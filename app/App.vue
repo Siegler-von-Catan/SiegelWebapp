@@ -13,7 +13,7 @@
 
         $refs!: {
             example: ExamplePage
-        }
+        };
 
         public mounted() {
 
