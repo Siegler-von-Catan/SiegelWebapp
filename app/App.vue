@@ -1,19 +1,15 @@
 <template lang="pug">
     #app
-        ExamplePage(ref="example" foo="Hello World")
+        Siegel3DPage()
 </template>
 
 <script lang="ts">
     import Vue from "vue";
     import Component from "vue-class-component";
-    import ExamplePage from "./pages/ExamplePage.vue";
+    import Siegel3DPage from "./pages/Siegel3DPage.vue";
 
-    @Component({components: {ExamplePage}})
+    @Component({components: {Siegel3DPage}})
     export default class App extends Vue {
-
-        $refs!: {
-            example: ExamplePage
-        };
 
         public mounted() {
 

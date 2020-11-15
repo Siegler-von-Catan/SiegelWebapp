@@ -4,7 +4,7 @@
     "strict": true,
     "module": "ES2017",
     "lib": ["ES2017", "dom"],
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "strictPropertyInitialization": false
   }
