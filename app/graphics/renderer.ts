@@ -21,13 +21,11 @@ export default class Renderer {
 
     private readonly siegel: Mesh;
 
-    private lastUpdateTime: number;
-
     constructor(container: HTMLElement) {
         // Init Renderer and append to dom
         this.scene = new Scene();
         this.camera = new PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-        this.renderer = new WebGLRenderer();
+        this.renderer = new WebGLRenderer({alpha: true});
         this.renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(this.renderer.domElement);
 
@@ -39,7 +37,10 @@ export default class Renderer {
             shininess: 20,
         });
         const bumpMaterial = simpleMaterial.clone();
-        bumpMaterial.bumpMap = new TextureLoader().load(bumpMapUrl);
+        bumpMaterial.bumpMap = new TextureLoader().load(bumpMapUrl, () => {
+            // Render again for texture
+            this.renderer.render(this.scene, this.camera);
+        });
 
         // Build lights
         const ambient = new AmbientLight(0x404040);
@@ -57,6 +58,8 @@ export default class Renderer {
             }
         });
         this.siegel = new Mesh(geometry, materials);
+        this.siegel.rotation.y = Math.PI / 2;
+        this.siegel.rotation.z = Math.PI / 2;
 
         // Add objects to scene
         this.scene.add(ambient);
@@ -71,19 +74,8 @@ export default class Renderer {
     /**
      * Rotate siegel and render
      */
-    public update(time: number) {
-        this.siegel.rotation.set(Math.sin(time / 1000), Math.PI / 2, Math.PI / 2, "YZX");
+    public update(mouse: number) {
+        this.siegel.rotation.set((mouse * Math.PI - Math.PI / 2) * 0.6, Math.PI / 2, Math.PI / 2, "YZX");
         this.renderer.render(this.scene, this.camera);
-    }
-
-    private _getDelta(time: number): number {
-        if (!this.lastUpdateTime) {
-            this.lastUpdateTime = time;
-            return 0;
-        }
-
-        const delta = (time - this.lastUpdateTime) / 1000;
-        this.lastUpdateTime = time;
-        return delta;
     }
 }

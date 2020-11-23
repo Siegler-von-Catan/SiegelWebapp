@@ -18,19 +18,15 @@
 
       public mounted() {
         this.renderer = new Renderer(this.$refs.canvas);
-        requestAnimationFrame(time => this._loop(time));
-      }
-
-      private _loop(time: number) {
-        this.renderer.update(time);
-        requestAnimationFrame(time => this._loop(time));
+        window.addEventListener("mousemove", event => {
+          this.renderer.update(event.x / window.innerWidth);
+        });
       }
     }
 </script>
 
 <style lang="sass" scoped>
   .siegel3d
-    margin: 25vh 25%
-    width: 50%
-    height: 50vh
+    width: 100%
+    height: 100%
 </style>
