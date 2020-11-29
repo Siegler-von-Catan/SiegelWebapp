@@ -71,7 +71,7 @@ export default class Renderer {
         const simpleMaterial = new MeshPhongMaterial({
             color: new Color(0xff0000),
             emissive: new Color(0x101010),
-            specular: new Color(0xff8000),
+            specular: new Color(0xff5020),
             shininess: 20,
         });
         const bumpMaterial = simpleMaterial.clone();
