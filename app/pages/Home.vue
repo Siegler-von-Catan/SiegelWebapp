@@ -3,7 +3,10 @@
 
   block content
     section(id="home")
-      Siegel3DCanvas#siegel(:textures="textures")
+      #siegels(v-if="loaded")
+        Siegel3DCanvas(:texture="textures[0]" offset="-1")
+        Siegel3DCanvas(:texture="textures[1]" offset="0")
+        Siegel3DCanvas(:texture="textures[2]" offset="1")
       a.home-button#link-create(href="/merge.pug") Create your own seal
       a.home-button#link-browse(href="/browse.pug") Browse seals
     section(id="info")
@@ -19,22 +22,30 @@
           p The dead speak! The galaxy has heard a mysterious broadcast, a threat of revenge in the sinister voice of the late emperor Palpatine.
           | General Leia Organa dispatches secret agents to gather intelligence, while Rey, the last hope of the Jedi, trains for battle against the diabolical First Order. Meanwhile, Supreme Leader Kylo Ren rages in search of the phantom Emperor, determined to destroy any threat to his power....
         img(src="../assets/mock.jpg" alt="Mock")
-    Tooltip
 </template>
 
 <script lang="ts">
   import Component from 'vue-class-component';
   import Siegel3DCanvas from '../components/Siegel3DCanvas.vue';
-  import bumpMap1 from "../assets/2911_1.png"
-  import bumpMap2 from "../assets/2911_2.png"
-  import bumpMap3 from "../assets/out_copy.png"
   import Page from './Page';
-  import Tooltip from '../components/Tooltip.vue';
+  import {getData, getFile, Siegel} from '../util/api';
+  import {randomSubArray} from '../util/util';
 
-  @Component({components: {Tooltip, Siegel3DCanvas}})
+  @Component({components: {Siegel3DCanvas}})
   export default class Home extends Page {
 
-    public textures = [bumpMap1, bumpMap2, bumpMap3];
+    private textures: string[] = [];
+    private siegels: Siegel[] = [];
+    private loaded = false;
+
+    public async mounted() {
+      const data = await getData();
+      this.siegels = randomSubArray(data, 3);
+      await this.siegels.map(async s => {
+        const file = await getFile(`heightmaps/${s.heightmap}`);
+        console.log(file);
+      });
+    }
   }
 </script>
 
@@ -46,13 +57,17 @@
     flex-direction: column
     align-items: center
 
-    #siegel
+    #siegels
+      display: flex
+      justify-content: center
+      align-items: center
       width: 90%
       height: 50vh
       margin-top: 6em
 
-      canvas
-        height: 100%
+      .siegel3d
+        width: 15em
+        height: 15em
 
     .home-button
       font-size: 2em

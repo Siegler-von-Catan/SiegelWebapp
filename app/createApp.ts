@@ -3,6 +3,7 @@ import Home from './pages/Home.vue';
 import Browse from './pages/Browse.vue';
 import {VueConstructor} from 'vue/types/vue';
 import Merge from './pages/Merge.vue';
+import 'regenerator-runtime/runtime'
 
 const pages: {[className: string]: VueConstructor} = {
     "home": Home,

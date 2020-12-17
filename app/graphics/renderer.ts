@@ -21,10 +21,10 @@ export default class Renderer {
     private readonly camera: PerspectiveCamera;
     private readonly renderer: WebGLRenderer;
 
-    private readonly siegels: Mesh[];
+    private readonly siegel: Mesh;
     private readonly directionalLight: DirectionalLight;
 
-    constructor(container: HTMLElement, textures: string[]) {
+    constructor(container: HTMLElement, texture: string) {
         // Init Renderer and append to dom
         this.scene = new Scene();
         this.camera = new PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -37,19 +37,20 @@ export default class Renderer {
         this.directionalLight = new DirectionalLight(0xffffff);
         this.directionalLight.position.set(0, 1, 1).normalize();
 
-        this.siegels = textures.map(tex => this._createSiegel(tex));
-        this.siegels.forEach((s, i) => {
-            const relPos = (i + 0.5) / textures.length * 2 - 1;
-            s.rotation.y = Math.PI / 2 + -relPos * siegelMaxRotation;
-            s.position.x = relPos * siegelsSpan;
-            s.position.z = (1 - Math.abs(relPos)) * 2 - 1;
-        });
+        this.siegel = this._createSiegel(texture);
+        this.siegel.rotation.y = Math.PI * 2;
+        // this.siegels.forEach((s, i) => {
+        //     const relPos = (i + 0.5) / textures.length * 2 - 1;
+        //     s.rotation.y = Math.PI / 2 + -relPos * siegelMaxRotation;
+        //     s.position.x = relPos * siegelsSpan;
+        //     s.position.z = (1 - Math.abs(relPos)) * 2 - 1;
+        // });
 
         // Add objects to scene
         this.scene.add(ambient);
         this.scene.add(this.directionalLight);
-        this.scene.add(...this.siegels);
-        this.camera.position.z = 5;
+        this.scene.add(this.siegel);
+        this.camera.position.z = 2;
 
         // One time render
         this.renderer.render(this.scene, this.camera);
@@ -59,11 +60,21 @@ export default class Renderer {
      * Rotate siegel and render
      */
     public update(mouseX: number) {
-        this.siegels.forEach((s, i) => {
-            const relPos = (i + 0.5) / this.siegels.length * 2 - 1;
-            s.rotation.set((mouseX * Math.PI - Math.PI / 2 - relPos * siegelMaxRotation) * 0.6, Math.PI / 2, Math.PI / 2, "YZX");
-        });
+        this.resizeCanvasToDisplaySize();
+        this.siegel.rotation.set((mouseX * Math.PI - Math.PI / 2) * 0.6, Math.PI / 2, Math.PI / 2, "YZX");
         this.renderer.render(this.scene, this.camera);
+    }
+
+    private resizeCanvasToDisplaySize() {
+        const canvas = this.renderer.domElement;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+
+        if (canvas.width !== width || canvas.height !== height) {
+            this.renderer.setSize(width, height, false);
+            this.camera.aspect = width / height;
+            this.camera.updateProjectionMatrix();
+        }
     }
 
     private _createSiegel(texture: string): Mesh {
