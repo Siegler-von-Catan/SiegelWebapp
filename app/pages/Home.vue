@@ -4,9 +4,9 @@
   block content
     section(id="home")
       #siegels(v-if="loaded")
-        Siegel3DCanvas(:texture="textures[0]" offset="-1")
-        Siegel3DCanvas(:texture="textures[1]" offset="0")
-        Siegel3DCanvas(:texture="textures[2]" offset="1")
+        Siegel3DCanvas(:heightmap="textures[0]" offset="-1")
+        Siegel3DCanvas(:heightmap="textures[1]" offset="0")
+        Siegel3DCanvas(:heightmap="textures[2]" offset="1")
       a.home-button#link-create(href="/merge.pug") Create your own seal
       a.home-button#link-browse(href="/browse.pug") Browse seals
     section(id="info")
@@ -30,6 +30,7 @@
   import Page from './Page';
   import {getData, getFile, Siegel} from '../util/api';
   import {randomSubArray} from '../util/util';
+  import {ImageUtils, Texture, TextureLoader} from "three";
 
   @Component({components: {Siegel3DCanvas}})
   export default class Home extends Page {
@@ -43,9 +44,11 @@
       this.siegels = randomSubArray(data, 3);
       await this.siegels.map(async s => {
         const file = await getFile(`heightmaps/${s.heightmap}`);
-        console.log(file);
+        this.textures.push(file);
       });
+      this.loaded = true;
     }
+
   }
 </script>
 

@@ -12,5 +12,9 @@ export async function getData() {
 }
 
 export async function getFile(siegel: string) {
-    return await axios.get("siegel", {params: {file: siegel}})
+    const res = await axios.get("siegel", {
+        params: {file: siegel},
+        responseType: "arraybuffer"
+    });
+    return Buffer.from(res.data, "binary").toString("base64");
 }

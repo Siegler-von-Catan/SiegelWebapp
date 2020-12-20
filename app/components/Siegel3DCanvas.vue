@@ -7,7 +7,8 @@
     import Vue from "vue";
     import Component from "vue-class-component";
     import Renderer from '../graphics/renderer';
-    import {Prop} from 'vue-property-decorator';
+    import {Prop, Watch} from 'vue-property-decorator';
+    import {Texture, TextureLoader} from "three";
 
     @Component
     export default class Siegel3DCanvas extends Vue {
@@ -21,19 +22,28 @@
 
       private renderer: Renderer;
 
-      public mounted() {
-        this.renderer = new Renderer(this.$refs.canvas, this.texture);
+      @Watch("heightmap")
+      public async loadedTexture() {
+        const tex = await this.loadImage(this.heightmap);
+        this.renderer = new Renderer(this.$refs.canvas, tex);
         window.addEventListener("mousemove", event => {
           this.renderer.update(event.x / window.innerWidth);
         });
       }
 
-      private _createImage(source: string) {
-        const image = document.createElement("img");
-        image.style.display = "none";
-        document.body.appendChild(image);
-        image.addEventListener("load", () => {});
-        image.src = `data:image/png;base64`
+      private async loadImage(file: string): Promise<Texture> {
+        return new Promise((resolve) => {
+          const img = document.createElement("img");
+          document.body.appendChild(img);
+
+          img.addEventListener("load", () => {
+            const tex = new TextureLoader().load(img.src);
+            tex.needsUpdate = true;
+            resolve(tex);
+          });
+
+          img.src = `data:image/png;base64,${file}`;
+        });
       }
     }
 </script>

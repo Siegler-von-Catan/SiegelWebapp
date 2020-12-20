@@ -6,7 +6,7 @@ import {
     Mesh,
     MeshPhongMaterial,
     PerspectiveCamera,
-    Scene,
+    Scene, Texture,
     TextureLoader,
     WebGLRenderer
 } from 'three';
@@ -24,7 +24,7 @@ export default class Renderer {
     private readonly siegel: Mesh;
     private readonly directionalLight: DirectionalLight;
 
-    constructor(container: HTMLElement, texture: string) {
+    constructor(container: HTMLElement, texture: Texture) {
         // Init Renderer and append to dom
         this.scene = new Scene();
         this.camera = new PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -77,7 +77,7 @@ export default class Renderer {
         }
     }
 
-    private _createSiegel(texture: string): Mesh {
+    private _createSiegel(texture: Texture): Mesh {
         // Build simple material for back and sides and bump material for front
         const simpleMaterial = new MeshPhongMaterial({
             color: new Color(0xff0000),
@@ -86,10 +86,7 @@ export default class Renderer {
             shininess: 20,
         });
         const bumpMaterial = simpleMaterial.clone();
-        bumpMaterial.bumpMap = new TextureLoader().load(texture, () => {
-            // Render again for texture
-            this.renderer.render(this.scene, this.camera);
-        });
+        bumpMaterial.bumpMap = texture;
 
 
         // Build geometry and attach materials
