@@ -3,10 +3,8 @@
 
   block content
     section(id="home")
-      #siegels(v-if="loaded")
-        Siegel3DCanvas(:heightmap="textures[0]" offset="-1")
-        Siegel3DCanvas(:heightmap="textures[1]" offset="0")
-        Siegel3DCanvas(:heightmap="textures[2]" offset="1")
+      #siegels
+        Siegel3DCanvas(v-for="(tex, i) in textures" :heightmap="tex" :offset="i - Math.floor(textures.length / 2)")
       a.home-button#link-create(href="/merge.pug") Create your own seal
       a.home-button#link-browse(href="/browse.pug") Browse seals
     section(id="info")
@@ -28,25 +26,19 @@
   import Component from 'vue-class-component';
   import Siegel3DCanvas from '../components/Siegel3DCanvas.vue';
   import Page from './Page';
-  import {getData, getFile, Siegel} from '../util/api';
+  import {getData, getFileUrl, Siegel} from '../util/api';
   import {randomSubArray} from '../util/util';
-  import {ImageUtils, Texture, TextureLoader} from "three";
 
   @Component({components: {Siegel3DCanvas}})
   export default class Home extends Page {
 
     private textures: string[] = [];
     private siegels: Siegel[] = [];
-    private loaded = false;
 
     public async mounted() {
       const data = await getData();
       this.siegels = randomSubArray(data, 3);
-      await this.siegels.map(async s => {
-        const file = await getFile(`heightmaps/${s.heightmap}`);
-        this.textures.push(file);
-      });
-      this.loaded = true;
+      this.textures = this.siegels.map(s => getFileUrl(`heightmaps/${s.heightmap}`));
     }
 
   }
