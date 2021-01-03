@@ -19,5 +19,9 @@ export async function getDataFor(i: string) {
 }
 
 export function getFileUrl(siegel: string) {
-    return `${domain}/siegel?file=${siegel}`
+    return `${domain}/siegel?file=${siegel}`;
+}
+
+export function getSealBrowseCoordinatesUrl() {
+  return domain + "/browseSealCoordinates";
 }
