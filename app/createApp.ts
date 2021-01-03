@@ -4,11 +4,13 @@ import Browse from './pages/Browse.vue';
 import {VueConstructor} from 'vue/types/vue';
 import Merge from './pages/Merge.vue';
 import 'regenerator-runtime/runtime'
+import Siegel from "./pages/Siegel.vue";
 
 const pages: {[className: string]: VueConstructor} = {
     "home": Home,
     "browse": Browse,
-    "merge": Merge
+    "merge": Merge,
+    "siegel": Siegel
 };
 
 const appElem = document.getElementById("app");

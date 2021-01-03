@@ -23,6 +23,7 @@
       private renderer: Renderer;
 
       public mounted() {
+        console.log(this.heightmap);
         const tex = new TextureLoader().load(this.heightmap);
         this.renderer = new Renderer(this.$refs.canvas, tex);
         window.addEventListener("mousemove", event => {

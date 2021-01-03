@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx parcel app/home.pug app/browse.pug app/merge.pug",
-    "build": "npx parcel build app/home.pug app/browse.pug app/merge.pug"
+    "start": "npx parcel $npm_package_pugfiles",
+    "build": "npx parcel build $npm_package_pugfiles",
+    "dev:build": "NODE_ENV=development npx parcel build $npm_package_pugfiles"
   },
+  "pugfiles": "app/home.pug app/browse.pug app/merge.pug app/siegel.pug",
   "author": "Paul Methfessel",
   "license": "MIT",
   "devDependencies": {
