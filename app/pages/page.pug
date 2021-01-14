@@ -1,15 +1,15 @@
 #app
     header
-        a#title(href="../home.pug") Siegler
-        menu
-            a(href="../merge.pug") Create
-            a(href="../browse.pug") Browse
-            a(href="../home.pug") About
+      #about
+        a(href="../home.pug")
+          img(src="../assets/FabSealLogo.png" alt="Mock")
+        a#title(href="../home.pug") FabSeal
+      menu
+        a(href="../browse.pug") Auf zu den Siegeln!
     block content
     footer
         .top
-            a About
-            a Kontakt
+            a(href="mailto:siegler.von.catan@gmail.com") Kontakt
             a Impressum
         .bottom
             span Copyright © 2020 Siegler von Catan
