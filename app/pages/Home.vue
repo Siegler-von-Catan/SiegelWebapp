@@ -5,12 +5,13 @@
     section(class="container--fluid")
       .container__row
         #home
-          h1 Erwecke historische Siegel zum Leben!
           .container__col-sm-12
             #siegels
               Siegel3DCanvas(v-for="(tex, i) in textures" :heightmap="tex" :offset="i - Math.floor(textures.length / 2)")
           .container__col-sm-12
-            a.home-button#link-browse(href="/browse.pug") Auf zu den Siegeln!
+            a.home-button#link-browse(href="/browse.pug") Siegel durchstöbern
+          .container__col-sm-12
+            h1 Erwecke historische Siegel zum Leben!
       .container__row
           .container__col-sm-12.container__col-lg-6
             #picture
@@ -20,12 +21,12 @@
               h2 Die Siegelsammlung
               p Der Sammler Paul Arnold Grun schenkte der Staats- und Universitätsbibliothek Göttingen seine fast 1500 Abdrücke von Lacksiegeln. Grun hatte schon zu Beginn seiner Militärzeit begonnen, Siegelabdrücke seiner Kameraden zu erbitten und damit eine kleine Siegelsammlung anzulegen. Erweitert wurde die Sammlung später durch weitere Siegelabdrücke, die Mitglieder der Genealogisch-Heraldischen Gesellschaft Göttingens beisteuerten. Im Jahr 2016 wurden die Siegel abfotografiert und im #[a(href="https://sammlungen.uni-goettingen.de/sammlung/slg_1034/", target="_blank") Onlineportal der Universität Göttingen] bereit gestellt. Der Datensatz enthält pro Siegel eine Abbildung, die Maße und den Namen der siegelführenden Familie, wie er unter dem Siegel verzeichnet ist. Darüber hinaus wurden die im Siegel abgebildeten Symbole durch Schlagworte erschlossen.
           .container__col-sm-12.container__col-lg-6
+            #text
+              h2 Eigene Siegelstempel
+              p Mit "FabSeal" kann jede*r in Zukunft wortwörtlich Brief und Siegel geben. Die Webanwendung erweckt die Lacksiegel aus der Sammlung von Paul Arnold Grun wieder zum Leben, indem aus den 2D-Fotos des Siegels ein 3D-Modell automatisch generiert wird. Die 3D-Modelle können anschließend mit dem 3D-Drucker oder Lasercutter erneut physisch hergestellt werden, um ganz einfach zu Hause eigene Siegel zu erschaffen und zu benutzen. Diese Webanwendung kann als Grundlage dienen, um neben Siegeln auch andere Sammlungen wie bspw von Münzen in die 3D-Welt zu bringen.
+          .container__col-sm-12.container__col-lg-6
             #picture
               img(src="../assets/fabricatedSeal.jpg" alt="Selbstgemachter Siegelstempel")
-          .container__col-sm-12.container__col-lg-6
-            #text
-              h2 Eigene Siegel
-              p Mit "FabSeal" kann jede*r in Zukunft wortwörtlich Brief und Siegel geben. Die Webanwendung erweckt die Lacksiegel aus der Sammlung von Paul Arnold Grun wieder zum Leben, indem aus den 2D-Fotos des Siegels ein 3D-Modell automatisch generiert wird. Die 3D-Modelle können anschließend mit dem 3D-Drucker oder Lasercutter erneut physisch hergestellt werden, um ganz einfach zu Hause eigene Siegel zu erschaffen und zu benutzen. Diese Webanwendung kann als Grundlage dienen, um neben Siegeln auch andere Sammlungen wie bspw von Münzen in die 3D-Welt zu bringen.
           .container__col-sm-12.container__col-lg-6
             #picture
               img(src="../assets/pipeline.gif" alt="Pipeline")
@@ -64,44 +65,34 @@
   @at-root
     [class='container__row']
       #home
-        height: 70vh
+        width: 90%
+        height: 40vh
         justify-content: center
         align-items: center
         margin: 0 auto
-
-        h1
-          animation-duration: 15s
-          animation-iteration-count: infinite
-          animation-name: banner
-          animation-timing-function: linear
-
-        @keyframes banner
-          0%
-            transform: translateX(500px)
-            opacity: 0
-          50%
-            transform: translateX(0px)
-            opacity: 1
-          100%
-            transform: translateX(-500px)
-            opacity: 0
+        padding: 2em 0
+        box-shadow: 0 15px 10px #777
 
         @at-root
           [class*='container__col-']
+            h1
+              margin-top: 2em
+              font-size: 200%
+              color: #707070
+
             #siegels
               display: flex
-              margin: 12em 0 4em 0
+              margin-bottom: 4em
 
               .siegel3d
-                width: 20em
-                height: 20em
+                width: 13em
+                height: 13em
 
             .home-button
               font-size: 2em
               text-decoration: none
               border-radius: 10px
               padding: .5em 1.2em
-              margin: .4em 0
 
               user-select: none
 
@@ -124,15 +115,15 @@
         [class*='container__col-']
           #picture
             background-color: black
-            padding: 4em
-            margin: 10em
+            padding: 3em
+            margin: 6em
 
             img
               width: 100%
 
           #text
             display: block
-            padding: 12em
+            padding: 5em
 
             h2
               transform: rotate(-3deg)

@@ -1,6 +1,6 @@
 <template lang="pug">
   .siegel3d(ref="canvas")
-    .tooltip Hello
+    .tooltip Siegel
 </template>
 
 <script lang="ts">
