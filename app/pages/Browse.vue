@@ -16,13 +16,20 @@
   import * as d3 from "d3";
   import {getSealBrowseCoordinatesUrl} from '../util/api';
 
+  const thumbnailWidth = 20;
+  const thumbnailHeight = thumbnailWidth;
+
+  let prevK = null;
+
   @Component
   export default class Browse extends Page {
+
     public async mounted() {
       const data = await d3.csv(getSealBrowseCoordinatesUrl(), row => {
         return {
           /* cluster: row.cluster, */
           id: row.id,
+          record_id: row.record_id,
           coord: [Number(row.x), Number(row.y)],
         }
       });
@@ -42,14 +49,17 @@
         .append("g")
           .attr("transform", d => `translate(${scaleX(d.coord[0])} ${scaleY(d.coord[1])})`);
 
-      sealGroups
+      const links = sealGroups
         .append("a")
           .attr("href", d => `/siegel.html?s=${d.id}`)
-          .attr("target", "_blank")
-        .append("circle")
-          .attr("cx", 0)
-          .attr("cy", 0)
-          .attr("r", 2);
+          .attr("target", "_blank");
+
+      const images = links.append("image")
+          .attr("href", d => `http://localhost:8080/staticBrowse/thumbnails/record_kuniweb_${d.record_id}-img.jpg`)
+          .attr("x", -thumbnailWidth / 2)
+          .attr("y", -thumbnailHeight / 2)
+          .attr("width", thumbnailWidth)
+          .attr("height", thumbnailHeight);
 
       function zoomed(e) {
         const transform = e.transform;
@@ -58,10 +68,17 @@
         const newScaleY = transform.rescaleY(scaleY.copy());
 
         sealGroups
-            .attr("transform", d => `translate(${newScaleX(d.coord[0])} ${newScaleY(d.coord[1])})`)
+            .attr("transform", d => `translate(${newScaleX(d.coord[0])} ${newScaleY(d.coord[1])})`);
+
+        if (transform.k !== prevK) {
+          prevK = transform.k;
+          images
+            .attr("width", thumbnailWidth * transform.k)
+            .attr("height", thumbnailHeight * transform.k);
+        }
       }
 
-      zoomable.call(d3.zoom().extent([[0, 0], [500, 500]]).on("zoom", zoomed));
+      zoomable.call(d3.zoom().extent([[0, 0], [500, 500]]).scaleExtent([1, 4]).on("zoom", zoomed));
     }
   }
 </script>
