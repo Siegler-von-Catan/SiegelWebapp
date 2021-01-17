@@ -1,16 +1,16 @@
 import Vue from "vue";
-import Home from './pages/Home.vue';
-import Browse from './pages/Browse.vue';
 import {VueConstructor} from 'vue/types/vue';
+import SiegelView from "./pages/SiegelView.vue";
+import Browse from './pages/Browse.vue';
 import Merge from './pages/Merge.vue';
+import Home from './pages/Home.vue';
 import 'regenerator-runtime/runtime'
-import Siegel from "./pages/Siegel.vue";
 
 const pages: {[className: string]: VueConstructor} = {
+    "siegel": SiegelView,
     "home": Home,
     "browse": Browse,
     "merge": Merge,
-    "siegel": Siegel
 };
 
 const appElem = document.getElementById("app");

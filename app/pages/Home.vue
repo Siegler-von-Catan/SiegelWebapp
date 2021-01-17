@@ -4,7 +4,7 @@
   block content
     section(id="home")
       #siegels
-        Siegel3DCanvas(v-for="(tex, i) in textures" :heightmap="tex" :offset="i - Math.floor(textures.length / 2)")
+        Siegel3DCanvas(v-for="(tex, i) in textures" :heightmap="tex" :tooltip="siegels[i].name" :offset="i - Math.floor(textures.length / 2)")
       a.home-button#link-create(href="/merge.pug") Create your own seal
       a.home-button#link-browse(href="/browse.pug") Browse seals
     section(id="info")
@@ -43,76 +43,3 @@
 
   }
 </script>
-
-<style lang="sass" scoped>
-  @import variables
-
-  #home
-    display: flex
-    flex-direction: column
-    align-items: center
-
-    #siegels
-      display: flex
-      justify-content: center
-      align-items: center
-      width: 90%
-      height: 50vh
-      margin-top: 6em
-
-      .siegel3d
-        width: 15em
-        height: 15em
-
-    .home-button
-      font-size: 2em
-      text-decoration: none
-      border-radius: 10px
-      padding: .5em 1.2em
-      margin: .4em 0
-
-      user-select: none
-
-      transition: padding .4s ease, background .1s ease, color .2s ease
-
-      &:hover
-        padding: .5em 1.6em
-
-      &#link-create
-        color: $base
-        background: $accent
-        font-size: 2.3em
-        border: 2px solid $accent
-
-        &:active
-          background: $base
-          color: $accent
-
-      &#link-browse
-        color: $accent
-        background: $base
-        border: 2px solid $accent
-
-        &:active
-          background: $accent
-          color: $base
-
-  #info
-    font-size: 2em
-    margin: 3em 10em
-
-    .part
-      display: flex
-      justify-content: space-between
-      align-content: center
-      margin: 8em 0
-
-      img
-        height: 20em
-
-      span
-        padding: 0 4em
-
-        &.right-aligned
-          text-align: right
-</style>

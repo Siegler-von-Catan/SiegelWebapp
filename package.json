@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx parcel app/home.pug app/browse.pug app/merge.pug app/siegel.pug",
+    "start": "npx parcel app/home.pug app/siegel.pug app/browse.pug app/merge.pug",
     "build": "npx parcel build app/home.pug app/browse.pug app/merge.pug app/siegel.pug",
     "dev:build": "NODE_ENV=development npx parcel build app/home.pug app/browse.pug app/merge.pug app/siegel.pug"
   },
