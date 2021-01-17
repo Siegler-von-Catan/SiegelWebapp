@@ -1,61 +1,86 @@
 @import variables
 
-#home
-  display: flex
-  flex-direction: column
-  align-items: center
+@at-root
+  [class='container__row']
+    #home
+      width: 90%
+      height: 40vh
+      justify-content: center
+      align-items: center
+      margin: 0 auto
+      padding: 2em 0
+      //box-shadow: 0 15px 10px #777
+      border-bottom: 2px solid #000
 
-  #siegels
-    display: flex
-    justify-content: center
-    align-items: center
-    width: 90%
-    height: 50vh
-    margin-top: 6em
+      @at-root
+        [class*='container__col-']
+          h1
+            margin-top: 2em
+            font-size: 200%
+            color: #707070
 
-    .siegel3d
-      width: 25em
-      height: 25em
+          #siegels
+            display: flex
+            margin-bottom: 4em
 
-  .home-button
-    font-size: 2em
-    text-decoration: none
-    border-radius: 10px
-    padding: .5em 1.2em
-    margin: .4em 0
+            .siegel3d
+              width: 20em
+              height: 20em
 
-    user-select: none
+          .home-button
+            font-size: 2em
+            text-decoration: none
+            border-radius: 10px
+            padding: .5em 1.2em
 
-    transition: padding .4s ease, background .1s ease, color .2s ease
+            user-select: none
 
-    &:hover
-      padding: .5em 1.6em
+            transition: padding .4s ease, background .1s ease, color .2s ease
 
-    &#link-browse
-      color: $base
-      background: $accent
-      font-size: 2.3em
-      border: 2px solid $accent
+            &:hover
+              padding: .5em 1.6em
 
-      &:active
-        background: $base
-        color: $accent
+            &#link-browse
+              color: $base
+              background: $accent
+              font-size: 2.3em
+              border: 2px solid $accent
 
-#info
-  font-size: 2em
-  margin: 3em 10em
+              &:active
+                background: $base
+                color: $accent
 
-  .part
-    display: flex
-    justify-content: space-between
-    align-content: center
-    margin: 8em 0
+    @at-root
+      [class*='container__col-']
 
-    img
-      height: 20em
+        #picture
+          background-color: black
+          padding: 3em
+          margin: 6em
 
-    span
-      padding: 0 4em
+          img
+            width: 100%
 
-      &.right-aligned
-        text-align: right
+        #text
+          display: block
+          padding: 5em
+
+          a
+            color: $accent
+
+          h2
+            transform: rotate(-3deg)
+            color: red
+            font-size: 300%
+            border: 4px solid red
+            border: 8px double red
+            display: inline-block
+            padding: 0.4em
+            text-transform: uppercase
+            mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png')
+            mask-size: 944px 604px
+            mix-blend-mode: multiply
+
+          p
+            font-size: 200%
+

@@ -7,7 +7,7 @@
         #home
           .container__col-sm-12
             #siegels
-              Siegel3DCanvas(v-for="(tex, i) in textures" :heightmap="tex" :offset="i - Math.floor(textures.length / 2)")
+              Siegel3DCanvas(v-for="(tex, i) in textures" :tooltip="siegels[i].name" :heightmap="tex" :offset="i - Math.floor(textures.length / 2)")
           .container__col-sm-12
             a.home-button#link-browse(href="/browse.pug") Siegel durchstöbern
           .container__col-sm-12
@@ -58,87 +58,3 @@
 
   }
 </script>
-
-<style lang="sass" scoped>
-  @import variables
-
-  @at-root
-    [class='container__row']
-      #home
-        width: 90%
-        height: 40vh
-        justify-content: center
-        align-items: center
-        margin: 0 auto
-        padding: 2em 0
-        box-shadow: 0 15px 10px #777
-
-        @at-root
-          [class*='container__col-']
-            h1
-              margin-top: 2em
-              font-size: 200%
-              color: #707070
-
-            #siegels
-              display: flex
-              margin-bottom: 4em
-
-              .siegel3d
-                width: 13em
-                height: 13em
-
-            .home-button
-              font-size: 2em
-              text-decoration: none
-              border-radius: 10px
-              padding: .5em 1.2em
-
-              user-select: none
-
-              transition: padding .4s ease, background .1s ease, color .2s ease
-
-              &:hover
-                padding: .5em 1.6em
-
-              &#link-browse
-                color: $base
-                background: $accent
-                font-size: 2.3em
-                border: 2px solid $accent
-
-                &:active
-                  background: $base
-                  color: $accent
-
-      @at-root
-        [class*='container__col-']
-          #picture
-            background-color: black
-            padding: 3em
-            margin: 6em
-
-            img
-              width: 100%
-
-          #text
-            display: block
-            padding: 5em
-
-            h2
-              transform: rotate(-3deg)
-              color: red
-              font-size: 300%
-              border: 4px solid red
-              border: 8px double red
-              display: inline-block
-              padding: 0.4em
-              text-transform: uppercase
-              mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png')
-              mask-size: 944px 604px
-              mix-blend-mode: multiply
-
-            p
-              font-size: 200%
-
-</style>
