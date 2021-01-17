@@ -2,7 +2,6 @@ import Vue from "vue";
 import {VueConstructor} from 'vue/types/vue';
 import SiegelView from "./pages/SiegelView.vue";
 import Browse from './pages/Browse.vue';
-import Merge from './pages/Merge.vue';
 import Home from './pages/Home.vue';
 import 'regenerator-runtime/runtime'
 
@@ -10,7 +9,6 @@ const pages: {[className: string]: VueConstructor} = {
     "siegel": SiegelView,
     "home": Home,
     "browse": Browse,
-    "merge": Merge,
 };
 
 const appElem = document.getElementById("app");

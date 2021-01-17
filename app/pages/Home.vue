@@ -5,7 +5,6 @@
     section(id="home")
       #siegels
         Siegel3DCanvas(v-for="(tex, i) in textures" :heightmap="tex" :tooltip="siegels[i].name" :offset="i - Math.floor(textures.length / 2)")
-      a.home-button#link-create(href="/merge.pug") Create your own seal
       a.home-button#link-browse(href="/browse.pug") Browse seals
     section(id="info")
       .part
