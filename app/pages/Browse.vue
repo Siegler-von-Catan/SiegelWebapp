@@ -2,12 +2,13 @@
   extends page
 
   block content
-    h1 Browse
-    svg(width="500" height="500" viewbox="0 0 500 500")
-      rect(width="500" height="500" fill="none" stroke="black")
-      g(id="zoomable")
-        rect(width="500" height="500" opacity="0%")
-        g(id="seals")
+    h1(style="position: absolute; z-index: 1;") Browse
+    div(id="svg-container" style="position: relative; height: 100vh")
+      svg(style="position: absolute" width="100%" height="100%" viewbox="0 0 500 500")
+        //rect(width="500" height="500" fill="none" stroke="black")
+        g(id="zoomable")
+          rect(id="interaction-rect" width="500" height="500" opacity="0%")
+          g(id="seals")
 </template>
 
 <script lang="ts">
@@ -25,6 +26,19 @@
   export default class Browse extends Page {
 
     public async mounted() {
+      const divBB = document.getElementById("svg-container").getBoundingClientRect();
+      let width = divBB.width;
+      let height = divBB.height;
+      d3.select("svg")
+          .attr("viewbox", `0 0 ${width} ${height}`);
+      d3.select("#interaction-rect")
+          .attr("width", width)
+          .attr("height", height);
+
+      window.onresize = function(e) {
+        console.log(e);
+      }
+
       const data = await d3.csv(getSealBrowseCoordinatesUrl(), row => {
         return {
           /* cluster: row.cluster, */
@@ -37,8 +51,9 @@
       const extentX = d3.extent(data.map(row => row.coord[0]));
       const extentY = d3.extent(data.map(row => row.coord[1]));
 
-      const scaleX = d3.scaleLinear().domain(extentX).range([0, 500]);
-      const scaleY = d3.scaleLinear().domain(extentY).range([0, 500]);
+      const sideLength = Math.min(width, height);
+      const scaleX = d3.scaleLinear().domain(extentX).range([sideLength == width ? 0 : (width - sideLength) / 2, (width - sideLength) / 2 + sideLength]);
+      const scaleY = d3.scaleLinear().domain(extentY).range([sideLength == height ? 0 : (height - sideLength) / 2,(height - sideLength) / 2 + sideLength]);
 
       const zoomable = d3.select("#zoomable");
 
@@ -78,7 +93,7 @@
         }
       }
 
-      zoomable.call(d3.zoom().extent([[0, 0], [500, 500]]).scaleExtent([1, 4]).on("zoom", zoomed));
+      zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 20]).on("zoom", zoomed));
     }
   }
 </script>
