@@ -12,17 +12,54 @@ body
 
   font-size: 62.5%
   font-family: $content
+  background-image: url(http://api.thumbr.it/whitenoise-361x370.png?background=ffffffff&noise=626262&density=5&opacity=44)
+
+  @mixin create-mq($breakpoint)
+    @if($breakpoint == 0)
+      @content
+    @else
+      @media screen and (min-width: $breakpoint *1px)
+        @content
+
+  @mixin create-col-classes($modifier, $grid-cols, $breakpoint)
+    @include create-mq($breakpoint)
+      @for $i from 1 through $grid-cols
+        &__col#{$modifier}-#{$i}
+          flex-basis: (100 / ($grid-cols / $i) ) * 1%
+
+  .container
+    max-width: $grid__bp-md * 1px
+    margin: 0 auto
+    box-sizing: border-box
+
+    &--fluid
+      margin: 0
+      max-width: 100%
+
+    &__row
+      display: flex
+      flex-wrap: wrap
+      width: 100%
+
+    @at-root
+      [class*='container__col-']
+        display: flex
+        align-items: center
+        justify-content: space-around
+
+    @each $modifier , $breakpoint in $map-grid-props
+      @include create-col-classes($modifier, $grid__cols, $breakpoint)
 
 header
   display: flex
   justify-content: space-between
   align-items: center
-
   padding: 0 2em
-
   background: $accent
   color: $base
   font-size: 1.6em
+  img
+    max-height: 4em
 
   #title
     font-size: 1.8em
