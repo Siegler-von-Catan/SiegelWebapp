@@ -2,12 +2,17 @@
   extends page
 
   block content
+    link(rel="stylesheet" href="./browse.sass")
     h1(style="position: absolute; z-index: 1;") Browse
-    div(id="svg-container" style="position: relative; height: 100vh")
+    #tooltip
+      h3#tooltip-family family
+      p Begriffe: 
+        span#tooltip-tags placeholder
+    #svg-container(style="position: relative; height: 100vh")
       svg(style="position: absolute" width="100%" height="100%" viewbox="0 0 500 500")
         //rect(width="500" height="500" fill="none" stroke="black")
         g(id="zoomable")
-          rect(id="interaction-rect" width="500" height="500" opacity="0%")
+          rect#interaction-rect(width="500" height="500" opacity="0%")
           g(id="seals")
 </template>
 
@@ -39,14 +44,17 @@
         console.log(e);
       }
 
-      const data = await d3.csv(getSealBrowseCoordinatesUrl(), row => {
+      const data = await d3.dsv(";", getSealBrowseCoordinatesUrl(), row => {
         return {
-          /* cluster: row.cluster, */
+          tags: row.tags.replaceAll(",", ", "),
+          family: row.family,
           id: row.id,
           record_id: row.record_id,
           coord: [Number(row.x), Number(row.y)],
         }
       });
+
+      console.log(data);
 
       const extentX = d3.extent(data.map(row => row.coord[0]));
       const extentY = d3.extent(data.map(row => row.coord[1]));
@@ -69,12 +77,41 @@
           .attr("href", d => `/siegel.html?s=${d.id}`)
           .attr("target", "_blank");
 
+      links.append("circle")
+          .attr("cx", 0)
+          .attr("cy", 0)
+          .attr("r", 5)
+          .attr("fill", "darkred");
+
+      d3.select("#interaction-rect")
+        .on("mouseover", () => {
+            tooltip.style("visibility", "hidden");
+          });
+
+      const tooltip = d3.select("#tooltip");
+      const tooltipFamily = d3.select("#tooltip-family")
+      const tooltipTags = d3.select("#tooltip-tags")
+
       const images = links.append("image")
           .attr("href", d => `http://localhost:8080/staticBrowse/thumbnails/record_kuniweb_${d.record_id}-img.jpg`)
           .attr("x", -thumbnailWidth / 2)
           .attr("y", -thumbnailHeight / 2)
           .attr("width", thumbnailWidth)
-          .attr("height", thumbnailHeight);
+          .attr("height", thumbnailHeight)
+          .on("mouseover", e => {
+              const d = d3.select(e.target).data()[0];
+              tooltipFamily.text(d.family);
+              tooltipTags.text(d.tags);
+              tooltip.style("visibility", "visible");
+            });
+
+      const svgOffset = d3.select("svg").node().getBoundingClientRect().top;
+      const pointerOffset = 20;
+      console.log(svgOffset)
+      d3.select("body").on("mousemove", e => {
+        tooltip
+            .style("transform", `translate(${e.clientX + pointerOffset}px, ${e.clientY - svgOffset + pointerOffset}px)`);
+      });
 
       function zoomed(e) {
         const transform = e.transform;
@@ -88,6 +125,8 @@
         if (transform.k !== prevK) {
           prevK = transform.k;
           images
+            .attr("x", (-thumbnailWidth / 2) * transform.k)
+            .attr("y", (-thumbnailHeight / 2) * transform.k)
             .attr("width", thumbnailWidth * transform.k)
             .attr("height", thumbnailHeight * transform.k);
         }
