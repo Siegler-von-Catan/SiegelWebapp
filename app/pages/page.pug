@@ -1,15 +1,31 @@
+//-
+//- ShapeFromShading - Creating heightmaps out of 2D seal images.
+//- Copyright (C) 2021
+//- Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel
+//- This program is free software: you can redistribute it and/or modify
+//- it under the terms of the GNU General Public License as published by
+//- the Free Software Foundation, either version 3 of the License, or
+//- (at your option) any later version.
+//-
+//- This program is distributed in the hope that it will be useful,
+//- but WITHOUT ANY WARRANTY; without even the implied warranty of
+//- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//- GNU General Public License for more details.
+//-
+//- You should have received a copy of the GNU General Public License
+//- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 #app
     header
-        a#title(href="../home.pug") Siegler
-        menu
-            a(href="../merge.pug") Create
-            a(href="../browse.pug") Browse
-            a(href="../home.pug") About
+      #about
+        a(href="../home.pug")
+          img(src="../assets/FabSealLogo.png" alt="Mock")
+        a#title(href="../home.pug") FabSeal
+      menu
+        a(href="../browse.pug") Siegel durchstöbern
     block content
     footer
         .top
-            a About
-            a Kontakt
-            a Impressum
+            a(href="mailto:fab.seal@gmail.com") Kontakt
         .bottom
-            span Copyright © 2020 Siegler von Catan
+            span Copyright © 2021 FabSeal

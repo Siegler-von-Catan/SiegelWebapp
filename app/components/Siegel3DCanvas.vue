@@ -1,6 +1,24 @@
+<!--
+  - ShapeFromShading - Creating heightmaps out of 2D seal images.
+  - Copyright (C) 2021
+  - Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU General Public License for more details.
+  -
+  - You should have received a copy of the GNU General Public License
+  - along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <template lang="pug">
-  .siegel3d(ref="canvas")
-    .tooltip Hello
+  .siegel3d(ref="canvas" @click="$emit('click')")
+    .tooltip(:class="stickyTooltip ? 'sticky' : ''") {{ tooltip }}
 </template>
 
 <script lang="ts">
@@ -16,6 +34,12 @@
       @Prop({default: ""})
       public heightmap: string;
 
+      @Prop({default: false})
+      public stickyTooltip: boolean;
+
+      @Prop({default: ""})
+      public tooltip: string;
+
       $refs!: {
         canvas: HTMLDivElement
       }
@@ -23,7 +47,6 @@
       private renderer: Renderer;
 
       public mounted() {
-        console.log(this.heightmap);
         const tex = new TextureLoader().load(this.heightmap);
         this.renderer = new Renderer(this.$refs.canvas, tex);
         window.addEventListener("mousemove", event => {
@@ -32,44 +55,3 @@
       }
     }
 </script>
-
-<style lang="sass" scoped>
-  @import ../pages/variables
-
-  .siegel3d
-    position: relative
-    width: 100%
-    height: 100%
-
-    .tooltip
-      opacity: 0
-      position: absolute
-      bottom: 0
-      left: 50%
-      transform: translate(-50%, .7em)
-
-      font-size: 1.3em
-      background: $accent
-      color: $base
-
-      padding: .3em .8em
-      border-radius: .5em
-
-      transition: opacity .5s ease
-
-      &::after
-        position: absolute
-        display: block
-        content: ""
-        width: 0
-        height: 0
-        left: 50%
-        top: 0
-        transform: translate(-50%, -.5em)
-        border-left: 1em solid transparent
-        border-right: 1em solid transparent
-        border-bottom: 1em solid $accent
-
-    &:hover .tooltip
-      opacity: 1
-</style>
