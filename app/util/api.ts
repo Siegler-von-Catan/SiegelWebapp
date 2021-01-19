@@ -38,7 +38,7 @@ export async function getDataFor(i: string) {
 }
 
 export function getFileUrl(type: string, siegel: Siegel) {
-    return `${domain}/siegel?type=${type}&id=${siegel.id}`;
+    return `${domain}/siegeldata?type=${type}&id=${siegel.id}`;
 }
 
 export function openDetails(s: Siegel) {
