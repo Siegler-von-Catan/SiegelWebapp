@@ -1,86 +1,159 @@
 @import variables
 
-@at-root
-  [class='container__row']
-    #home
-      width: 90%
-      height: 40vh
-      justify-content: center
-      align-items: center
+.container__row
+  #home
+    width: 90%
+    height: 40vh
+    justify-content: center
+    align-items: center
+    margin: 0 auto
+    padding: 2em 0
+    background-image: url("../assets/hr.svg")
+    background-size: contain
+    background-repeat: no-repeat
+    background-position: bottom
+
+    @include create-mq($grid__bp-md)
+      height: 50vh
+
+  h1
+    margin-top: 2em
+    font-size: 150%
+    color: #707070
+    @include create-mq($grid__bp-md)
+      font-size: 200%
+
+  #siegels
+    display: flex
+    margin-bottom: 4em
+
+    .siegel3d
+      width: 10em
+      height: 10em
+      @include create-mq($grid__bp-md)
+        width: 20em
+        height: 20em
+
+  .home-button
+    font-size: 2em
+    text-decoration: none
+    border-radius: 10px
+    padding: .5em 1.2em
+    user-select: none
+    transition: padding .4s ease, background .1s ease, color .2s ease
+
+    &:hover
+      padding: .5em 1.6em
+
+    &#link-browse
+      color: $base
+      background: $accent
+      font-size: 2.3em
+      border: 2px solid $accent
+
+      &:active
+        background: $base
+        color: $accent
+
+
+  .picture
+    background-color: black
+    padding: 2em
+    margin: 3em
+    @include create-mq($grid__bp-md)
+      padding: 3em
+      margin: 6em
+
+    img
+      width: 100%
+
+  .text
+    display: block
+    padding: 5em
+
+    a
+      color: $accent
+
+    h2
+      transform: rotate(-3deg)
+      color: red
+      font-size: 170%
+      border: 4px solid red
+      border: 8px double red
+      display: inline-block
+      padding: 0.4em
+      text-transform: uppercase
+      mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png')
+      mask-size: 944px 604px
+      mix-blend-mode: multiply
+      @include create-mq($grid__bp-md)
+        font-size: 300%
+
+    p
+      font-size: 120%
+      @include create-mq($grid__bp-md)
+        font-size: 200%
+  img
+    &#line
+      width: 100%
+
+  #contact
+    margin-bottom: 1.2em
+    a
+      width: 20%
       margin: 0 auto
-      padding: 2em 0
-      //box-shadow: 0 15px 10px #777
-      border-bottom: 2px solid #000
+      font-size: 1.2em
 
-      @at-root
-        [class*='container__col-']
-          h1
-            margin-top: 2em
-            font-size: 200%
-            color: #707070
+      &.envelope
+        display: block
+        width:   24rem
+        height:  14rem
+        position: relative
+        background-color: #F5E6DD
+        background-image: -webkit-linear-gradient(235.5deg, rgba(  0,   0,   0, 0.0) 0%, rgba(  0,   0,   0, 0.0) 48%, rgba(  0,   0,   0, 0.1) 49%,  rgba(225, 215, 205, 0.7) 50%, rgba(225, 215, 205, 0.0) 52%, rgba(225, 215, 205, 0.0) 100%), -webkit-linear-gradient(-235.5deg,rgba(225, 215, 205, 0.0) 0%,rgba(225, 215, 205, 0.0) 48%,rgba(225, 215, 205, 0.7) 49%,rgba(  0,   0,   0, 0.1) 50%,rgba(  0,   0,   0, 0.0) 52%,rgba(  0,   0,   0, 0.0) 100%),-webkit-linear-gradient(-235.5deg,rgba(  0,   0,   0, 0.0) 0%,rgba(  0,   0,   0, 0.0) 48%,rgba(  0,   0,   0, 0.1) 49%,rgba(225, 215, 205, 0.5) 50%,rgba(225, 215, 205, 0.0) 52%,rgba(225, 215, 205, 0.0) 100%),-webkit-linear-gradient(235.5deg,rgba(225, 215, 205, 0.0) 0%,rgba(225, 215, 205, 0.0) 48%,rgba(225, 215, 205, 0.5) 49%,rgba(  0,   0,   0, 0.1) 50%,rgba(  0,   0,   0, 0.0) 52%, rgba(  0,   0,   0, 0.0) 100%),-webkit-linear-gradient(left,  rgba(51, 41, 31, 0.4) 0%,  rgba(51, 41, 31, 0.3) 5%,  rgba(51, 41, 31, 0.2) 12%,  rgba(51, 41, 31, 0.0) 50%,  rgba(51, 41, 31, 0.2) 88%,  rgba(51, 41, 31, 0.3) 95%,  rgba(51, 41, 31, 0.4) 100%),  -webkit-linear-gradient(top,  rgba(51, 41, 31, 0.20) 0%,  rgba(51, 41, 31, 0.00) 20%,  rgba(51, 41, 31, 0.00) 50%,  rgba(51, 41, 31, 0.20) 88%,  rgba(51, 41, 31, 0.30) 95%,  rgba(51, 41, 31, 0.50) 100%),
+        background-position: 105% 215%, -5% 215%, 100% -80%,  0% -80%, center, center, center
+        background-size: 12rem 12rem, 12rem 12rem, 12rem 12rem, 12rem 12rem, auto, auto, auto
+        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat, repeat
+        box-shadow: 0  1px  0   rgba(255, 255, 255, 0.6) inset, 0  2px  0   rgba(255, 255, 255, 0.2) inset, 0 -3px  3px rgba(  0,   0,   0, 0.3) inset, 0  2px  3px rgba(  0,   0,   0, 0.4), 0  6px 12px rgba(  0,   0,   0, 0.2)
+        border-radius: 0.5rem
+        text-decoration: none
 
-          #siegels
-            display: flex
-            margin-bottom: 4em
-
-            .siegel3d
-              width: 20em
-              height: 20em
-
-          .home-button
-            font-size: 2em
-            text-decoration: none
-            border-radius: 10px
-            padding: .5em 1.2em
-
-            user-select: none
-
-            transition: padding .4s ease, background .1s ease, color .2s ease
-
-            &:hover
-              padding: .5em 1.6em
-
-            &#link-browse
-              color: $base
-              background: $accent
-              font-size: 2.3em
-              border: 2px solid $accent
-
-              &:active
-                background: $base
-                color: $accent
-
-    @at-root
-      [class*='container__col-']
-
-        #picture
-          background-color: black
-          padding: 3em
-          margin: 6em
-
-          img
-            width: 100%
-
-        #text
+      span
+        &.seal
           display: block
-          padding: 5em
+          width:   4.4rem
+          height:  4.4rem
+          position: absolute
+          left:     50%
+          top:      50%
+          margin:   -2.2rem 0 0 -2.2rem
+          border-radius: 2.8rem 2.3rem 3.2rem 2.0rem
+          background:   red
+          color:        red
+          border-color: red
+          box-shadow: 0 -2px 4px rgba(  0,   0,   0, 0.2) inset, 0  3px 3px rgba(255, 255, 255, 0.6) inset, 0  1px 5px rgba(  0,   0,   0, 0.8)
+          text-align: center
+          line-height: 4.2rem
+          font-size:   0.9rem
+          padding: 0.4rem
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6)
 
-          a
-            color: $accent
+        &.ss-social-regular
+          font-family: $content
+          font-style: normal
+          font-weight: normal
+          text-decoration: none
+          text-rendering: optimizeLegibility
+          white-space: nowrap
+          font-feature-settings: "liga", "dlig"
 
-          h2
-            transform: rotate(-3deg)
-            color: red
-            font-size: 300%
-            border: 4px solid red
-            border: 8px double red
-            display: inline-block
-            padding: 0.4em
-            text-transform: uppercase
-            mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png')
-            mask-size: 944px 604px
-            mix-blend-mode: multiply
-
-          p
-            font-size: 200%
-
+        &.embossed
+          display: block
+          width:   80%
+          height:  80%
+          position: absolute
+          top:      10%
+          left:     10%
+          box-shadow: 0  -2px 2px rgba(205, 205, 205, 0.1) inset, 0   3px 3px rgba( 30,  30,  30, 0.1) inset, 0   1px 2px rgba( 30,  30,  30, 0.6) inset
+          border-radius: 999rem
+          background-image: -webkit-linear-gradient(top, rgba( 51, 51, 51, 0.3) 0%, rgba( 51, 51, 51, 0.2) 100%)

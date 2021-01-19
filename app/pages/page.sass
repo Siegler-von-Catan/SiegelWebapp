@@ -14,19 +14,6 @@ body
   font-family: $content
   background-image: url(http://api.thumbr.it/whitenoise-361x370.png?background=ffffffff&noise=626262&density=5&opacity=44)
 
-  @mixin create-mq($breakpoint)
-    @if($breakpoint == 0)
-      @content
-    @else
-      @media screen and (min-width: $breakpoint *1px)
-        @content
-
-  @mixin create-col-classes($modifier, $grid-cols, $breakpoint)
-    @include create-mq($breakpoint)
-      @for $i from 1 through $grid-cols
-        &__col#{$modifier}-#{$i}
-          flex-basis: (100 / ($grid-cols / $i) ) * 1%
-
   .container
     max-width: $grid__bp-md * 1px
     margin: 0 auto
@@ -86,11 +73,7 @@ footer
   font-size: 1em
   margin-bottom: 3em
 
-  .top
-    margin-bottom: 1.2em
-
+  span
     a
-      margin: 0 1em
-      font-size: 1.2em
       color: $accent
       text-decoration: none
