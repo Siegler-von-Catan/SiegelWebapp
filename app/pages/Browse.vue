@@ -38,7 +38,7 @@
   import Page from './Page';
   import Component from 'vue-class-component';
   import * as d3 from "d3";
-  import {getSealBrowseCoordinatesUrl, getThumbnailUrl} from '../util/api';
+  import {getSealBrowseCoordinatesUrl, getThumbnailUrl, getIdForRecordId} from '../util/api';
 
   const thumbnailWidth = 20;
   const thumbnailHeight = thumbnailWidth;
@@ -90,8 +90,15 @@
 
       const links = sealGroups
         .append("a")
-          .attr("href", d => `/siegel.html?s=${d.id}`)
-          .attr("target", "_blank");
+          /* .attr("href", async (d) => { */
+              /* const id = await getIdForRecordId(d.record_id); */
+              /* return `/siegel.html?s=${id}`; */
+            /* }) */
+          .attr("target", "_blank")
+          .each(async function(d) {
+            const id = await getIdForRecordId(d.record_id);
+            d3.select(this).attr("href", `/siegel.html?s=${id}`);
+          });
 
       links.append("circle")
           .attr("cx", 0)

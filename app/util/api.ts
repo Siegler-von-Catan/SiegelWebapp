@@ -52,3 +52,8 @@ export function getSealBrowseCoordinatesUrl() {
 export function getThumbnailUrl(id: Number, size: Number) {
   return domain + `/staticBrowse/thumbnails/thumb-${size}/record_kuniweb_${id}-img.jpg`;
 }
+
+export async function getIdForRecordId(id: Number) {
+  const result = await axios.get(domain + `/id?recordid=${id}`);
+  return result.data;
+}
