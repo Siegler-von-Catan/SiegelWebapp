@@ -7,7 +7,7 @@
         #home
           .container__col-sm-12
             #siegels
-              Siegel3DCanvas(v-for="(tex, i) in textures" :tooltip="siegels[i].name" :heightmap="tex" :offset="i - Math.floor(textures.length / 2)")
+              Siegel3DCanvas(v-for="(tex, i) in textures" @click="onClick(siegels[i])" :tooltip="siegels[i].name" :heightmap="tex" :offset="i - Math.floor(textures.length / 2)")
           .container__col-sm-12
             a.home-button#link-browse(href="/browse.pug") Siegel durchstöbern
           .container__col-sm-12
@@ -41,8 +41,7 @@
   import Component from 'vue-class-component';
   import Siegel3DCanvas from '../components/Siegel3DCanvas.vue';
   import Page from './Page';
-  import {getData, getFileUrl, Siegel} from '../util/api';
-  import {randomSubArray} from '../util/util';
+  import {getFileUrl, getRandomData, openDetails, Siegel} from '../util/api';
 
   @Component({components: {Siegel3DCanvas}})
   export default class Home extends Page {
@@ -51,10 +50,12 @@
     private siegels: Siegel[] = [];
 
     public async mounted() {
-      const data = await getData();
-      this.siegels = randomSubArray(data, 3);
-      this.textures = this.siegels.map(s => getFileUrl(`heightmaps/${s.heightmap}`));
+      this.siegels = await getRandomData(3);
+      this.textures = this.siegels.map(s => getFileUrl("heightmap", s));
     }
 
+    private onClick(s: Siegel) {
+      openDetails(s);
+    }
   }
 </script>
