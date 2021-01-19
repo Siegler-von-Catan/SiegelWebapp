@@ -23,5 +23,9 @@ export function getFileUrl(siegel: string) {
 }
 
 export function getSealBrowseCoordinatesUrl() {
-  return domain + "/browseSealCoordinates";
+  return domain + "/staticBrowse/browseSealCoordinates.csv";
+}
+
+export function getThumbnailUrl(id: Number, size: Number) {
+  return domain + `/staticBrowse/thumbnails/thumb-${size}/record_kuniweb_${id}-img.jpg`;
 }

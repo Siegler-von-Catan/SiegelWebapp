@@ -8,7 +8,7 @@
       h3#tooltip-family family
       p Begriffe: 
         span#tooltip-tags placeholder
-    #svg-container(style="position: relative; height: 100vh")
+    #svg-container(style="position: relative; height: 85vh")
       svg(style="position: absolute" width="100%" height="100%" viewbox="0 0 500 500")
         //rect(width="500" height="500" fill="none" stroke="black")
         g(id="zoomable")
@@ -20,7 +20,7 @@
   import Page from './Page';
   import Component from 'vue-class-component';
   import * as d3 from "d3";
-  import {getSealBrowseCoordinatesUrl} from '../util/api';
+  import {getSealBrowseCoordinatesUrl, getThumbnailUrl} from '../util/api';
 
   const thumbnailWidth = 20;
   const thumbnailHeight = thumbnailWidth;
@@ -53,8 +53,6 @@
           coord: [Number(row.x), Number(row.y)],
         }
       });
-
-      console.log(data);
 
       const extentX = d3.extent(data.map(row => row.coord[0]));
       const extentY = d3.extent(data.map(row => row.coord[1]));
@@ -93,12 +91,13 @@
       const tooltipTags = d3.select("#tooltip-tags")
 
       const images = links.append("image")
-          .attr("href", d => `http://localhost:8080/staticBrowse/thumbnails/record_kuniweb_${d.record_id}-img.jpg`)
+          .attr("href", d => getThumbnailUrl(d.record_id, 100))
           .attr("x", -thumbnailWidth / 2)
           .attr("y", -thumbnailHeight / 2)
           .attr("width", thumbnailWidth)
           .attr("height", thumbnailHeight)
           .on("mouseover", e => {
+              d3.select(e.target.parentNode.parentNode).raise();
               const d = d3.select(e.target).data()[0];
               tooltipFamily.text(d.family);
               tooltipTags.text(d.tags);
@@ -112,6 +111,12 @@
         tooltip
             .style("transform", `translate(${e.clientX + pointerOffset}px, ${e.clientY - svgOffset + pointerOffset}px)`);
       });
+
+      function getSize(k) {
+        if (k === 8) return 150;
+        if (k > 2) return 100;
+        return 50;
+      }
 
       function zoomed(e) {
         const transform = e.transform;
@@ -128,11 +133,12 @@
             .attr("x", (-thumbnailWidth / 2) * transform.k)
             .attr("y", (-thumbnailHeight / 2) * transform.k)
             .attr("width", thumbnailWidth * transform.k)
-            .attr("height", thumbnailHeight * transform.k);
+            .attr("height", thumbnailHeight * transform.k)
+            .attr("href", d => getThumbnailUrl(d.record_id, getSize(transform.k)));
         }
       }
 
-      zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 20]).on("zoom", zoomed));
+      zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", zoomed));
     }
   }
 </script>
