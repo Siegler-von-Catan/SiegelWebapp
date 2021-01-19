@@ -20,7 +20,7 @@
   extends page
 
   block content
-    h1 Browse
+    h1 Under construction
 </template>
 
 <script lang="ts">
