@@ -57,7 +57,7 @@
           .container__col-sm-12
             #contact
               a.envelope(href="mailto:fab.seal@gmail.com")
-                span.seal.ss-social-regular
+                span.seal
                   span.embossed FabSeal
 </template>
 
