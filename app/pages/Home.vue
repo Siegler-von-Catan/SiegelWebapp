@@ -56,7 +56,7 @@
             img#line(src="../assets/hr2.svg")
           .container__col-sm-12
             #contact
-              a.envelope(href="mailto:fab.seal@gmail.com")
+              a.envelope(href="mailto:siegler.von.catan@gmail.com")
                 span.seal
                   span.embossed FabSeal
 </template>
