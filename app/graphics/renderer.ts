@@ -46,14 +46,14 @@ export default class Renderer {
         // Init Renderer and append to dom
         this.scene = new Scene();
         this.camera = new PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-        this.renderer = new WebGLRenderer({alpha: true});
+        this.renderer = new WebGLRenderer({alpha: true, antialias: true});
         this.renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(this.renderer.domElement);
 
         // Build lights
-        const ambient = new AmbientLight(0x404040);
-        this.directionalLight = new DirectionalLight(0xffffff);
-        this.directionalLight.position.set(0, 1, 1).normalize();
+        const ambient = new AmbientLight(0x505050);
+        this.directionalLight = new DirectionalLight(0xffffff, 0.5);
+        this.directionalLight.position.set(-0.5, 1, 1).normalize();
 
         this.siegel = this._createSiegel(texture);
         this.siegel.rotation.y = Math.PI * 2;
@@ -105,10 +105,11 @@ export default class Renderer {
         });
         const bumpMaterial = simpleMaterial.clone();
         bumpMaterial.bumpMap = texture;
+        bumpMaterial.bumpScale = 0.1;
 
 
         // Build geometry and attach materials
-        const geometry = new CylinderGeometry(1, 1, 0.1, 24);
+        const geometry = new CylinderGeometry(1, 1, 0.1, 48);
         const materials = geometry.faces.map((face, i) => {
             face.materialIndex = i;
             if (face.normal.y === 1) {
