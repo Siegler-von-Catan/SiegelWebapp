@@ -57,10 +57,26 @@
       d3.select("#interaction-rect")
           .attr("width", width)
           .attr("height", height);
+      d3.select("#interaction-rect")
+           .on("mouseover", () => {
+               tooltip.style("visibility", "hidden");
+           });
+
+      const tooltip = d3.select("#tooltip");
+      const tooltipFamily = d3.select("#tooltip-family");
+      const tooltipTags = d3.select("#tooltip-tags");
+
+      const svgOffset = d3.select("svg").node().getBoundingClientRect().top;
+      const pointerOffset = 20;
+      console.log(svgOffset);
+      d3.select("body").on("mousemove", e => {
+          tooltip
+              .style("transform", `translate(${e.clientX + pointerOffset}px, ${e.clientY - svgOffset + pointerOffset}px)`);
+      });
 
       window.onresize = function(e) {
         console.log(e);
-      }
+      };
 
       const data = await d3.dsv(";", getSealBrowseCoordinatesUrl(), row => {
         return {
@@ -80,62 +96,55 @@
       const scaleY = d3.scaleLinear().domain(extentY).range([sideLength == height ? 0 : (height - sideLength) / 2,(height - sideLength) / 2 + sideLength]);
 
       const zoomable = d3.select("#zoomable");
+      const sealGroups = zoomable.select("#seals");
 
-      const sealGroups = zoomable.select("#seals")
-        .selectAll("g")
-        .data(data)
-        .enter()
-        .append("g")
-          .attr("transform", d => `translate(${scaleX(d.coord[0])} ${scaleY(d.coord[1])})`);
+      // Insert all seals as chunked groups to improve d3 performance
+      let i, j, temparray;
+      const chunk = 50;
+      for (i=0,j=data.length; i<j; i+=chunk) {
+        temparray = data.slice(i,i+chunk);
+        let currentGroup = sealGroups.append("g").attr("class", `${i}-${chunk}`);
 
-      const links = sealGroups
-        .append("a")
-          /* .attr("href", async (d) => { */
+          currentGroup = currentGroup
+            .selectAll("g")
+            .data(temparray)
+            .enter()
+            .append("g")
+            .attr("class", "seal")
+            .attr("transform", d => `translate(${scaleX(d.coord[0])} ${scaleY(d.coord[1])})`);
+
+          let links = currentGroup
+              .append("a")
+              /* .attr("href", async (d) => { */
               /* const id = await getIdForRecordId(d.record_id); */
               /* return `/siegel.html?s=${id}`; */
-            /* }) */
-          .attr("target", "_blank")
-          .each(async function(d) {
-            const id = await getIdForRecordId(d.record_id);
-            d3.select(this).attr("href", `/siegel.html?s=${id}`);
-          });
+              /* }) */
+              .attr("target", "_blank")
+              .each(async function(d) {
+                  const id = await getIdForRecordId(d.record_id);
+                  d3.select(this).attr("href", `/siegel.html?s=${id}`);
+              });
 
-      links.append("circle")
-          .attr("cx", 0)
-          .attr("cy", 0)
-          .attr("r", 5)
-          .attr("fill", "darkred");
+          links.append("circle")
+              .attr("cx", 0)
+              .attr("cy", 0)
+              .attr("r", 5)
+              .attr("fill", "darkred");
 
-      d3.select("#interaction-rect")
-        .on("mouseover", () => {
-            tooltip.style("visibility", "hidden");
-          });
-
-      const tooltip = d3.select("#tooltip");
-      const tooltipFamily = d3.select("#tooltip-family")
-      const tooltipTags = d3.select("#tooltip-tags")
-
-      const images = links.append("image")
-          .attr("href", d => getThumbnailUrl(d.record_id, 100))
-          .attr("x", -thumbnailWidth / 2)
-          .attr("y", -thumbnailHeight / 2)
-          .attr("width", thumbnailWidth)
-          .attr("height", thumbnailHeight)
-          .on("mouseover", e => {
-              d3.select(e.target.parentNode.parentNode).raise();
-              const d = d3.select(e.target).data()[0];
-              tooltipFamily.text(d.family);
-              tooltipTags.text(d.tags);
-              tooltip.style("visibility", "visible");
-            });
-
-      const svgOffset = d3.select("svg").node().getBoundingClientRect().top;
-      const pointerOffset = 20;
-      console.log(svgOffset)
-      d3.select("body").on("mousemove", e => {
-        tooltip
-            .style("transform", `translate(${e.clientX + pointerOffset}px, ${e.clientY - svgOffset + pointerOffset}px)`);
-      });
+          links.append("image")
+              .attr("href", d => getThumbnailUrl(d.record_id, 100))
+              .attr("x", -thumbnailWidth / 2)
+              .attr("y", -thumbnailHeight / 2)
+              .attr("width", thumbnailWidth)
+              .attr("height", thumbnailHeight)
+              .on("mouseover", e => {
+                  d3.select(e.target.parentNode.parentNode).raise();
+                  const d = d3.select(e.target).data()[0];
+                  tooltipFamily.text(d.family);
+                  tooltipTags.text(d.tags);
+                  tooltip.style("visibility", "visible");
+              });
+      }
 
       function getSize(k) {
         if (k === 8) return 150;
@@ -149,22 +158,23 @@
         const newScaleX = transform.rescaleX(scaleX.copy());
         const newScaleY = transform.rescaleY(scaleY.copy());
 
-        sealGroups
+        d3.selectAll(".seal")
             .attr("transform", d => `translate(${newScaleX(d.coord[0])} ${newScaleY(d.coord[1])})`);
 
         if (transform.k !== prevK) {
           prevK = transform.k;
-          images
+          d3.selectAll("image")
             .attr("x", (-thumbnailWidth / 2) * transform.k)
             .attr("y", (-thumbnailHeight / 2) * transform.k)
             .attr("width", thumbnailWidth * transform.k)
             .attr("height", thumbnailHeight * transform.k)
+            .filter(image => image.coord[0] >= 0 && image.coord[1] >= 0)
             .attr("href", d => getThumbnailUrl(d.record_id, getSize(transform.k)));
         }
       }
 
       zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", zoomed));
-    }
+      zoomable.call(d3.zoom().on("zoom", zoomed).transform, d3.zoomIdentity.translate(-500, -500).scale(2))
   }
 </script>
 
