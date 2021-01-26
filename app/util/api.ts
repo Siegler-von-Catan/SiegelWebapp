@@ -50,7 +50,7 @@ export function getSealBrowseCoordinatesUrl() {
 }
 
 export function getThumbnailUrl(id: Number, size: Number) {
-  return domain + `/staticBrowse/thumbnails/thumb-${size}/record_kuniweb_${id}-img.jpg`;
+  return domain + `/staticBrowse/thumbnails/thumb-${size}/seal-record_kuniweb_${id}-img.png`;
 }
 
 export async function getIdForRecordId(id: Number) {
