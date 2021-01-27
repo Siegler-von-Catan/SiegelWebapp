@@ -116,7 +116,7 @@
       const tooltipTags = d3.select("#tooltip-tags")
 
       const images = links.append("image")
-          .attr("href", d => getThumbnailUrl(d.record_id, 100))
+          .attr("href", d => getThumbnailUrl(d.record_id, 50))
           .attr("x", -thumbnailWidth / 2)
           .attr("y", -thumbnailHeight / 2)
           .attr("width", thumbnailWidth)
