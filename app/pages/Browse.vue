@@ -24,7 +24,7 @@
     h1(style="position: absolute; z-index: 1;") Browse
     #tooltip
       h3#tooltip-family family
-      p Begriffe: 
+      p Begriffe:
         span#tooltip-tags placeholder
     #svg-container(style="position: relative; height: 85vh")
       svg(style="position: absolute" width="100%" height="100%" viewbox="0 0 500 500")
@@ -137,7 +137,7 @@
             .style("transform", `translate(${e.clientX + pointerOffset}px, ${e.clientY - svgOffset + pointerOffset}px)`);
       });
 
-      zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", (e) => zoomable.attr("transform", e.transform);));
+      d3.select("svg").call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", (e) => zoomable.attr("transform", e.transform);));
     }
   }
 </script>
