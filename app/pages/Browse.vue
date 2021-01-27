@@ -86,7 +86,7 @@
         .data(data)
         .enter()
         .append("g")
-          .attr("transform", d => `translate(${scaleX(d.coord[0])} ${scaleY(d.coord[1])})`);
+          .attr("transform", d => `translate(${scaleX(d.coord[0]*1.8)} ${scaleY(d.coord[1]*1.8)})`);
 
       const links = sealGroups
         .append("a")
@@ -116,7 +116,7 @@
       const tooltipTags = d3.select("#tooltip-tags")
 
       const images = links.append("image")
-          .attr("href", d => getThumbnailUrl(d.record_id, 50))
+          .attr("href", d => getThumbnailUrl(d.record_id, 100))
           .attr("x", -thumbnailWidth / 2)
           .attr("y", -thumbnailHeight / 2)
           .attr("width", thumbnailWidth)
@@ -137,21 +137,7 @@
             .style("transform", `translate(${e.clientX + pointerOffset}px, ${e.clientY - svgOffset + pointerOffset}px)`);
       });
 
-      function getSize(k) {
-          if (k > 2) return 100;
-          return 50;
-      }
-
-      function zoomed(e) {
-          zoomable.attr("transform", e.transform);
-
-          if (e.transform.k !== prevK && ((prevK < 3 && e.transform.k>3) || (prevK > 3 && e.transform.k<3)) ) {
-              prevK = e.transform.k;
-              images.attr("href", d => getThumbnailUrl(d.record_id, getSize(e.transform.k)));
-          }
-      }
-
-      zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", zoomed));
+      zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", (e) => zoomable.attr("transform", e.transform);));
     }
   }
 </script>
