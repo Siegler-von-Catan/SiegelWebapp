@@ -138,29 +138,17 @@
       });
 
       function getSize(k) {
-        if (k === 8) return 150;
-        if (k > 2) return 100;
-        return 50;
+          if (k > 2) return 100;
+          return 50;
       }
 
       function zoomed(e) {
-        const transform = e.transform;
+          zoomable.attr("transform", e.transform);
 
-        const newScaleX = transform.rescaleX(scaleX.copy());
-        const newScaleY = transform.rescaleY(scaleY.copy());
-
-        sealGroups
-            .attr("transform", d => `translate(${newScaleX(d.coord[0])} ${newScaleY(d.coord[1])})`);
-
-        if (transform.k !== prevK) {
-          prevK = transform.k;
-          images
-            .attr("x", (-thumbnailWidth / 2) * transform.k)
-            .attr("y", (-thumbnailHeight / 2) * transform.k)
-            .attr("width", thumbnailWidth * transform.k)
-            .attr("height", thumbnailHeight * transform.k)
-            .attr("href", d => getThumbnailUrl(d.record_id, getSize(transform.k)));
-        }
+          if (e.transform.k !== prevK && ((prevK < 3 && e.transform.k>3) || (prevK > 3 && e.transform.k<3)) ) {
+              prevK = e.transform.k;
+              images.attr("href", d => getThumbnailUrl(d.record_id, getSize(e.transform.k)));
+          }
       }
 
       zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", zoomed));
