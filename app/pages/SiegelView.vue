@@ -73,7 +73,7 @@ export default class SiegelView extends Vue {
   }
 
   private downloadObjUrl() {
-    return getFileUrl("obj", this.siegel);
+    return getFileUrl("stl", this.siegel);
   }
 
   private downloadLaserUrl() {
