@@ -28,7 +28,7 @@
       #siegel(v-if="loaded")
         Siegel3DCanvas(v-if="texture" :heightmap="texture" :tooltip="siegel.name" offset="0" sticky-tooltip="true")
         #export
-          a(:href="downloadObjUrl()" download) 3D Druck
+          a(:href="downloadObjUrl()" :download="`${siegel.name}.stl`") 3D Druck
           //a(:href="downloadLaserUrl()" download="laser-cut-siegel.png") Laser-cut
           a(:href="downloadOriginalUrl()" download) Original Bild
           //a(@click="a('Coming soon')") 3D Druck
