@@ -78,6 +78,7 @@
       const sideLength = Math.min(width, height);
       const scaleX = d3.scaleLinear().domain(extentX).range([sideLength == width ? 0 : (width - sideLength) / 2, (width - sideLength) / 2 + sideLength]);
       const scaleY = d3.scaleLinear().domain(extentY).range([sideLength == height ? 0 : (height - sideLength) / 2,(height - sideLength) / 2 + sideLength]);
+      const transitionZoomLevel = 3;
 
       const zoomable = d3.select("#zoomable");
 
@@ -86,7 +87,7 @@
         .data(data)
         .enter()
         .append("g")
-          .attr("transform", d => `translate(${scaleX(d.coord[0]*1.8)} ${scaleY(d.coord[1]*1.8)})`);
+          .attr("transform", d => `translate(${scaleX(d.coord[0]*2)} ${scaleY(d.coord[1]*2)})`);
 
       const links = sealGroups
         .append("a")
@@ -137,7 +138,23 @@
             .style("transform", `translate(${e.clientX + pointerOffset}px, ${e.clientY - svgOffset + pointerOffset}px)`);
       });
 
-      zoomable.call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", (e) => zoomable.attr("transform", e.transform);));
+      function getSize(k) {
+          if (k >= transitionZoomLevel) return 100;
+          return 50;
+      }
+
+      function zoomed(e) {
+          zoomable.attr("transform", e.transform);
+          const currK = e.transform.k;
+          if (currK !== prevK
+              && ((prevK < transitionZoomLevel && currK > transitionZoomLevel)
+                  || (prevK > transitionZoomLevel && currK<transitionZoomLevel)) ) {
+              prevK = e.transform.k;
+              images.attr("href", d => getThumbnailUrl(d.record_id, getSize(e.transform.k)));
+          }
+      }
+
+        d3.select("svg").call(d3.zoom().extent([[0, 0], [width, height]]).scaleExtent([1, 8]).on("zoom", zoomed));
     }
   }
 </script>
