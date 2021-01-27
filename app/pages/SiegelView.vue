@@ -30,7 +30,7 @@
         #export
           a(:href="downloadObjUrl()" :download="`${siegel.name}.stl`") 3D Druck
           //a(:href="downloadLaserUrl()" download="laser-cut-siegel.png") Laser-cut
-          a(:href="downloadOriginalUrl()" download) Original Bild
+          a(:href="downloadOriginalUrl()" :download="`${siegel.name}.png`") Original Bild
           //a(@click="a('Coming soon')") 3D Druck
           a(@click="a('Coming soon')") Laser-cut
           //a(@click="a('Coming soon')") Original Bild
