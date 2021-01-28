@@ -47,10 +47,15 @@
       private renderer: Renderer;
 
       public mounted() {
-        const tex = new TextureLoader().load(this.heightmap);
+        const tex = new TextureLoader().load(this.heightmap, () => {
+          this.renderer.plainRender();
+        });
         this.renderer = new Renderer(this.$refs.canvas, tex);
         window.addEventListener("mousemove", event => {
           this.renderer.update(event.x / window.innerWidth);
+        });
+        window.addEventListener("touchmove", event => {
+          this.renderer.update(event.touches[0].clientX / window.innerWidth);
         });
       }
     }

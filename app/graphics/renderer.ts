@@ -56,7 +56,7 @@ export default class Renderer {
         this.directionalLight.position.set(-0.5, 1, 1).normalize();
 
         this.siegel = this._createSiegel(texture);
-        this.siegel.rotation.y = Math.PI * 2;
+        /* this.siegel.rotation.y = Math.PI * 0.5; */
         // this.siegels.forEach((s, i) => {
         //     const relPos = (i + 0.5) / textures.length * 2 - 1;
         //     s.rotation.y = Math.PI / 2 + -relPos * siegelMaxRotation;
@@ -70,8 +70,11 @@ export default class Renderer {
         this.scene.add(this.siegel);
         this.camera.position.z = 2;
 
-        // One time render
         this.renderer.render(this.scene, this.camera);
+    }
+
+    public plainRender() {
+      this.renderer.render(this.scene, this.camera);
     }
 
     /**

@@ -22,6 +22,7 @@
   block content
     link(rel="stylesheet" href="./browse.sass")
     h1(style="position: absolute; z-index: 1;") Browse
+      p(v-if="!is_firefox") If you run into trouble, use firefox!
     #tooltip
       h3#tooltip-family family
       p Begriffe:
@@ -48,7 +49,10 @@
   @Component
   export default class Browse extends Page {
 
+    private is_firefox = true;
+
     public async mounted() {
+      this.is_firefox = navigator.userAgent.search("Firefox") > -1;
       const divBB = document.getElementById("svg-container").getBoundingClientRect();
       let width = divBB.width;
       let height = divBB.height;

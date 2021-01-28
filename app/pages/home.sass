@@ -32,7 +32,7 @@
     background-position: bottom
 
     @include create-mq($grid__bp-md)
-      height: 50vh
+      height: 100%
 
   h1
     margin-top: 2em
@@ -49,8 +49,8 @@
       width: 10em
       height: 10em
       @include create-mq($grid__bp-md)
-        width: 20em
-        height: 20em
+        width: 30em
+        height: 30em
 
   .home-button
     font-size: 2em
@@ -101,7 +101,7 @@
       display: inline-block
       padding: 0.4em
       text-transform: uppercase
-      mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png')
+      mask-image: url('../assets/grunge.png')
       mask-size: 944px 604px
       mix-blend-mode: multiply
       @include create-mq($grid__bp-md)
