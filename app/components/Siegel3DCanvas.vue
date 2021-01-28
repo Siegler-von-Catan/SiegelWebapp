@@ -54,6 +54,9 @@
         window.addEventListener("mousemove", event => {
           this.renderer.update(event.x / window.innerWidth);
         });
+        window.addEventListener("touchmove", event => {
+          this.renderer.update(event.touches[0].clientX / window.innerWidth);
+        });
       }
     }
 </script>
