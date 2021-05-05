@@ -21,7 +21,6 @@
 .container__row
   #home
     width: 90%
-    height: 40vh
     justify-content: center
     align-items: center
     margin: 0 auto
@@ -82,6 +81,20 @@
         background: $base
         color: $accent
 
+  .info-section
+    display: flex
+    flex-direction: row
+    align-items: center
+
+    *
+      flex-basis: 100%
+
+  @media screen and (max-width: 900px)
+    .info-section
+      flex-direction: column
+
+      &:nth-of-type(2n)
+        flex-direction: column-reverse
 
   .picture
     background-color: black
@@ -91,12 +104,18 @@
       padding: 3em
       margin: 6em
 
+      @media screen and (max-width: 900px)
+        margin: 0 6em
+
     img
       width: 100%
 
   .text
     display: block
     padding: 5em
+
+    @media screen and (max-width: 900px)
+      padding: 3em 5em 0
 
     a
       color: $accent
