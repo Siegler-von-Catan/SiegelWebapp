@@ -47,8 +47,8 @@ export default class Renderer {
         this.scene = new Scene();
         this.camera = new PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
         this.renderer = new WebGLRenderer({alpha: true, antialias: true});
-        this.renderer.setSize(container.clientWidth, container.clientHeight);
-        container.appendChild(this.renderer.domElement);
+        this.renderer.setSize(container.clientWidth, container.clientHeight, false);
+        container.prepend(this.renderer.domElement);
 
         // Build lights
         const ambient = new AmbientLight(0x505050);
@@ -68,7 +68,9 @@ export default class Renderer {
         this.scene.add(ambient);
         this.scene.add(this.directionalLight);
         this.scene.add(this.siegel);
-        this.camera.position.z = 2;
+        this.camera.position.z = 2.5;
+
+        window.addEventListener("resize", () => this.update());
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -80,9 +82,11 @@ export default class Renderer {
     /**
      * Rotate siegel and render
      */
-    public update(mouseX: number) {
+    public update(mouseX?: number) {
         this.resizeCanvasToDisplaySize();
-        this.siegel.rotation.set((mouseX * Math.PI - Math.PI / 2) * 0.6, Math.PI / 2, Math.PI / 2, "YZX");
+        if (mouseX) {
+            this.siegel.rotation.set((mouseX * Math.PI - Math.PI / 2) * 0.6, Math.PI / 2, Math.PI / 2, "YZX");
+        }
         this.renderer.render(this.scene, this.camera);
     }
 

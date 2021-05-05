@@ -94,7 +94,19 @@ header
     text-decoration: none
 
   menu a
-      margin: 2em
+      margin: 0 2em
+
+  @media screen and (max-width: 625px)
+    #title
+      display: none
+
+  @media screen and (max-width: 525px)
+    menu
+      padding: 0
+      a
+        display: block
+        text-align: right
+        margin: 0
 
 footer
   text-align: center

@@ -42,15 +42,24 @@
       font-size: 200%
 
   #siegels
+    width: 100%
     display: flex
+    justify-content: center
     margin-bottom: 4em
 
     .siegel3d
-      width: 10em
-      height: 10em
-      @include create-mq($grid__bp-md)
-        width: 30em
-        height: 30em
+      position: relative
+      width: 30%
+      height: 0
+      padding-top: 30%
+      max-width: 30em
+      max-height: 30em
+
+      canvas
+        width: 100%
+        height: 100%
+        position: absolute
+        top: 0
 
   .home-button
     font-size: 2em
