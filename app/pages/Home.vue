@@ -72,7 +72,14 @@
               img(src="../assets/siegelsammlung_grun_1142w.jpg" alt="Siegelsammlung Grun")
         .info-section
           .picture
-            img(src="../assets/pipeline.gif" alt="Pipeline")
+            picture
+              source(media="(max-width: 480px)" srcset="../assets/pipeline_320w.webp")
+              source(media="(max-width: 480px)" srcset="../assets/pipeline_320w.gif")
+              source(media="(max-width: 960px)" srcset="../assets/pipeline_640w.webp")
+              source(media="(max-width: 960px)" srcset="../assets/pipeline_640w.gif")
+              source(media="(min-width: 961px)" srcset="../assets/pipeline_1280w.webp")
+              source(media="(min-width: 961px)" srcset="../assets/pipeline_1280w.gif")
+              img(src="../assets/pipeline_1280w.gif" alt="Pipeline")
           .text
             h2 Funktionsweise
             p Die technische Umsetzung für die Erstellung eines 3D-Modells aus den 2D-Fotos besteht aus verschiedenen Zwischenschritten, die ineinander greifen. Von jedem Lacksiegel der Sammlung existiert ein Foto, aus welchem wir die Siegelabdrücke automatisch freistellen und die Form herausfiltern. Neben rechteckigen und ovalen Siegelformen existieren auch weitere nicht-triviale Formen, die aufwendiger zu erkennen sind. Im nächsten Schritt berechnet unser Algorithmus Höheninformationen für das spätere 3D-Objekt unter Nutzung des Verfahrens "Shape-from-Shading (SfS)". Die Schwierigkeit entstand hierbei vor allem durch die Beleuchtung, die zum Teil ungünstige Schatten wirft, denn unser Programm arbeitet mit nur einem Foto pro Siegel. Das fertige Höhenbild wurde dann mit Bildalgorithmen nachbearbeitet, um das Rauschen zu entfernen bevor es in ein 3D-Modell umgewandelt wird.
