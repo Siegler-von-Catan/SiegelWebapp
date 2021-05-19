@@ -20,6 +20,7 @@ import Vue from "vue";
 import {VueConstructor} from 'vue/types/vue';
 import SiegelView from "./pages/SiegelView.vue";
 import Browse from './pages/Browse.vue';
+import Guide from './pages/Guide.vue';
 import Home from './pages/Home.vue';
 import 'regenerator-runtime/runtime'
 
@@ -27,6 +28,7 @@ const pages: {[className: string]: VueConstructor} = {
     "siegel": SiegelView,
     "home": Home,
     "browse": Browse,
+    "guide": Guide,
 };
 
 const appElem = document.getElementById("app");
