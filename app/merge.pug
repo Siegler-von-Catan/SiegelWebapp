@@ -15,19 +15,7 @@
 //- You should have received a copy of the GNU General Public License
 //- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-doctype html
-html(lang="en")
-    head
-        meta(charset="utf-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        title FabSeal
-        //- Parcels does not support different css files for multiple end points, so we have to do it like this
-        link(rel="stylesheet" href="pages/page.sass")
-        link(rel="stylesheet" href="pages/home.sass")
-        link(rel="stylesheet" href="pages/siegelview.sass")
-        link(rel="stylesheet" href="pages/guide.sass")
-        link(rel="stylesheet" href="pages/merge.sass")
-        link(rel="stylesheet" href="components/siegel3dcanvas.sass")
-    body
-        block app
-        script(src="createApp.ts")
+extends template
+
+block app
+    #app.merge

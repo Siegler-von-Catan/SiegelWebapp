@@ -23,12 +23,14 @@ import Browse from './pages/Browse.vue';
 import Guide from './pages/Guide.vue';
 import Home from './pages/Home.vue';
 import 'regenerator-runtime/runtime'
+import Merge from "./pages/Merge.vue";
 
 const pages: {[className: string]: VueConstructor} = {
     "siegel": SiegelView,
     "home": Home,
     "browse": Browse,
     "guide": Guide,
+    "merge": Merge,
 };
 
 const appElem = document.getElementById("app");
