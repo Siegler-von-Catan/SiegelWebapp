@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx parcel app/home.pug app/siegel.pug app/browse.pug app/guide.pug",
-    "build": "npx parcel build --no-minify app/home.pug app/browse.pug app/guide.pug app/siegel.pug",
-    "dev:build": "npx parcel build app/home.pug app/browse.pug app/guide.pug app/siegel.pug"
+    "start": "npx parcel app/*.pug",
+    "build": "npx parcel build --no-minify app/*.pug",
+    "dev:build": "npx parcel build app/*.pug"
   },
   "author": "Paul Methfessel",
   "license": "MIT",
