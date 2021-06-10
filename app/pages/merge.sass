@@ -17,3 +17,29 @@
  /
 
 @import variables
+
+#merge
+  display: flex
+  justify-content: space-around
+  height: 80vh
+
+  #element-palette
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    align-items: center
+
+    background: $accent
+    margin: 1em
+    border-radius: 10px
+
+    overflow-y: auto
+    overflow-x: hidden
+
+    .element
+      background: $base
+      margin: 3em
+      border-radius: 10px
+
+      &:hover
+        cursor: pointer

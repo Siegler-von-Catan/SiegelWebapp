@@ -20,18 +20,30 @@
   extends page
 
   block content
-    h1 Hello
+    #merge
+      ElementPalette(@click="placeElement")
+      DrawableSeal(ref="drawableSeal")
+      ToolBar
 </template>
 
 <script lang="ts">
 import Component from "vue-class-component";
 import Vue from "vue";
-import Siegel3DCanvas from "../components/Siegel3DCanvas.vue";
+import ElementPalette from "../components/merge/ElementPalette.vue";
+import DrawableSeal from "../components/merge/DrawableSeal.vue";
+import ToolBar from "../components/merge/ToolBar.vue";
+import {SealElement} from "../components/merge/SealElement";
 
-@Component({components: {Siegel3DCanvas}})
+@Component({components: {ElementPalette, DrawableSeal, ToolBar}})
 export default class Merge extends Vue {
 
-  public async mounted() {
+  $refs!: {
+    drawableSeal: DrawableSeal
+  }
+
+  private placeElement(element: SealElement) {
+    this.$refs.drawableSeal.placeElement(element);
   }
 }
 </script>
+
