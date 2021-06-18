@@ -7,7 +7,7 @@
 <script lang="ts">
 import Component from "vue-class-component";
 import Vue from "vue";
-import {loadElements, SealElement} from "./SealElement";
+import {loadElements, SealElement} from "../../data/SealElement";
 
 @Component
 export default class ElementPalette extends Vue {

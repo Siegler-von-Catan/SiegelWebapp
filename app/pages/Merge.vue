@@ -23,7 +23,7 @@
     #merge
       ElementPalette(@click="placeElement")
       DrawableSeal(ref="drawableSeal")
-      ToolBar
+      ToolBar(@doExport="doExport")
 </template>
 
 <script lang="ts">
@@ -32,7 +32,8 @@ import Vue from "vue";
 import ElementPalette from "../components/merge/ElementPalette.vue";
 import DrawableSeal from "../components/merge/DrawableSeal.vue";
 import ToolBar from "../components/merge/ToolBar.vue";
-import {SealElement} from "../components/merge/SealElement";
+import {merge} from "../data/MergeExport";
+import {SealElement} from "../data/SealElement";
 
 @Component({components: {ElementPalette, DrawableSeal, ToolBar}})
 export default class Merge extends Vue {
@@ -43,6 +44,11 @@ export default class Merge extends Vue {
 
   private placeElement(element: SealElement) {
     this.$refs.drawableSeal.placeElement(element);
+  }
+
+  private doExport() {
+    const json = this.$refs.drawableSeal.getSerializedElements();
+    merge(json);
   }
 }
 </script>
