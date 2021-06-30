@@ -7,8 +7,7 @@ canvas#drawable-seal
 import Component from "vue-class-component";
 import Vue from "vue";
 import {fabric} from "fabric";
-import {SealElement} from "./SealElement";
-import {FabricSealElement} from "../../data/SealElement";
+import {FabricSealElement, SealElement} from "../../data/SealElement";
 
 @Component
 export default class DrawableSeal extends Vue {
@@ -32,16 +31,16 @@ export default class DrawableSeal extends Vue {
   }
 
   public getSerializedElements(): object {
-    const elements = this.canvas.getObjects("image").map(obj => ({
+    const objects = this.canvas.getObjects("image").map(obj => ({
       sealElementId: (obj as FabricSealElement).sealElement.id,
-      ...obj.toJSON(["left", "top", "width", "height", "angle"])
+      ...obj.toJSON()
     }));
 
     return {
       width: this.canvas.width,
       height: this.canvas.height,
-      elements
-    }
+      objects
+    };
   }
 }
 </script>
