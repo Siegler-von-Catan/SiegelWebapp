@@ -62,10 +62,6 @@
           .attr("width", width)
           .attr("height", height);
 
-      window.onresize = function(e) {
-        console.log(e);
-      }
-
       const data = await d3.dsv(";", getSealBrowseCoordinatesUrl(), row => {
         return {
           tags: row.tags.replaceAll(",", ", "),
@@ -136,7 +132,6 @@
 
       const svgOffset = d3.select("svg").node().getBoundingClientRect().top;
       const pointerOffset = 20;
-      console.log(svgOffset)
       d3.select("body").on("mousemove", e => {
         tooltip
             .style("transform", `translate(${e.clientX + pointerOffset}px, ${e.clientY - svgOffset + pointerOffset}px)`);
