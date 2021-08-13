@@ -42,6 +42,7 @@ import DrawableSeal from "../components/merge/DrawableSeal.vue";
 import ToolBar from "../components/merge/ToolBar.vue";
 import {merge} from "../data/MergeExport";
 import {SealElement} from "../data/SealElement";
+import "../style/merge.sass";
 
 @Component({components: {ElementPalette, DrawableSeal, ToolBar}})
 export default class Merge extends Vue {
