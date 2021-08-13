@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx parcel app/merge.pug",
-    "build": "npx parcel build --no-minify app/merge.pug",
-    "dev:build": "npx parcel build app/merge.pug"
+    "start": "npx parcel app/index.pug",
+    "build": "npx parcel build --no-minify app/index.pug",
+    "dev:build": "npx parcel build app/index.pug"
   },
   "author": "Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel",
   "license": "GPL",
@@ -27,6 +27,7 @@
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.5",
     "vue-hot-reload-api": "^2.3.4",
-    "vue-property-decorator": "^9.0.0"
+    "vue-property-decorator": "^9.0.0",
+    "vue-router": "^3.5.2"
   }
 }

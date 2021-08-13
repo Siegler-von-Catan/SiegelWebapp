@@ -17,9 +17,7 @@
   -->
 
 <template lang="pug">
-  extends page
-
-  block content
+  .page
     h1(style="position: absolute; z-index: 1;") Browse
       p(v-if="!is_firefox") If you run into trouble, use firefox!
     #tooltip
@@ -35,10 +33,10 @@
 </template>
 
 <script lang="ts">
-  import Page from './Page';
   import Component from 'vue-class-component';
   import * as d3 from "d3";
   import {getSealBrowseCoordinatesUrl, getThumbnailUrl, getIdForRecordId} from '../util/api';
+  import Vue from 'vue';
   import "../style/browse.sass";
 
   const thumbnailWidth = 20;
@@ -47,7 +45,7 @@
   let prevK = null;
 
   @Component
-  export default class Browse extends Page {
+  export default class Browse extends Vue {
 
     private is_firefox = true;
 
@@ -162,7 +160,3 @@
     }
   }
 </script>
-
-<style lang="sass" scoped>
-
-</style>
