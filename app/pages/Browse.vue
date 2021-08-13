@@ -20,7 +20,6 @@
   extends page
 
   block content
-    link(rel="stylesheet" href="./browse.sass")
     h1(style="position: absolute; z-index: 1;") Browse
       p(v-if="!is_firefox") If you run into trouble, use firefox!
     #tooltip
@@ -40,6 +39,7 @@
   import Component from 'vue-class-component';
   import * as d3 from "d3";
   import {getSealBrowseCoordinatesUrl, getThumbnailUrl, getIdForRecordId} from '../util/api';
+  import "../style/browse.sass";
 
   const thumbnailWidth = 20;
   const thumbnailHeight = thumbnailWidth;

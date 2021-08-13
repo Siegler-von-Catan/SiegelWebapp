@@ -1,0 +1,38 @@
+@import "icons"
+@import "variables"
+
+.action-button
+  display: flex
+  align-items: center
+  gap: 0.5em
+  height: 2.5em
+  min-width: 10em
+  font-size: 2em
+
+  cursor: pointer
+  user-select: none
+
+  .icon
+    position: relative
+    width: 1.6em
+    height: 1.6em
+    background-position: center
+    background-size: cover
+    top: 0
+
+    transition: top .1s ease
+
+  .text
+    font-family: $font-accent
+    flex: 1
+    color: $grey-100
+    font-size: 1em
+    text-align: center
+
+    transition: font-size .5s ease
+
+  &:hover .text
+    font-size: 1.2em
+
+  &:active .icon
+    top: .2em

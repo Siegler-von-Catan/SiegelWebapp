@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx parcel app/*.pug",
-    "build": "npx parcel build --no-minify app/*.pug",
-    "dev:build": "npx parcel build app/*.pug"
+    "start": "npx parcel app/merge.pug",
+    "build": "npx parcel build --no-minify app/merge.pug",
+    "dev:build": "npx parcel build app/merge.pug"
   },
   "author": "Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel",
   "license": "GPL",
