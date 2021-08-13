@@ -17,10 +17,18 @@
   -->
 
 <template lang="pug">
-  extends page
-
-  block content
-    #merge
+  .big-seal-page
+    .toolbar
+      .main
+        Slider(title="Optimierung").center
+        Slider(title="Kontrast").center
+    .big-seal
+      | Much big Seal go here
+    .toolbar
+      .info Hello World
+      .group
+        ActionButton(title="Upload" icon="upload").end
+        ActionButton(title="Export" icon="download").end
       ElementPalette(@click="placeElement")
       DrawableSeal(ref="drawableSeal")
       ToolBar(@doExport="doExport")

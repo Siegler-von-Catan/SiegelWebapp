@@ -17,23 +17,20 @@
   -->
 
 <template lang="pug">
-  extends page
-
-  block content
-    #detail
-      #loading(v-if="!loaded")
-        #error(v-if="error")
-          span Error loading siegel
-        span(v-else) Loading
-      #siegel(v-if="loaded")
-        Siegel3DCanvas(v-if="texture" :heightmap="texture" :tooltip="siegel.name" offset="0" sticky-tooltip="true")
-        #export
-          a(:href="downloadObjUrl()" download) 3D Druck
-          //a(:href="downloadLaserUrl()" download="laser-cut-siegel.png") Laser-cut
-          a(:href="downloadOriginalUrl()" download) Original Bild
-          //a(@click="a('Coming soon')") 3D Druck
-          a(@click="a('Coming soon')") Laser-cut
-          //a(@click="a('Coming soon')") Original Bild
+  #detail
+    #loading(v-if="!loaded")
+      #error(v-if="error")
+        span Error loading siegel
+      span(v-else) Loading
+    #siegel(v-if="loaded")
+      Siegel3DCanvas(v-if="texture" :heightmap="texture" :tooltip="siegel.name" offset="0" sticky-tooltip="true")
+      #export
+        a(:href="downloadObjUrl()" download) 3D Druck
+        //a(:href="downloadLaserUrl()" download="laser-cut-siegel.png") Laser-cut
+        a(:href="downloadOriginalUrl()" download) Original Bild
+        //a(@click="a('Coming soon')") 3D Druck
+        a(@click="a('Coming soon')") Laser-cut
+        //a(@click="a('Coming soon')") Original Bild
 </template>
 
 <script lang="ts">
@@ -42,6 +39,7 @@ import Vue from "vue";
 import {getQueryParams} from "../util/util";
 import {getDataFor, getFileUrl, Siegel} from "../util/api";
 import Siegel3DCanvas from "../components/Siegel3DCanvas.vue";
+import "../style/siegelview.sass";
 
 @Component({components: {Siegel3DCanvas}})
 export default class SiegelView extends Vue {
