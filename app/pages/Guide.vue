@@ -17,9 +17,7 @@
   -->
 
 <template lang="pug">
-  extends page
-
-  block content
+  .page
     section(class="container--fluid")
       .container__row
         .info-section
@@ -49,11 +47,20 @@
               img(src="../assets/resinplatte_1024w.jpg" alt="Resinplatte")
           .text
             h2 Wie stemple ich am besten?
-            p Herkömmliche Siegelstempel bestehen aus hitzeresistentem Material. Resin auch bekannt als Kunstharz kann meist Temperaturen von bis 260°C standhalten. Siegelwachs verflüssigt sich bei einer Temperatur von 140°C. 
+            p Herkömmliche Siegelstempel bestehen aus hitzeresistentem Material. Resin auch bekannt als Kunstharz kann meist Temperaturen von bis 260°C standhalten. Siegelwachs verflüssigt sich bei einer Temperatur von 140°C.
             p Bei der Nutzung eines Siegelstempels aus PLA haben sich zwei Tipps für nützlich erwiesen:
-            ol 
-              li Stellt den Siegelstempel vor der Benutzung in Eiswasser 
-              li Bestreicht die Siegelfläche vorm Stempel mit Vaseline oder Seife, damit sich das besser vom Siegelwachs entfernen lässt. 
+            ol
+              li Stellt den Siegelstempel vor der Benutzung in Eiswasser
+              li Bestreicht die Siegelfläche vorm Stempel mit Vaseline oder Seife, damit sich das besser vom Siegelwachs entfernen lässt.
             p Beim Siegeln erhitzt man das Wachs und tropft dieses auf die vorgesehene Stelle. Danach drückt man den Siegelstempel in das Wachs und lässt es drin stehen, bis das Wachs ausgehärtet ist.
             p Wenn ihr euren Siegelstempel ohne viel Materialverschwendung testen wollt, dann besorgt euch ein Knetradiergummi. Diesen findet ihr in den meisten Schreibwarengeschäften. Das Material kann man wieder verwenden und zeigt schnell, ob der Druck was geworden ist.
 </template>
+
+<script lang="ts">
+import "./guide.sass";
+import Component from 'vue-class-component';
+import Vue from 'vue';
+
+@Component
+export default class Guide extends Vue {}
+</script>

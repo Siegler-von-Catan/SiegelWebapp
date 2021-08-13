@@ -17,9 +17,7 @@
   -->
 
 <template lang="pug">
-  extends page
-
-  block content
+  .page
     section(class="container--fluid")
       .container__row
         #home
@@ -27,7 +25,7 @@
             #siegels
               Siegel3DCanvas(v-for="(tex, i) in textures" @click="onClick(siegels[i])" :tooltip="siegels[i].name" :heightmap="tex" :offset="i - Math.floor(textures.length / 2)")
           .container__col-sm-12
-            a.home-button#link-browse(href="/browse.pug") Siegel durchstöbern
+            router-link.home-button#link-browse(to="/browse") Siegel durchstöbern
           .container__col-sm-12
             h1 Erwecke historische Siegel zum Leben!
       .container__row
@@ -56,7 +54,7 @@
               img(src="../assets/resindruckerErgebnis_1024w.jpg" alt="Resindrucker")
           .text
             h2 How to Fabricate
-            p Wie funktioniert nun die Herstellung des Siegels genau? Womit lässt sich ein Siegelstempel herstellen? Beim Durchstöbern der Siegel kann eines ausgewählt werden, welches dann als 3D-Modell angezeigt wird. Dort lässt sich sowohl eine 3D-Vorlage für die und im #[a(href="/guide.pug", target="_blank") Herstellung mit dem 3D-Drucker] als auch eine Vektordatei für die Herstellung mit dem Lasercutter runterladen. Die besten Druckergebnisse erzielt ein Resindrucker mittels Kunstharz. Frag am besten im FabLab oder Makerspace in deiner Nähe nach, ob dort ein solcher Drucker vorhanden ist. Alternativ kannst du auch einen herkömmlichen 3D-Drucker zu Hause nutzen, der bspw mit PLA-Filament arbeitet. Hier könnten die Ergebnisse verbessert werden, indem das 3D-Modell ein leicht tieferes Relief erhält. Die Vorlage für den Lasercutter kannst du auch nutzen, um einen Siegelstempel aus Moosgummi mit einem Hobbyplotter herzustellen.
+            p Wie funktioniert nun die Herstellung des Siegels genau? Womit lässt sich ein Siegelstempel herstellen? Beim Durchstöbern der Siegel kann eines ausgewählt werden, welches dann als 3D-Modell angezeigt wird. Dort lässt sich sowohl eine 3D-Vorlage für die und im #[router-link(to="/guide") Herstellung mit dem 3D-Drucker] als auch eine Vektordatei für die Herstellung mit dem Lasercutter runterladen. Die besten Druckergebnisse erzielt ein Resindrucker mittels Kunstharz. Frag am besten im FabLab oder Makerspace in deiner Nähe nach, ob dort ein solcher Drucker vorhanden ist. Alternativ kannst du auch einen herkömmlichen 3D-Drucker zu Hause nutzen, der bspw mit PLA-Filament arbeitet. Hier könnten die Ergebnisse verbessert werden, indem das 3D-Modell ein leicht tieferes Relief erhält. Die Vorlage für den Lasercutter kannst du auch nutzen, um einen Siegelstempel aus Moosgummi mit einem Hobbyplotter herzustellen.
         .info-section
           .text
             h2 Die Siegelsammlung
@@ -95,11 +93,12 @@
 <script lang="ts">
 import Component from 'vue-class-component';
 import Siegel3DCanvas from '../components/Siegel3DCanvas.vue';
-import Page from './Page';
 import {getFileUrl, getRandomData, openDetails, Siegel} from '../util/api';
+import Vue from 'vue';
+import "./home.sass";
 
 @Component({components: {Siegel3DCanvas}})
-export default class Home extends Page {
+export default class Home extends Vue {
 
   private textures: string[] = [];
   private siegels: Siegel[] = [];

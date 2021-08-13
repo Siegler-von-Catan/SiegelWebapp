@@ -17,32 +17,31 @@
  */
 
 import Vue from "vue";
-import {VueConstructor} from 'vue/types/vue';
-import SiegelView from "./pages/SiegelView.vue";
-import Browse from './pages/Browse.vue';
-import Guide from './pages/Guide.vue';
-import Home from './pages/Home.vue';
 import 'regenerator-runtime/runtime'
+import VueRouter from 'vue-router';
+import Home from './pages/Home.vue';
+import Page from './pages/Page.vue';
+import Browse from './pages/Browse.vue';
+import SiegelView from './pages/SiegelView.vue';
+import Guide from './pages/Guide.vue';
 
-const pages: {[className: string]: VueConstructor} = {
-    "siegel": SiegelView,
-    "home": Home,
-    "browse": Browse,
-    "guide": Guide,
-};
+Vue.use(VueRouter);
 
-const appElem = document.getElementById("app");
-if (appElem == null) throw Error();
+const routes = [
+    { path: "/home", component: Home },
+    { path: "/", redirect: "/home" },
+    { path: "/browse", component: Browse },
+    { path: "/guide", component: Guide },
+    { path: "/detail", component: SiegelView },
+];
 
-let rendered = false;
-for (const page of Object.keys(pages)) {
-    if (appElem.classList.contains(page)) {
-        rendered = true;
-        new Vue({render: createElement => createElement(pages[page])}).$mount("#app");
-        break;
-    }
-}
+const router = new VueRouter({
+    mode: "history",
+    routes
+});
 
-if (!rendered) {
-    console.error("No page class has been set on #app element")
-}
+new Vue({
+    el: "#app",
+    router,
+    render: (h) => h(Page)
+});
