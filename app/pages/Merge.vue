@@ -20,18 +20,14 @@
   .big-seal-page
     .toolbar
       .main
-        Slider(title="Optimierung").center
-        Slider(title="Kontrast").center
-    .big-seal
+        ElementPalette(@click="placeElement")
+    DrawableSeal.big-seal(ref="drawableSeal")
       | Much big Seal go here
     .toolbar
       .info Hello World
       .group
-        ActionButton(title="Upload" icon="upload").end
-        ActionButton(title="Export" icon="download").end
-      ElementPalette(@click="placeElement")
-      DrawableSeal(ref="drawableSeal")
-      ToolBar(@doExport="doExport")
+        ActionButton(title="Upload" icon="upload")
+        ActionButton(title="Export" icon="download" @click="doExport")
 </template>
 
 <script lang="ts">
@@ -39,12 +35,11 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import ElementPalette from "../components/merge/ElementPalette.vue";
 import DrawableSeal from "../components/merge/DrawableSeal.vue";
-import ToolBar from "../components/merge/ToolBar.vue";
 import {merge} from "../data/MergeExport";
 import {SealElement} from "../data/SealElement";
 import "../style/merge.sass";
 
-@Component({components: {ElementPalette, DrawableSeal, ToolBar}})
+@Component({components: {ElementPalette, DrawableSeal}})
 export default class Merge extends Vue {
 
   $refs!: {
