@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import "./guide.sass";
+import "../style/guide.sass";
 import Component from 'vue-class-component';
 import Vue from 'vue';
 

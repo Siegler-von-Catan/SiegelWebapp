@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import "./page.sass";
+import "../style/page.sass";
 import Vue from 'vue';
 import Component from 'vue-class-component';
 

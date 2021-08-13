@@ -39,7 +39,7 @@ import Vue from "vue";
 import {getQueryParams} from "../util/util";
 import {getDataFor, getFileUrl, Siegel} from "../util/api";
 import Siegel3DCanvas from "../components/Siegel3DCanvas.vue";
-import "./siegelview.sass";
+import "../style/siegelview.sass";
 
 @Component({components: {Siegel3DCanvas}})
 export default class SiegelView extends Vue {

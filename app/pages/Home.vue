@@ -95,7 +95,7 @@ import Component from 'vue-class-component';
 import Siegel3DCanvas from '../components/Siegel3DCanvas.vue';
 import {getFileUrl, getRandomData, openDetails, Siegel} from '../util/api';
 import Vue from 'vue';
-import "./home.sass";
+import "../style/home.sass";
 
 @Component({components: {Siegel3DCanvas}})
 export default class Home extends Vue {
