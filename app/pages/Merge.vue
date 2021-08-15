@@ -17,17 +17,21 @@
   -->
 
 <template lang="pug">
-  .big-seal-page
-    .toolbar
-      .main
-        ElementPalette(@click="placeElement")
-    DrawableSeal.big-seal(ref="drawableSeal")
-      | Much big Seal go here
-    .toolbar
-      .info Hello World
-      .group
-        ActionButton(title="Upload" icon="upload")
-        ActionButton(title="Export" icon="download" @click="doExport")
+  .screen-height-page.padding-page
+    .big-seal-page#merge
+      .toolbar
+        .main
+          ElementPalette(@click="placeElement")
+      DrawableSeal.big-seal(ref="drawableSeal")
+        | Much big Seal go here
+      .toolbar
+        .group
+          ActionButton(title="Undo" icon="undo")
+          ActionButton(title="Redo" icon="redo")
+        .group
+          ActionButton(title="Upload" icon="upload")
+          ActionButton(title="Export" icon="download" @click="doExport")
+    img(ref="result")
 </template>
 
 <script lang="ts">
@@ -38,12 +42,15 @@ import DrawableSeal from "../components/merge/DrawableSeal.vue";
 import {merge} from "../data/MergeExport";
 import {SealElement} from "../data/SealElement";
 import "../style/merge.sass";
+import "../style/bigSealPage.sass";
+import ActionButton from '../components/ActionButton.vue';
 
-@Component({components: {ElementPalette, DrawableSeal}})
+@Component({components: {ActionButton, ElementPalette, DrawableSeal}})
 export default class Merge extends Vue {
 
   $refs!: {
-    drawableSeal: DrawableSeal
+    drawableSeal: DrawableSeal,
+    result: HTMLImageElement
   }
 
   private placeElement(element: SealElement) {
@@ -52,7 +59,9 @@ export default class Merge extends Vue {
 
   private doExport() {
     const json = this.$refs.drawableSeal.getSerializedElements();
-    merge(json);
+    merge(json).then(result => {
+      this.$refs.result.setAttribute("src", result);
+    });
   }
 }
 </script>
