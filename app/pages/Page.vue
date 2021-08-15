@@ -19,23 +19,13 @@
 <template lang="pug">
   #app
     header
-      #about
-        router-link(to="/")
-          picture
-            source(media="(max-width: 171px)" srcset="../assets/FabSealLogo_116w.webp")
-            source(media="(max-width: 171px)" srcset="../assets/FabSealLogo_116w.png")
-            source(media="(max-width: 348px)" srcset="../assets/FabSealLogo_232w.webp")
-            source(media="(max-width: 348px)" srcset="../assets/FabSealLogo_232w.png")
-            source(media="(min-width: 349px)" srcset="../assets/FabSealLogo_464w.webp")
-            source(media="(min-width: 349px)" srcset="../assets/FabSealLogo_464w.png")
-            img(src="../assets/FabSealLogo_464w.png" alt="FabSeal Logo")
-        router-link(to="/")#title FabSeal
+      router-link.logo(to="/")
+        img(src="../assets/FabSealLogo_464w.png" alt="FabSeal Logo")
       menu
         router-link(to="/home") Home
         router-link(to="/browse") Browse
         router-link(to="/remix") Remix
         router-link(to="/create") Create
-        a(href="https://youtu.be/xnUtEY7K_qE" target="_blank" style="color:#FF3333") Youtube
     router-view
     footer
       span Copyright © 2021 FabSeal | #[a(href="https://codingdavinci.de/de/events/niedersachsen-2020", target="_blank") Coding da Vinci Niedersachsen]

@@ -66,47 +66,22 @@ header
   display: flex
   justify-content: space-between
   align-items: center
-  padding: 0.2em 2em
-  background: $background
-  color: $grey-80
-  font-size: 1.6em
+  padding: 0 2em
+  background: $grey-80
+  font-size: 1.5em
+  font-family: $font-content
 
-  #about
-    display: flex
-    justify-content: center
-    align-items: center
+  .logo img
+    display: inline
+    height: 2em
+
+  menu
+    margin: .6em 0 .8em
 
     a
-      padding: .1em
-
-  img
-    display: inline
-    max-height: 4em
-    margin-right: .6em
-
-  #title
-    font-size: 1.8em
-    font-family: $font-accent
-
-  a
-    color: $grey-100
-    text-decoration: none
-
-  menu a
-    margin: 0 2em
-
-  @media screen and (max-width: 625px)
-    #title
-      display: none
-
-  @media screen and (max-width: 525px)
-    menu
-      padding: 0
-
-      a
-        display: block
-        text-align: right
-        margin: 0
+      margin: 0 1.5em
+      color: $background
+      text-decoration: none
 
 footer
   text-align: center
