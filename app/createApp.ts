@@ -23,7 +23,7 @@ import Home from './pages/Home.vue';
 import Page from './pages/Page.vue';
 import Browse from './pages/Browse.vue';
 import SiegelView from './pages/SiegelView.vue';
-import Merge from './pages/Merge.vue';
+import Remix from './pages/Remix.vue';
 import Guide from './pages/Guide.vue';
 
 Vue.use(VueRouter);
@@ -32,9 +32,10 @@ const routes = [
     { path: "/home", component: Home },
     { path: "/", redirect: "/home" },
     { path: "/browse", component: Browse },
+    // { path: "/create", component: Create },
     { path: "/guide", component: Guide },
     { path: "/detail", component: SiegelView },
-    { path: "/merge", component: Merge }
+    { path: "/remix", component: Remix }
 ];
 
 const router = new VueRouter({

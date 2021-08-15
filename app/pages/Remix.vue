@@ -18,7 +18,7 @@
 
 <template lang="pug">
   .screen-height-page.padding-page
-    .big-seal-page#merge
+    .big-seal-page#remix
       .toolbar
         .main
           ElementPalette(@click="placeElement")
@@ -41,12 +41,12 @@ import ElementPalette from "../components/merge/ElementPalette.vue";
 import DrawableSeal from "../components/merge/DrawableSeal.vue";
 import {merge} from "../data/MergeExport";
 import {SealElement} from "../data/SealElement";
-import "../style/merge.sass";
+import "../style/remix.sass";
 import "../style/bigSealPage.sass";
 import ActionButton from '../components/ActionButton.vue';
 
 @Component({components: {ActionButton, ElementPalette, DrawableSeal}})
-export default class Merge extends Vue {
+export default class Remix extends Vue {
 
   $refs!: {
     drawableSeal: DrawableSeal,
