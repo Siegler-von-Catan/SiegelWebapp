@@ -22,19 +22,21 @@ import VueRouter from 'vue-router';
 import Home from './pages/Home.vue';
 import Page from './pages/Page.vue';
 import Browse from './pages/Browse.vue';
-import SiegelView from './pages/SiegelView.vue';
+import Details from './pages/Details.vue';
 import Remix from './pages/Remix.vue';
 import Guide from './pages/Guide.vue';
+import Datasets from './pages/Datasets.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
     { path: "/home", component: Home },
     { path: "/", redirect: "/home" },
-    { path: "/browse", component: Browse },
+    { path: "/browse", component: Datasets },
+    { path: "/browse/:dataset", component: Browse },
+    { path: "/browse/:dataset/detail/:obj", component: Details },
     // { path: "/create", component: Create },
     { path: "/guide", component: Guide },
-    { path: "/detail", component: SiegelView },
     { path: "/remix", component: Remix }
 ];
 

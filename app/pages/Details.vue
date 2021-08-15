@@ -17,7 +17,8 @@
   -->
 
 <template lang="pug">
-  #detail
+  #detail.padding-page.screen-height-page
+    Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}, {title: datasetName, href: datasetId}, {title: objectName, href: 'detail/' + objectId}]")
     #loading(v-if="!loaded")
       #error(v-if="error")
         span Error loading siegel
@@ -39,10 +40,12 @@ import Vue from "vue";
 import {getQueryParams} from "../util/util";
 import {getDataFor, getFileUrl, Siegel} from "../util/api";
 import Siegel3DCanvas from "../components/Siegel3DCanvas.vue";
-import "../style/siegelview.sass";
+import Location from '../components/Location.vue';
+import "../style/details.sass";
+import "../style/page.sass";
 
-@Component({components: {Siegel3DCanvas}})
-export default class SiegelView extends Vue {
+@Component({components: {Siegel3DCanvas, Location}})
+export default class Details extends Vue {
 
   private siegel: Siegel;
   private texture: string;
@@ -83,5 +86,23 @@ export default class SiegelView extends Vue {
   }
 
   private a(str: string) { alert(str); }
+
+  private get datasetName(): string {
+    // TODO should return name dependent of dataset
+    return "Siegelsammlung Paul Arnold Grun";
+  }
+
+  private get datasetId(): string {
+    return this.$route.params.dataset;
+  }
+
+  private get objectName(): string {
+    // TODO should return name dependent of obj
+    return "Katze";
+  }
+
+  private get objectId(): string {
+    return this.$route.params.obj;
+  }
 }
 </script>

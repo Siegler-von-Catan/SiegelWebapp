@@ -18,10 +18,9 @@
 
 <template lang="pug">
   .padding-page
-    Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}, {title: datasetName, href: datasetId}]")
-
+    Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}]")
     div
-      router-link(to="/browse/seals/detail/0") Ein Siegel oder so
+      router-link(to="/browse/seals") Siegelsammlung Paul Arnold Grun
 </template>
 
 <script lang="ts">
@@ -29,19 +28,10 @@
   import "../style/page.sass";
   import Component from 'vue-class-component';
   import Vue from 'vue';
-  import Location from '../components/Location.vue';
+  import Location from "../components/Location";
 
   @Component({components: {Location}})
-  export default class Browse extends Vue {
+  export default class Datasets extends Vue {
 
-
-    private get datasetName(): string {
-      // TODO should return name dependent of dataset
-      return "Siegelsammlung Paul Arnold Grun";
-    }
-
-    private get datasetId(): string {
-      return this.$route.params.dataset;
-    }
   }
 </script>
