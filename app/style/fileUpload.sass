@@ -16,29 +16,43 @@
  / along with this program.  If not, see <https://www.gnu.org/licenses/>.
  /
 
+@import variables
+
 .fileUpload
 
-  .dropbox
-    outline: 2px dashed grey
-    outline-offset: -10px
-    background: lightcyan
-    color: dimgray
-    padding: 10px 10px
-    min-height: 200px
+  form
+    width: 100%
+    height: 100%
     position: relative
-    cursor: pointer
 
-    .input-file
-      opacity: 0
+    input
       width: 100%
-      height: 200px
+      height: 100%
+      opacity: 0
       position: absolute
       cursor: pointer
 
-    .dropbox:hover
-      background: lightblue
+    .dropbox
+      user-select: none
+      pointer-events: none
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      width: 100%
+      height: 100%
+      background: url("../assets/blank.png") no-repeat center
+      background-size: contain
+      position: absolute
+      top: 0
+      cursor: pointer
 
-    .dropbox p
-      font-size: 1.2em
-      text-align: center
-      padding: 50px 0
+      //.dropbox:hover
+      //  background: lightblue
+
+      p
+        font-size: 1.2em
+        text-align: center
+        padding: 0
+        margin: 0
+        color: $background
