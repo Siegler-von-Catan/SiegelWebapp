@@ -20,6 +20,8 @@
 import axios from "axios";
 
 const domain = process.env.DOMAIN || "";
+const apiEndpoint = domain + "/api";
+const staticEndpoint = domain + "/staticBrowse";
 
 export interface Siegel {
     id: number;
@@ -28,17 +30,17 @@ export interface Siegel {
 }
 
 export async function getRandomData(amount: number) {
-    const result = await axios.get(domain + "/randomSiegels", {params: {amount}});
+    const result = await axios.get(apiEndpoint + "/randomSiegels", {params: {amount}});
     return result.data.siegel as Siegel[];
 }
 
 export async function getDataFor(i: string) {
-    const result = await axios.get(domain + "/data", {params: {i}});
+    const result = await axios.get(apiEndpoint + "/data", {params: {i}});
     return result.data.siegel as Siegel;
 }
 
 export function getFileUrl(type: string, siegel: Siegel) {
-    return `${domain}/siegeldata?type=${type}&id=${siegel.id}`;
+    return `${apiEndpoint}/siegeldata?type=${type}&id=${siegel.id}`;
 }
 
 export function openDetails(s: Siegel) {
@@ -46,14 +48,14 @@ export function openDetails(s: Siegel) {
 }
 
 export function getSealBrowseCoordinatesUrl() {
-  return domain + "/staticBrowse/browseSealCoordinates.csv";
+  return staticEndpoint + "/browseSealCoordinates.csv";
 }
 
 export function getThumbnailUrl(id: Number, size: Number) {
-  return domain + `/staticBrowse/thumbnails/thumb-${size}/seal-record_kuniweb_${id}-img.png`;
+  return staticEndpoint + `/thumbnails/thumb-${size}/seal-record_kuniweb_${id}-img.png`;
 }
 
 export async function getIdForRecordId(id: Number) {
-  const result = await axios.get(domain + `/id?recordid=${id}`);
+  const result = await axios.get(apiEndpoint + `/id?recordid=${id}`);
   return result.data;
 }
