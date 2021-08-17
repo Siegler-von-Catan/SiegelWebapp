@@ -23,6 +23,7 @@ import Home from './pages/Home.vue';
 import Page from './pages/Page.vue';
 import Browse from './pages/Browse.vue';
 import Details from './pages/Details.vue';
+import Create from './pages/Create.vue';
 import Remix from './pages/Remix.vue';
 import Guide from './pages/Guide.vue';
 import Datasets from './pages/Datasets.vue';
@@ -35,7 +36,7 @@ const routes = [
     { path: "/browse", component: Datasets },
     { path: "/browse/:dataset", component: Browse },
     { path: "/browse/:dataset/detail/:obj", component: Details },
-    // { path: "/create", component: Create },
+    { path: "/create", component: Create },
     { path: "/guide", component: Guide },
     { path: "/remix", component: Remix }
 ];
