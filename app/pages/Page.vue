@@ -20,7 +20,7 @@
   #app
     header
       router-link.logo(to="/")
-        img(src="../assets/FabSealLogo_464w.png" alt="FabSeal Logo")
+        img(src="../assets/FabSealLogo_464w.png" alt="FabSeal Logo" width="464" height="476")
       menu
         router-link(to="/home") Home
         router-link(to="/browse") Browse
