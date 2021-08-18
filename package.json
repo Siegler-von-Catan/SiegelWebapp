@@ -17,7 +17,7 @@
     "eslint": "^7.17.0",
     "eslint-plugin-vue": "^7.4.0",
     "parcel-bundler": "^1.12.4",
-    "pug": "^3.0.0",
+    "pug": "^3.0.2",
     "sass": "^1.26.10",
     "typescript": "^3.9.7",
     "vue-template-compiler": "^2.6.11"
@@ -25,8 +25,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "d3": "^6.3.1",
-    "fabric": "^4.5.0",
-    "three": "^0.122.0",
+    "fabric": "^4.5.1",
+    "three": "^0.131.3",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.5",
     "vue-hot-reload-api": "^2.3.4",
