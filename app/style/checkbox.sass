@@ -1,0 +1,57 @@
+/*!
+ / ShapeFromShading - Creating heightmaps out of 2D seal images.
+ / Copyright (C) 2021
+ / Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel
+ / This program is free software: you can redistribute it and/or modify
+ / it under the terms of the GNU General Public License as published by
+ / the Free Software Foundation, either version 3 of the License, or
+ / (at your option) any later version.
+ /
+ / This program is distributed in the hope that it will be useful,
+ / but WITHOUT ANY WARRANTY; without even the implied warranty of
+ / MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ / GNU General Public License for more details.
+ /
+ / You should have received a copy of the GNU General Public License
+ / along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ /
+
+@import variables
+
+.checkbox
+  display: flex
+  justify-content: space-between
+  align-items: center
+  font-size: 2em
+  font-family: $font-accent
+  user-select: none
+  cursor: pointer
+
+  label
+    cursor: inherit
+
+  input
+    position: relative
+    appearance: none
+    width: 2em
+    height: 2em
+    background: $grey-60
+    border: 2px solid $grey-100
+    border-radius: 2px
+    cursor: inherit
+
+    &::after
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      display: block
+      content: ''
+      background: url("../assets/checkbox_checked.svg") no-repeat center
+      background-size: cover
+      opacity: 0
+      transition: opacity .1s ease
+
+    &:checked::after
+      opacity: 1
