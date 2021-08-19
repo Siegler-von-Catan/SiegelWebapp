@@ -1,5 +1,5 @@
 <!--
-  - FabSeal Website.
+  - ShapeFromShading - Creating heightmaps out of 2D seal images.
   - Copyright (C) 2021
   - Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel
   - This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,9 @@
         .big-seal-page#create
             .toolbar
                 ActionButton(title="Upload" icon="upload-alt")
-                span(v-show="showOptions") //todo: add checkboxes
+                .main
+                  // (v-show="showOptions")
+                  CheckBox(title="Optimierung" v-model="optimizeValue")
             FileUpload.big-seal(tooltip="Upload or Drag an Image" sticky-tooltip="true" @successfulUpload="showOptions = true")
             .toolbar
                 div
@@ -40,10 +42,12 @@
     import FileUpload from "../components/FileUpload.vue";
     import "../style/bigSealPage.sass";
     import ActionButton from "../components/ActionButton.vue";
+    import CheckBox from '../components/CheckBox.vue';
 
-    @Component({components: {FileUpload, ActionButton}})
+    @Component({components: {FileUpload, ActionButton, CheckBox}})
     export default class Create extends Vue {
         private showOptions = false;
+        private optimizeValue = false;
 
     }
 
