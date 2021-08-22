@@ -19,20 +19,18 @@
 <template lang="pug">
   .checkbox
     label(:for="_uid") {{ title }}
-    input(type="checkbox" v-model="value" :id="_uid")
+    input(type="checkbox" :value="checked" :id="_uid" @change="$emit('change', $event.target.checked)")
 </template>
 
 <script lang="ts">
 import "../style/checkbox.sass";
 import Component from 'vue-class-component';
 import Vue from 'vue';
-import {Prop} from 'vue-property-decorator';
+import {Model, Prop} from 'vue-property-decorator';
 
 @Component
 export default class CheckBox extends Vue {
   @Prop() title: string;
-  @Prop({default: false}) defaultValue: boolean;
-
-  private value: boolean = this.defaultValue;
+  @Model("change", {type: Boolean}) readonly checked: boolean;
 }
 </script>
