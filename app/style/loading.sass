@@ -1,0 +1,33 @@
+@import variables
+
+.loading
+  display: flex
+  flex-direction: column
+  gap: 3em
+  justify-content: center
+  align-items: center
+  margin-bottom: 8em
+
+  .ico
+    width: 10em
+    height: 10em
+    background: url("../assets/icons/loading.svg") no-repeat center
+    background-size: cover
+    animation: rotate linear infinite 2s
+    transition: opacity 1s ease
+
+    svg
+      fill: $grey-80
+
+    @keyframes rotate
+      from
+        transform: rotateZ(0)
+      to
+        transform: rotateZ(360deg)
+
+  span
+    font-family: $font-content
+    color: $grey-80
+    font-size: 2em
+
+

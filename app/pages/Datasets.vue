@@ -28,19 +28,22 @@
 <script lang="ts">
   import "../style/browse.sass";
   import "../style/page.sass";
+  import "../style/loading.sass";
   import Component from 'vue-class-component';
   import Vue from 'vue';
-  import {get} from "../util/api";
   import Dataset, {DatasetData} from "../components/Dataset.vue";
   import Location from "../components/Location.vue";
+  import Loadable from "../components/Loadable.vue";
+  import {get} from "../util/api";
 
-  @Component({components: {Dataset, Location}})
+  @Component({components: {Loadable, Dataset, Location}})
   export default class Datasets extends Vue {
     private datasets: DatasetData[] = [];
 
     public async mounted() {
       const datasetMap = await get("datasets");
       this.datasets = Object.values(datasetMap);
+      this.loaded = true;
     }
   }
 </script>
