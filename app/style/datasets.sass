@@ -7,6 +7,8 @@
   gap: 6em 4em
 
   .dataset
+    position: relative
+    top: 0
     padding: 2em
     width: 100%
     box-shadow: 0 0 15px $grey-60
@@ -14,7 +16,7 @@
     text-decoration: none
     color: $grey-100
     text-align: center
-    transition: box-shadow .2s ease
+    transition: box-shadow .2s ease, top .2s ease
 
     &.fake
       display: flex
@@ -34,6 +36,7 @@
 
     &:hover
       box-shadow: 0 0 20px $grey-80
+      top: -2px
 
     img
       width: 100%

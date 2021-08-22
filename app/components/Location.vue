@@ -1,8 +1,10 @@
 <template lang="pug">
   .location
-    .entry(v-for="(entry, i) in entries" :key="i")
-      router-link(:to="buildLink(i)") {{ entry.title }}
-      span >
+    .line(:style="{left: lineLeft + 'px', width: lineWidth + 'px'}")
+    template(v-for="(entry, i) in entries")
+      .entry(@mouseover="onHover($event.target)" @mouseleave="onHover(null)" :key="i*2")
+        router-link(:to="buildLink(i)") {{ entry.title }}
+      .right.right-icon(:key="i*2+1")
 </template>
 
 <script lang="ts">
@@ -26,6 +28,25 @@ export interface LocationEntry {
 @Component
 export default class Location extends Vue {
   @Prop({default: []}) entries: LocationEntry[];
+  private lineLeft = null;
+  private lineWidth = null;
+
+  public mounted() {
+    this.setLineStyle(null);
+  }
+
+  public onHover(target: HTMLElement) {
+    this.setLineStyle(target);
+  }
+
+  private setLineStyle(target: HTMLElement) {
+    if (!target) {
+      // nth-last-child(2) because last is .right that is hidden
+      target = document.querySelector(".location .entry:nth-last-child(2)");
+    }
+    this.lineLeft = target.offsetLeft || 0;
+    this.lineWidth = target.offsetWidth || 0;
+  }
 
   /**
    * Builds a link from multiple parts.

@@ -1,21 +1,34 @@
-@import "variables"
+@import variables
+@import icons
 
 .location
+  display: flex
+  align-items: center
+  position: relative
   font-size: 1.4em
   margin-bottom: 3em
 
+  .line
+    position: absolute
+    bottom: 0.5px
+    border-radius: 0.75px
+    height: 1.5px
+    background: $grey-80
+    transition: left .5s ease, width .5s ease
+
   .entry
-    display: inline
-    font-family: $font-content
-    color: $grey-100
 
     a
+      font-family: $font-content
+      color: $grey-100
       text-decoration: none
-      color: inherit
 
-    span
-      margin: 0 .3em
+  .right
+    background-size: cover
+    background-position: center
+    width: 1em
+    height: 1em
+    margin: 0 .3em
 
-    &:last-of-type span
-      display: none
-
+  .right:last-of-type
+    display: none
