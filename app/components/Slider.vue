@@ -3,7 +3,7 @@
     .title
       | {{ title }}
     .bottom
-      input(type="range" :min="min" :max="max" :step="step" v-model="value")
+      input(type="range" :min="min" :max="max" :step="step" :value="value" @input="$emit('change', Number($event.target.value))")
       .value
         | {{ value }}
 
@@ -13,7 +13,7 @@
 import "../style/slider.sass";
 import Component from 'vue-class-component';
 import Vue from 'vue';
-import {Prop} from 'vue-property-decorator';
+import {Model, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Slider extends Vue {
@@ -22,7 +22,6 @@ export default class Slider extends Vue {
   @Prop({default: 0}) min: number;
   @Prop({default: 100}) max: number;
   @Prop({default: 1}) step: number;
-  @Prop({default: 20}) defaultValue: number;
-  private value: number = this.defaultValue;
+  @Model("change", {type: Number}) readonly value: number;
 }
 </script>
