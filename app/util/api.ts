@@ -20,7 +20,7 @@
 import axios from "axios";
 
 const domain = process.env.DOMAIN || "";
-const apiEndpoint = domain + "/api";
+const apiEndpoint = process.env.NODE_ENV === "development" ? domain : domain + "/api";
 const staticEndpoint = domain + "/staticBrowse";
 
 export interface Siegel {
@@ -45,6 +45,11 @@ export function getFileUrl(type: string, siegel: Siegel) {
 
 export function openDetails(s: Siegel) {
     window.location.href = `siegel.html?s=${s.id}`;
+}
+
+export async function get(url: string, params: any = {}): Promise<any> {
+    const result = await axios.get(`${apiEndpoint}/${url}`, {params});
+    return result.data;
 }
 
 export function getSealBrowseCoordinatesUrl() {

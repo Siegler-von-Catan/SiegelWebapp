@@ -19,8 +19,10 @@
 <template lang="pug">
   .padding-page
     Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}]")
-    div
-      router-link(to="/browse/seals") Siegelsammlung Paul Arnold Grun
+    .datasets
+      Dataset(v-for="(dataset, i) in datasets" :dataset="dataset" :key="i")
+      .dataset.fake
+        p Mehr Datensätze kommen bald!
 </template>
 
 <script lang="ts">
@@ -28,10 +30,17 @@
   import "../style/page.sass";
   import Component from 'vue-class-component';
   import Vue from 'vue';
-  import Location from "../components/Location";
+  import {get} from "../util/api";
+  import Dataset, {DatasetData} from "../components/Dataset.vue";
+  import Location from "../components/Location.vue";
 
-  @Component({components: {Location}})
+  @Component({components: {Dataset, Location}})
   export default class Datasets extends Vue {
+    private datasets: DatasetData[] = [];
 
+    public async mounted() {
+      const datasetMap = await get("datasets");
+      this.datasets = Object.values(datasetMap);
+    }
   }
 </script>
