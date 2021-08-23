@@ -32,7 +32,8 @@
         p {{ "Currently shown: " + loadedItems.length }}
         button(@click="loadItems") Load
       .items
-        .item(v-for="(item, i) in loadedItems" :key="i")
+        router-link.item(v-for="(item, i) in loadedItems" :key="i" :to="`/browse/${datasetId}/detail/${item.id}`")
+          img(:src="loadedThumbs[i]" :alt="item.name")
           h1 {{ item.name }}
           p {{ item.subjects.join(', ') }}
 </template>
@@ -62,6 +63,7 @@
     private datasetName: string = "";
     private itemsCount = 0;
     private loadedItems: Item[] = [];
+    private loadedThumbs: string[] = [];
     private limit = 25;
     private offset = 0;
 
@@ -70,10 +72,18 @@
       this.datasetName = info.dataset.title;
       this.itemsCount = info.itemsCount;
       await this.loadItems();
+      await this.loadThumbs();
     }
 
     private async loadItems() {
       this.loadedItems = await get(`datasets/${this.datasetId}/items`, {limit: this.limit, offset: this.offset});
+    }
+
+    private async loadThumbs() {
+      for (const item of this.loadedItems) {
+        const thumb = await get(`datasets/${this.datasetId}/items/${item.id}/original`);
+        this.loadedThumbs.push(`data:image/png;base64,${thumb}`);
+      }
     }
 
     private get datasetId(): string {
