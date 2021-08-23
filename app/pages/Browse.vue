@@ -20,8 +20,21 @@
   .padding-page
     Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}, {title: datasetName, href: datasetId}]")
 
-    div
-      router-link(to="/browse/seals/detail/0") Ein Siegel oder so
+    .browse
+      .search
+        select(v-model="limit")
+          option 25
+          option 50
+          option 100
+        .offset
+          input(type="number" v-model="offset" min="0")
+        p {{ "Items: " + itemsCount }}
+        p {{ "Currently shown: " + loadedItems.length }}
+        button(@click="loadItems") Load
+      .items
+        .item(v-for="(item, i) in loadedItems" :key="i")
+          h1 {{ item.name }}
+          p {{ item.subjects.join(', ') }}
 </template>
 
 <script lang="ts">
@@ -30,14 +43,37 @@
   import Component from 'vue-class-component';
   import Vue from 'vue';
   import Location from '../components/Location.vue';
+  import {get} from "../util/api";
+  import {DatasetData} from "../components/Dataset.vue";
+
+  interface Item {
+    id: string;
+    name: string;
+    subjects: string[];
+  }
+
+  interface DatasetInfo {
+    dataset: DatasetData;
+    itemsCount: number;
+  }
 
   @Component({components: {Location}})
   export default class Browse extends Vue {
+    private datasetName: string = "";
+    private itemsCount = 0;
+    private loadedItems: Item[] = [];
+    private limit = 25;
+    private offset = 0;
 
+    private async mounted() {
+      const info: DatasetInfo = await get(`datasets/${this.datasetId}/items/info`);
+      this.datasetName = info.dataset.title;
+      this.itemsCount = info.itemsCount;
+      await this.loadItems();
+    }
 
-    private get datasetName(): string {
-      // TODO should return name dependent of dataset
-      return "Siegelsammlung Paul Arnold Grun";
+    private async loadItems() {
+      this.loadedItems = await get(`datasets/${this.datasetId}/items`, {limit: this.limit, offset: this.offset});
     }
 
     private get datasetId(): string {
