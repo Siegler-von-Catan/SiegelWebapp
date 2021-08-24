@@ -20,22 +20,20 @@
   .padding-page
     Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}, {title: datasetName, href: datasetId}]")
 
-    .browse
+    .browse(v-show="hasLoadedItems")
       .search
-        select(v-model="limit")
-          option 25
-          option 50
-          option 100
-        .offset
-          input(type="number" v-model="offset" min="0")
-        p {{ "Items: " + itemsCount }}
-        p {{ "Currently shown: " + loadedItems.length }}
-        button(@click="loadItems") Load
+        .title
+          h1 {{ datasetName }}
+          p {{ `${itemsCount} Elemente` }}
+        .page-filter
+          Dropdown(v-model="limit" :options="[25, 50, 100]" title="Elemente pro Seite: ")
+      PageOffset.top(v-model="offset" :itemCount="itemsCount" :items-per-page="limit")
       .items
         router-link.item(v-for="(item, i) in loadedItems" :key="i" :to="`/browse/${datasetId}/detail/${item.id}`")
           img(:src="loadedThumbs[i]" :alt="item.name")
           h1 {{ item.name }}
           p {{ item.subjects.join(', ') }}
+      PageOffset.bottom(v-model="offset" :itemCount="itemsCount" :items-per-page="limit")
 </template>
 
 <script lang="ts">
@@ -44,8 +42,11 @@
   import Component from 'vue-class-component';
   import Vue from 'vue';
   import Location from '../components/Location.vue';
-  import {get} from "../util/api";
+  import {asUrl, get} from "../util/api";
   import {DatasetData} from "../components/Dataset.vue";
+  import PageOffset from "../components/PageOffset.vue";
+  import {Watch} from "vue-property-decorator";
+  import Dropdown from "../components/Dropdown.vue";
 
   interface Item {
     id: string;
@@ -58,11 +59,12 @@
     itemsCount: number;
   }
 
-  @Component({components: {Location}})
+  @Component({components: {Dropdown, PageOffset, Location}})
   export default class Browse extends Vue {
     private datasetName: string = "";
-    private itemsCount = 0;
+    private itemsCount = 1;
     private loadedItems: Item[] = [];
+    private hasLoadedItems = false;
     private loadedThumbs: string[] = [];
     private limit = 25;
     private offset = 0;
@@ -75,14 +77,22 @@
       await this.loadThumbs();
     }
 
+    @Watch("offset")
+    @Watch("limit")
+    private async reloadPage() {
+      await this.loadItems();
+      await this.loadThumbs();
+    }
+
     private async loadItems() {
       this.loadedItems = await get(`datasets/${this.datasetId}/items`, {limit: this.limit, offset: this.offset});
+      this.hasLoadedItems = true;
     }
 
     private async loadThumbs() {
       for (const item of this.loadedItems) {
         const thumb = await get(`datasets/${this.datasetId}/items/${item.id}/original`);
-        this.loadedThumbs.push(`data:image/png;base64,${thumb}`);
+        this.loadedThumbs.push(asUrl(thumb.file));
       }
     }
 

@@ -2,8 +2,50 @@
 
 .browse
   .search
-    margin-bottom: 8em
+    display: flex
+    justify-content: space-between
+    align-items: center
 
-  img
-    width: 5em
-    height: 5em
+    .title
+      flex: 1
+      font-size: 2em
+
+      h1
+        margin: 0
+        font-family: $font-accent
+
+      p
+        margin: 0
+        font-family: $font-content
+
+  .items
+    display: grid
+    grid-template-columns: repeat(auto-fill, 18em)
+    justify-content: center
+    gap: 2em 2em
+
+    .item
+      position: relative
+      top: 0
+      padding: 1.5em 1em
+      width: 100%
+      box-shadow: 0 0 15px $grey-60
+      border-radius: 2px
+      text-decoration: none
+      color: $grey-100
+      text-align: center
+      transition: box-shadow .2s ease, top .2s ease
+
+      img
+        height: 10em
+        width: auto
+        border-radius: 1px
+
+      h1
+        font-family: $font-accent
+        font-size: 1.8em
+        padding: 0
+        margin: 1em 0 0
+
+      p
+        font-family: $font-content

@@ -52,6 +52,10 @@ export async function get(url: string, params: any = {}): Promise<any> {
     return result.data;
 }
 
+export function asUrl(path: string) {
+    return `${domain}/${path}`;
+}
+
 export function getSealBrowseCoordinatesUrl() {
   return staticEndpoint + "/browseSealCoordinates.csv";
 }
