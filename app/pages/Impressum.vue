@@ -34,6 +34,7 @@
     import "../style/bigSealPage.sass";
     import Component from "vue-class-component";
 
+    @Component
     export default class Impressum extends Vue {
 
     }
