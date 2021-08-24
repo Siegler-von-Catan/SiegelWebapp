@@ -27,8 +27,8 @@
             .toolbar
                 ActionButton(title="Upload" icon="upload-alt")
                 .main
-                  // (v-show="showOptions")
-                  CheckBox(title="Optimierung" v-model="optimizeValue")
+                    CheckBox(title="Inverse motif height" v-model="isInversed")
+                    CheckBox(title="Export as low quality" v-model="isLowQuality")
             FileUpload.big-seal(tooltip="Upload or Drag an Image" sticky-tooltip="true" @successfulUpload="showOptions = true")
             .toolbar
                 div
@@ -47,7 +47,8 @@
     @Component({components: {FileUpload, ActionButton, CheckBox}})
     export default class Create extends Vue {
         private showOptions = false;
-        private optimizeValue = false;
+        private isInversed = false;
+        private isLowQuality = false;
 
     }
 

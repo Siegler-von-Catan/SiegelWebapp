@@ -1,5 +1,5 @@
 <!--
-  - ShapeFromShading - Creating heightmaps out of 2D seal images.
+  - FabSeal Website.
   - Copyright (C) 2021
   - Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel
   - This program is free software: you can redistribute it and/or modify
@@ -17,26 +17,19 @@
   -->
 
 <template lang="pug">
-  #app
-    header
-      router-link.logo(to="/")
-        img(src="../assets/FabSealLogo_464w.png" alt="FabSeal Logo" width="464" height="476")
-      menu
-        router-link(to="/home") Home
-        router-link(to="/browse") Browse
-        router-link(to="/remix") Remix
-        router-link(to="/create") Create
-    router-view
-    footer
-        router-link(to="/impressum") Impressum
-        router-link(to="/contact") Kontakt
+    .screen-height-page.padding-page
+        .big-seal-page
+            .text
+                h2 Kontakt
+                p Für Fragen, Anmerkungen oder Wünsche zur Zusammenarbeit, schreib uns über siegler.von.catan@gmail.com!
 </template>
 
 <script lang="ts">
-import "../style/page.sass";
-import Vue from 'vue';
-import Component from 'vue-class-component';
+    import Vue from "vue";
+    import "../style/bigSealPage.sass";
+    import Component from "vue-class-component";
 
-@Component
-export default class Page extends Vue {}
+    export default class Contact extends Vue {
+
+    }
 </script>
