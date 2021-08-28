@@ -17,92 +17,64 @@
   -->
 
 <template lang="pug">
-  #detail.padding-page.screen-height-page
-    Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}, {title: datasetName, href: datasetId}, {title: objectName, href: 'detail/' + objectId}]")
-    #loading(v-if="!loaded")
-      #error(v-if="error")
-        span Error loading siegel
-      span(v-else) Loading
-    #siegel(v-if="loaded")
-      Siegel3DCanvas(v-if="texture" :heightmap="texture" :tooltip="siegel.name" offset="0" sticky-tooltip="true")
-      #export
-        a(:href="downloadObjUrl()" download) 3D Druck
-        //a(:href="downloadLaserUrl()" download="laser-cut-siegel.png") Laser-cut
-        a(:href="downloadOriginalUrl()" download) Original Bild
-        //a(@click="a('Coming soon')") 3D Druck
-        a(@click="a('Coming soon')") Laser-cut
-        //a(@click="a('Coming soon')") Original Bild
+  #detail.padding-page.screen-height-page(v-show="loaded")
+    Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}, {title: dataset.title, href: datasetId}, {title: item.name, href: 'detail/' + itemId}]")
+    .big-seal-page
+      .toolbar
+        .group
+          h1 {{ item.name }}
+          .tags
+            .tag(v-for="(tag, i) in item.subjects" :key="i") {{ tag }}
+        .main
+          h1 Originalfoto
+          img(:src="original" :alt="item.name")
+      .big-seal
+        img(:src="heightmap" :alt="item.name")
+      .toolbar
 </template>
 
 <script lang="ts">
 import Component from "vue-class-component";
 import Vue from "vue";
-import {getQueryParams} from "../util/util";
-import {getDataFor, getFileUrl, Siegel} from "../util/api";
 import Siegel3DCanvas from "../components/Siegel3DCanvas.vue";
 import Location from '../components/Location.vue';
 import "../style/details.sass";
 import "../style/page.sass";
+import {asUrl, get} from "../util/api";
+import {DatasetData} from "../components/Dataset.vue";
+
+export interface Item {
+  id: number;
+  name: string;
+  subjects: string[];
+}
 
 @Component({components: {Siegel3DCanvas, Location}})
 export default class Details extends Vue {
 
-  private siegel: Siegel;
-  private texture: string;
-
+  private dataset: DatasetData = {id: "", title: "", description: ""};
+  private item: Item = {id: 0, subjects: [], name: ""};
+  private heightmap: string = "";
+  private original: string = "";
   private loaded = false;
-  private error = false;
 
   public async mounted() {
-    const s = getQueryParams()["s"];
-    if (!s || isNaN(s as any)) {
-      console.error("Invalid query")
-      this.error = true;
-      return;
-    }
-
-    const data = await getDataFor(s);
-    if (!data) {
-      console.error("Invalid query: " + s);
-      this.error = true;
-      return;
-    }
-
-    this.siegel = data;
-    this.texture = getFileUrl("heightmap", this.siegel);
+    const data = await get(`datasets/${this.datasetId}/items/${this.itemId}`);
+    this.item = data.item;
+    this.dataset = data.dataset;
+    const heightmapFile = await get(`datasets/${this.datasetId}/items/${this.itemId}/heightmap`);
+    this.heightmap = asUrl(heightmapFile.file);
+    const originalFile = await get(`datasets/${this.datasetId}/items/${this.itemId}/original`);
+    this.original = asUrl(originalFile.file);
     this.loaded = true;
-  }
-
-  private downloadObjUrl() {
-    return getFileUrl("stl", this.siegel);
-  }
-
-  private downloadLaserUrl() {
-    return this.texture;
-  }
-
-  private downloadOriginalUrl() {
-    return getFileUrl("original", this.siegel);
-  }
-
-  private a(str: string) { alert(str); }
-
-  private get datasetName(): string {
-    // TODO should return name dependent of dataset
-    return "Siegelsammlung Paul Arnold Grun";
   }
 
   private get datasetId(): string {
     return this.$route.params.dataset;
   }
 
-  private get objectName(): string {
-    // TODO should return name dependent of obj
-    return "Katze";
-  }
-
-  private get objectId(): string {
-    return this.$route.params.obj;
+  private get itemId(): string {
+    return this.$route.params.item;
   }
 }
 </script>

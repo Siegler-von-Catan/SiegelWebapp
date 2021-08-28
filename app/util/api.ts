@@ -23,11 +23,6 @@ const domain = process.env.DOMAIN || "";
 const apiEndpoint = process.env.NODE_ENV === "development" ? domain : domain + "/api";
 const staticEndpoint = domain + "/staticBrowse";
 
-export interface Siegel {
-    id: number;
-    name: string;
-    heightmap: string;
-}
 
 export async function getRandomData(amount: number) {
     const result = await axios.get(apiEndpoint + "/randomSiegels", {params: {amount}});

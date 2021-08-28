@@ -15,7 +15,6 @@ import {asUrl, get} from "../util/api";
 export interface DatasetData {
   id: string;
   title: string;
-  thumb: string;
   description: string;
 }
 

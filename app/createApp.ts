@@ -37,7 +37,7 @@ const routes = [
     { path: "/", redirect: "/home" },
     { path: "/browse", component: Datasets },
     { path: "/browse/:dataset", component: Browse },
-    { path: "/browse/:dataset/detail/:obj", component: Details },
+    { path: "/browse/:dataset/detail/:item", component: Details },
     { path: "/create", component: Create },
     { path: "/guide", component: Guide },
     { path: "/remix", component: Remix },
