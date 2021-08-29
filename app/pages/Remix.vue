@@ -23,14 +23,13 @@
         .main
           ElementPalette(@click="placeElement")
       DrawableSeal.big-seal(ref="drawableSeal")
-        | Much big Seal go here
       .toolbar
         .group
-          ActionButton(title="Undo" icon="undo")
-          ActionButton(title="Redo" icon="redo")
+          ActionButton(title="Rückgängig" icon="undo")
+          ActionButton(title="Wiederherstellen" icon="redo")
         .group
-          ActionButton(title="Upload" icon="upload")
-          ActionButton(title="Export" icon="download" @click="doExport")
+          ActionButton(title="Hochladen" icon="upload")
+          ActionButton(title="Exportieren" icon="download" @click="doExport")
     img(ref="result")
 </template>
 

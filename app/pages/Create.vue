@@ -29,11 +29,11 @@
       FileUpload.big-seal(tooltip="Upload or Drag an Image" sticky-tooltip="true" @successfulUpload="showOptions = true")
       .toolbar
         .group
-          CheckBox(title="Inverse motif height and do a lot of other stuff but also preverse quality or not?" v-model="isInversed" left)
-          CheckBox(title="Export as low quality" v-model="isLowQuality" left)
+          CheckBox(title="Invertiere Motiv-Höhe" v-model="isInversed" left)
+          CheckBox(title="Exportiere in niedriger Qualität" v-model="isLowQuality" left)
         .group
-          ActionButton(title="Upload" icon="upload-alt")
-          ActionButton(title="Export" icon="download")
+          ActionButton(title="Hochladen" icon="upload-alt")
+          ActionButton(title="Exportieren" icon="download")
 
 </template>
 

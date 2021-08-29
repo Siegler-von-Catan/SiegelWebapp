@@ -23,23 +23,23 @@
         @change="filesChange($event.target.name, $event.target.files)" accept="image/*" class="input-file")
       .dropbox
         .text
-          h1 Upload Image
-          p(v-if="isInitial()") Drag your file or click here to begin
-          p(v-else="isSaving()") Uploading
+          h1 Bild hochladen
+          p(v-if="isInitial()") Ziehe deine Datei hier oder klicke
+          p(v-else="isSaving()") Hochladen...
 
     <!--SUCCESS-->
     #success(v-if="isSuccess()")
-      h2 Uploaded file successfully
+      h2 Datei wurde erfolgreich hochgeladen
       p
-        a(href="javascript:void(0)" @click="reset()") Upload again
+        a(href="javascript:void(0)" @click="reset()") Erneut hochladen
       ul(class="list-unstyled")
         li(v-for="item in uploadedFiles")
           img(:src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName")
     <!--FAILED-->
     #error(v-if="isFailed()")
-      h2 Upload failed
+      h2 Hochladen fehlgeschlagen
       p
-        a(href="javascript:void(0)" @click="reset()") Try again
+        a(href="javascript:void(0)" @click="reset()") Erneut versuchen
       pre {{ uploadError }}
 </template>
 

@@ -43,7 +43,6 @@
     public async mounted() {
       const datasetMap = await get("datasets");
       this.datasets = Object.values(datasetMap);
-      this.loaded = true;
     }
   }
 </script>
