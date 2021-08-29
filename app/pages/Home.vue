@@ -23,9 +23,9 @@
         .container__col-sm-12
           .teaser
             video(media="(max-width: 480px)" src="../assets/teaser_vs1.mp4" autoplay loop)
-            h1 Erstelle eigene Siegelstempel 
-              br
-              |oder wähle ein historisches Motiv aus!
+            .over-video
+              h1 Erstelle eigene Siegelstempel
+              h1 oder wähle ein historisches Motiv aus!
         .links      
           .container__col-sm-4
             .group

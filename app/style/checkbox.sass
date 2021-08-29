@@ -20,9 +20,10 @@
 
 .checkbox
   display: flex
-  justify-content: space-between
+  justify-content: flex-start
+  gap: .1em
   align-items: center
-  font-size: 2em
+  font-size: 1.6em
   font-family: $font-accent
   user-select: none
   cursor: pointer
@@ -34,6 +35,7 @@
     position: relative
     appearance: none
     width: 2em
+    min-width: 2em
     height: 2em
     background: $grey-60
     border: 2px solid $grey-100

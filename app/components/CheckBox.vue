@@ -18,8 +18,9 @@
 
 <template lang="pug">
   .checkbox
-    label(:for="_uid") {{ title }}
+    label(:for="_uid" v-if="!left") {{ title }}
     input(type="checkbox" :value="checked" :id="_uid" @change="$emit('change', $event.target.checked)")
+    label(:for="_uid" v-if="left") {{ title }}
 </template>
 
 <script lang="ts">
@@ -30,6 +31,7 @@ import {Model, Prop} from 'vue-property-decorator';
 
 @Component
 export default class CheckBox extends Vue {
+  @Prop({default: false}) left: boolean;
   @Prop() title: string;
   @Model("change", {type: Boolean}) readonly checked: boolean;
 }

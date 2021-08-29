@@ -22,9 +22,10 @@
       input(type="file" :name="uploadFieldName" :disabled="isSaving()"
         @change="filesChange($event.target.name, $event.target.files)" accept="image/*" class="input-file")
       .dropbox
-        h1 Upload Image
-        p(v-if="isInitial()") Drag your file or click here to begin
-        p(v-else="isSaving()") Uploading
+        .text
+          h1 Upload Image
+          p(v-if="isInitial()") Drag your file or click here to begin
+          p(v-else="isSaving()") Uploading
 
     <!--SUCCESS-->
     #success(v-if="isSuccess()")

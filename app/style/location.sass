@@ -8,21 +8,28 @@
   font-size: 1.4em
   margin-bottom: 3em
 
-  .line
-    position: absolute
-    bottom: 0.5px
-    border-radius: 0.75px
-    height: 1.5px
-    background: $grey-80
-    transition: left .5s ease, width .5s ease
-    pointer-events: none
-
   .entry
-
-    a
+      position: relative
       font-family: $font-content
       color: $grey-100
       text-decoration: none
+
+      &::after
+        content: ''
+        display: block
+        position: absolute
+        opacity: 0
+        width: 100%
+        bottom: -1.5px
+        height: 1.5px
+        background: $grey-80
+        border-radius: 0.75px
+        pointer-events: none
+        transition: opacity .2s ease
+
+      &:hover::after,
+      &:last-of-type::after
+        opacity: 1
 
   .right
     background-size: cover

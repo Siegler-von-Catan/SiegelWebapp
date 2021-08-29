@@ -22,34 +22,35 @@
 <!--                    label(for="inverse") Inverse-->
 
 <template lang="pug">
-    .screen-height-page.padding-page
-        .big-seal-page#create
-            .toolbar
-                ActionButton(title="Upload" icon="upload-alt")
-                .main
-                    CheckBox(title="Inverse motif height" v-model="isInversed")
-                    CheckBox(title="Export as low quality" v-model="isLowQuality")
-            FileUpload.big-seal(tooltip="Upload or Drag an Image" sticky-tooltip="true" @successfulUpload="showOptions = true")
-            .toolbar
-                div
-                ActionButton(title="Export" icon="download")
+  .screen-height-page.padding-page
+    .big-seal-page#create
+      .toolbar
+        .main.info Irgendwann kommt der Punkt, an dem du weißt: Wie es ist, darf es nicht bleiben. Die großen Aufgaben sind liegen geblieben. Weil sie groß sind. Weil du weißt, dass sie anstrengend werden. Lieber nochmal das Bücherregal abstauben oder durch den Newsfeed scrollen. Um Digitalisierung, Bildung, Klima, Freiheit und Wirtschaft kümmern wir uns dann morgen. Und man hofft darauf, dass sich diese Themen von selbst erledigen. Dass sich das schon ergibt. Digitalisierung kann aber kein Nebenthema mehr sein. Es ist ein Überlebensthema. Das hat die Pandemie gezeigt. Unsere Kinder brauchen dringend moderne Bildung. Für den Klimaschutz sind schlaue Lösungen notwendig. Unsere Freiheit ist bedroht – wie können wir sie wieder sichern? Jetzt ist die Zeit, etwas zu tun. Warten wir nicht länger auf die Zukunft. Gehen wir hin. Heute. Nie gab es mehr zu tun. Irgendwann kommt der Punkt, an dem du weißt: Wie es ist, darf es nicht bleiben. Die großen Aufgaben sind liegen geblieben. Weil sie groß sind. Weil du weißt, dass sie anstrengend werden. Lieber nochmal das Bücherregal abstauben oder durch den Newsfeed scrollen. Um Digitalisierung, Bildung, Klima, Freiheit und Wirtschaft kümmern wir uns dann morgen. Und man hofft darauf, dass sich diese Themen von selbst erledigen. Dass sich das schon ergibt. Digitalisierung kann aber kein Nebenthema mehr sein. Es ist ein Überlebensthema. Das hat die Pandemie gezeigt. Unsere Kinder brauchen dringend moderne Bildung. Für den Klimaschutz sind schlaue Lösungen notwendig. Unsere Freiheit ist bedroht – wie können wir sie wieder sichern? Jetzt ist die Zeit, etwas zu tun. Warten wir nicht länger auf die Zukunft. Gehen wir hin. Heute. Nie gab es mehr zu tun.
+      FileUpload.big-seal(tooltip="Upload or Drag an Image" sticky-tooltip="true" @successfulUpload="showOptions = true")
+      .toolbar
+        .group
+          CheckBox(title="Inverse motif height and do a lot of other stuff but also preverse quality or not?" v-model="isInversed" left)
+          CheckBox(title="Export as low quality" v-model="isLowQuality" left)
+        .group
+          ActionButton(title="Upload" icon="upload-alt")
+          ActionButton(title="Export" icon="download")
 
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import Component from "vue-class-component";
-    import FileUpload from "../components/FileUpload.vue";
-    import "../style/bigSealPage.sass";
-    import ActionButton from "../components/ActionButton.vue";
-    import CheckBox from '../components/CheckBox.vue';
+import Vue from "vue";
+import Component from "vue-class-component";
+import FileUpload from "../components/FileUpload.vue";
+import "../style/bigSealPage.sass";
+import ActionButton from "../components/ActionButton.vue";
+import CheckBox from '../components/CheckBox.vue';
 
-    @Component({components: {FileUpload, ActionButton, CheckBox}})
-    export default class Create extends Vue {
-        private showOptions = false;
-        private isInversed = false;
-        private isLowQuality = false;
+@Component({components: {FileUpload, ActionButton, CheckBox}})
+export default class Create extends Vue {
+  private showOptions = false;
+  private isInversed = false;
+  private isLowQuality = false;
 
-    }
+}
 
 </script>

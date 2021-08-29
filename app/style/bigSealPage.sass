@@ -1,21 +1,18 @@
 @import "variables"
 
 .big-seal-page
-  display: flex
+  display: grid
+  grid-template-columns: 1fr 50% 1fr
+  grid-template-rows: repeat(3, 80vh)
   flex: 1
+  height: 80vh
   justify-content: center
-
-  .big-seal
-    width: 50vw
-    display: flex
-    justify-content: center
-    align-items: center
 
   .toolbar
     display: flex
     flex-direction: column
     justify-content: space-between
-    height: 100%
+    overflow-y: auto
 
     .main
       flex: 1
@@ -25,7 +22,7 @@
 
     .info
       font-size: 1.5em
-      font-family: $font-accent
+      font-family: $font-content
       text-align: center
 
 
