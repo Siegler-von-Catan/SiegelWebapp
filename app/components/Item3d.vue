@@ -18,7 +18,6 @@
 
 <template lang="pug">
   .siegel3d(ref="canvas" @click="$emit('click')")
-    .tooltip(:class="stickyTooltip ? 'sticky' : ''") {{ tooltip }}
 </template>
 
 <script lang="ts">
@@ -27,9 +26,10 @@
     import Renderer from '../graphics/renderer';
     import {Prop, Watch} from 'vue-property-decorator';
     import {Texture, TextureLoader} from "three";
+    import "../style/siegel3dcanvas.sass";
 
     @Component
-    export default class Siegel3DCanvas extends Vue {
+    export default class Item3d extends Vue {
 
       @Prop({default: ""})
       public heightmap: string;
@@ -47,16 +47,18 @@
       private renderer: Renderer;
 
       public mounted() {
+        // Only relevant for development (re-renders on hot-reload)
+        this.onLoaded();
+      }
+
+      @Watch("heightmap")
+      public onLoaded() {
         const tex = new TextureLoader().load(this.heightmap, () => {
           this.renderer.plainRender();
+        }, () => {}, (e) => {
+          console.log(e)
         });
         this.renderer = new Renderer(this.$refs.canvas, tex);
-        window.addEventListener("mousemove", event => {
-          this.renderer.update(event.x / window.innerWidth);
-        });
-        window.addEventListener("touchmove", event => {
-          this.renderer.update(event.touches[0].clientX / window.innerWidth);
-        });
       }
     }
 </script>

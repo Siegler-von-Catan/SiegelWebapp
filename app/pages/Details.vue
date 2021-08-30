@@ -29,19 +29,19 @@
           h1 Originalfoto
           img(:src="original" :alt="item.name")
       .big-seal
-        img(:src="heightmap" :alt="item.name")
+        Item3d(:heightmap="heightmap")
       .toolbar
 </template>
 
 <script lang="ts">
 import Component from "vue-class-component";
 import Vue from "vue";
-import Siegel3DCanvas from "../components/Siegel3DCanvas.vue";
 import Location from '../components/Location.vue';
 import "../style/details.sass";
 import "../style/page.sass";
 import {asUrl, get} from "../util/api";
 import {DatasetData} from "../components/Dataset.vue";
+import Item3d from "../components/Item3d.vue";
 
 export interface Item {
   id: number;
@@ -49,7 +49,7 @@ export interface Item {
   subjects: string[];
 }
 
-@Component({components: {Siegel3DCanvas, Location}})
+@Component({components: {Item3d, Location}})
 export default class Details extends Vue {
 
   private dataset: DatasetData = {id: "", title: "", description: ""};
