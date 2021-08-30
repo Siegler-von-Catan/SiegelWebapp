@@ -48,7 +48,7 @@
 
       public mounted() {
         // Only relevant for development (re-renders on hot-reload)
-        this.onLoaded();
+        // this.onLoaded();
       }
 
       @Watch("heightmap")

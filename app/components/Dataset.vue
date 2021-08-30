@@ -16,6 +16,7 @@ export interface DatasetData {
   id: string;
   title: string;
   description: string;
+  license: string;
 }
 
 @Component

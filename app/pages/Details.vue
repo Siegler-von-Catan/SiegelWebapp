@@ -24,13 +24,24 @@
         .group
           h1 {{ item.name }}
           .tags
-            .tag(v-for="(tag, i) in item.subjects" :key="i") {{ tag }}
-        .main
+            .tag(v-for="(tag, i) in item.subjects" :key="i" :title="tag") {{ shorterTag(tag) }}
+        .main.links
           h1 Originalfoto
-          img(:src="original" :alt="item.name")
+          a(:href="original" target="_blank")
+            img(:src="original" :alt="item.name")
+          a(href="https://www.youtube.com/watch?v=5qap5aO4i9A" target="_blank") Website der Sammlung
+        .group
+          .license {{ dataset.license }}
       .big-seal
         Item3d(:heightmap="heightmap")
       .toolbar
+        .group
+          h1 Stempel 3D-Drucken
+          CheckBox(title="Ohne Halterung" left)
+          ActionButton(title="Model herunterladen" icon="download")
+        .group
+          h1 Stempel bestellen
+          ActionButton(title="Model zu Bestelldienst schicken" icon="right")
 </template>
 
 <script lang="ts">
@@ -42,6 +53,8 @@ import "../style/page.sass";
 import {asUrl, get} from "../util/api";
 import {DatasetData} from "../components/Dataset.vue";
 import Item3d from "../components/Item3d.vue";
+import CheckBox from "../components/CheckBox.vue";
+import ActionButton from "../components/ActionButton.vue";
 
 export interface Item {
   id: number;
@@ -49,10 +62,10 @@ export interface Item {
   subjects: string[];
 }
 
-@Component({components: {Item3d, Location}})
+@Component({components: {ActionButton, CheckBox, Item3d, Location}})
 export default class Details extends Vue {
 
-  private dataset: DatasetData = {id: "", title: "", description: ""};
+  private dataset: DatasetData = {id: "", title: "", description: "", license: ""};
   private item: Item = {id: 0, subjects: [], name: ""};
   private heightmap: string = "";
   private original: string = "";
@@ -75,6 +88,14 @@ export default class Details extends Vue {
 
   private get itemId(): string {
     return this.$route.params.item;
+  }
+
+  private shorterTag(tag: string): string {
+    const maxLength = 15;
+    if (tag.length > maxLength) {
+      return tag.substring(0, maxLength - 3) + "...";
+    }
+    return tag;
   }
 }
 </script>
