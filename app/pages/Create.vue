@@ -27,7 +27,7 @@
       .toolbar
         .main.info
           p Willkommen bei FabSeal Create, bei der wir dir neben unserer #[router-link(to="/browse") vielseitigen Sammlung] die Möglichkeit geben, deine eigenen Motiven zu Stempeln umzuwandeln. Ob selbst kreiierte Wappen, Zeichnungen oder Fotos von deiner Katze sind dir keine Grenzen gesetzt. Lade ein Bild deiner Wahl hoch, bewege den gewünschten Ausschnitt zurecht und lade deine Kreation als 3D-Modell herunter.
-          p Für detailierte Fotos mit vielen kleinen Elementen empfehlen wir einen Resindrucker, damit dein Motiv gut erkennbar gedruckt wird. Für hausübliche 3D-Drucker eignen sich Vektor- oder Comicgrafiken mit wenigen, klaren Konturen am Besten. Detailiertere Infos zur Fabrikation findest du in #[router-link(to="/guide") unserem Guide].
+          p Für detailierte Fotos mit vielen kleinen Elementen empfehlen wir einen Resindrucker, damit dein Motiv gut erkennbar gedruckt wird. Für herkömmliche 3D-Drucker eignen sich Vektor- oder Comicgrafiken mit wenigen Konturen und hohem Kontrast am Besten. Detailiertere Infos zur Fabrikation findest du in #[router-link(to="/guide") unserem Guide].
       FileUpload.big-seal(tooltip="Upload or Drag an Image" sticky-tooltip="true" @successfulUpload="showOptions = true")
       .toolbar
         .group
