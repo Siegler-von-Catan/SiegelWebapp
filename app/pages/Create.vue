@@ -25,12 +25,15 @@
   .screen-height-page.padding-page
     .big-seal-page#create
       .toolbar
-        .main.info Irgendwann kommt der Punkt, an dem du weißt: Wie es ist, darf es nicht bleiben. Die großen Aufgaben sind liegen geblieben. Weil sie groß sind. Weil du weißt, dass sie anstrengend werden. Lieber nochmal das Bücherregal abstauben oder durch den Newsfeed scrollen. Um Digitalisierung, Bildung, Klima, Freiheit und Wirtschaft kümmern wir uns dann morgen. Und man hofft darauf, dass sich diese Themen von selbst erledigen. Dass sich das schon ergibt. Digitalisierung kann aber kein Nebenthema mehr sein. Es ist ein Überlebensthema. Das hat die Pandemie gezeigt. Unsere Kinder brauchen dringend moderne Bildung. Für den Klimaschutz sind schlaue Lösungen notwendig. Unsere Freiheit ist bedroht – wie können wir sie wieder sichern? Jetzt ist die Zeit, etwas zu tun. Warten wir nicht länger auf die Zukunft. Gehen wir hin. Heute. Nie gab es mehr zu tun. Irgendwann kommt der Punkt, an dem du weißt: Wie es ist, darf es nicht bleiben. Die großen Aufgaben sind liegen geblieben. Weil sie groß sind. Weil du weißt, dass sie anstrengend werden. Lieber nochmal das Bücherregal abstauben oder durch den Newsfeed scrollen. Um Digitalisierung, Bildung, Klima, Freiheit und Wirtschaft kümmern wir uns dann morgen. Und man hofft darauf, dass sich diese Themen von selbst erledigen. Dass sich das schon ergibt. Digitalisierung kann aber kein Nebenthema mehr sein. Es ist ein Überlebensthema. Das hat die Pandemie gezeigt. Unsere Kinder brauchen dringend moderne Bildung. Für den Klimaschutz sind schlaue Lösungen notwendig. Unsere Freiheit ist bedroht – wie können wir sie wieder sichern? Jetzt ist die Zeit, etwas zu tun. Warten wir nicht länger auf die Zukunft. Gehen wir hin. Heute. Nie gab es mehr zu tun.
+        .main.info
+          p Willkommen bei FabSeal Create, bei der wir dir neben unserer #[router-link(to="/browse") vielseitigen Sammlung] die Möglichkeit geben, deine eigenen Motiven zu Stempeln umzuwandeln. Ob selbst kreiierte Wappen, Zeichnungen oder Fotos von deiner Katze sind dir keine Grenzen gesetzt. Lade ein Bild deiner Wahl hoch, bewege den gewünschten Ausschnitt zurecht und lade deine Kreation als 3D-Modell herunter.
+          p Für detailierte Fotos mit vielen kleinen Elementen empfehlen wir einen Resindrucker, damit dein Motiv gut erkennbar gedruckt wird. Für hausübliche 3D-Drucker eignen sich Vektor- oder Comicgrafiken mit wenigen, klaren Konturen am Besten. Detailiertere Infos zur Fabrikation findest du in #[router-link(to="/guide") unserem Guide].
       FileUpload.big-seal(tooltip="Upload or Drag an Image" sticky-tooltip="true" @successfulUpload="showOptions = true")
       .toolbar
         .group
-          CheckBox(title="Invertiere Motiv-Höhe" v-model="isInversed" left)
-          CheckBox(title="Exportiere in niedriger Qualität" v-model="isLowQuality" left)
+            #options(v-if="showOptions")
+                CheckBox(title="Invertiere Motiv-Höhe" v-model="isInversed" left)
+                CheckBox(title="Exportiere in niedriger Qualität" v-model="isLowQuality" left)
         .group
           ActionButton(title="Hochladen" icon="upload-alt")
           ActionButton(title="Exportieren" icon="download")
