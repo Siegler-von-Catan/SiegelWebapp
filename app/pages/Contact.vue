@@ -17,11 +17,13 @@
   -->
 
 <template lang="pug">
-    .screen-height-page.padding-page
-        .big-seal-page
-            .text
-                h2 Kontakt
-                p Für Fragen, Anmerkungen oder Wünsche zur Zusammenarbeit, schreib uns über siegler.von.catan@gmail.com!
+    .page
+        section(class="container--fluid")
+            .container__row
+                .container__col-sm-12
+                    .text
+                        h2 Kontakt
+                        p Für Fragen, Anmerkungen oder Wünsche zur Zusammenarbeit, schreib uns über siegler.von.catan@gmail.com!
 </template>
 
 <script lang="ts">

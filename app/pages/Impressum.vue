@@ -17,15 +17,17 @@
   -->
 
 <template lang="pug">
-    .screen-height-page.padding-page
-        .big-seal-page
-            .text
-                h2 Impressum
-                p Tobias Markus
-                p Lieblstr. 31
-                p 93059 Regensburg
-                p siegler.von.catan@gmail.com
-                p (0941) 5865582
+    .page
+        section(class="container--fluid")
+            .container__row
+                .container__col-sm-12
+                    .text
+                        h2 Impressum
+                        p Tobias Markus
+                        p Lieblstr. 31
+                        p 93059 Regensburg
+                        p siegler.von.catan@gmail.com
+                        p (0941) 5865582
 
 </template>
 
