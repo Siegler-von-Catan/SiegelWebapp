@@ -29,6 +29,7 @@ import Guide from './pages/Guide.vue';
 import Datasets from './pages/Datasets.vue';
 import Impressum from './pages/Impressum.vue';
 import Contact from './pages/Contact.vue';
+import About from "./pages/About.vue";
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,7 @@ const routes = [
     { path: "/remix", component: Remix },
     { path: "/impressum", component: Impressum },
     { path: "/contact", component: Contact },
+    { path: "/about", component: About },
 ];
 
 const router = new VueRouter({

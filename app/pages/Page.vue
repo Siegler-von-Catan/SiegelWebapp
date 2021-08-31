@@ -30,6 +30,7 @@
     footer
         router-link(to="/impressum") Impressum
         router-link(to="/contact") Kontakt
+        router-link(to="/about") Über uns
 </template>
 
 <script lang="ts">
