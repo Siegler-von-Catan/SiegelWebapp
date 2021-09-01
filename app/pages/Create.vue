@@ -28,14 +28,13 @@
         .main.info
           p Willkommen bei FabSeal Create, bei der wir dir neben unserer #[router-link(to="/browse") vielseitigen Sammlung] die Möglichkeit geben, deine eigenen Motiven zu Stempeln umzuwandeln. Ob selbst kreiierte Wappen, Zeichnungen oder Fotos von deiner Katze sind dir keine Grenzen gesetzt. Lade ein Bild deiner Wahl hoch, bewege den gewünschten Ausschnitt zurecht und lade deine Kreation als 3D-Modell herunter.
           p Für detailierte Fotos mit vielen kleinen Elementen empfehlen wir einen Resindrucker, damit dein Motiv gut erkennbar gedruckt wird. Für herkömmliche 3D-Drucker eignen sich Vektor- oder Comicgrafiken mit wenigen Konturen und hohem Kontrast am besten. Detailiertere Infos zur Fabrikation findest du in #[router-link(to="/guide") unserem Guide].
-      FileUpload.big-seal(tooltip="Upload or Drag an Image" sticky-tooltip="true" @successfulUpload="showOptions = true")
+      FileUpload.big-seal(ref="fileUpload" tooltip="Lade oder ziehe ein Bild" sticky-tooltip="true" @successfulUpload="showOptions = true")
       .toolbar
         .group
             #options(v-if="showOptions")
                 CheckBox(title="Invertiere Motiv-Höhe" v-model="isInversed" left)
-                CheckBox(title="Exportiere in niedriger Qualität" v-model="isLowQuality" left)
         .group
-          ActionButton(title="Hochladen" icon="upload-alt")
+          ActionButton(title="Hochladen" icon="upload-alt" @click="upload()")
           ActionButton(title="Exportieren" icon="download")
 
 </template>
@@ -53,6 +52,14 @@ export default class Create extends Vue {
   private showOptions = false;
   private isInversed = false;
   private isLowQuality = false;
+
+  private upload() {
+      //#todo: this is hacky
+      this.$refs.fileUpload.reset();
+      setTimeout(function () {
+          document.getElementById("createFileInput")?.click();
+      }, 300);
+  }
 
 }
 

@@ -19,7 +19,7 @@
 <template lang="pug">
   .fileUpload
     form(enctype="multipart/form-data" novalidate v-if="isInitial() || isSaving()")
-      input(type="file" :name="uploadFieldName" :disabled="isSaving()"
+      input(type="file" id="createFileInput" :name="uploadFieldName" :disabled="isSaving()"
         @change="filesChange($event.target.name, $event.target.files)" accept="image/*" class="input-file")
       .dropbox
         .text
@@ -29,12 +29,7 @@
 
     <!--SUCCESS-->
     #success(v-if="isSuccess()")
-      h2 Datei wurde erfolgreich hochgeladen
-      p
-        a(href="javascript:void(0)" @click="reset()") Erneut hochladen
-      ul(class="list-unstyled")
-        li(v-for="item in uploadedFiles")
-          img(:src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName")
+        img(:src="uploadedFiles[0].url" class="img-responsive img-thumbnail" :alt="uploadedFiles[0].originalName")
     <!--FAILED-->
     #error(v-if="isFailed()")
       h2 Hochladen fehlgeschlagen
@@ -47,8 +42,8 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import {Prop, Watch} from 'vue-property-decorator';
-import "../style/fileUpload.sass"
-//import {getCreateHeightmap, uploadCreatedImage} from "../util/CreateAPI";
+import "../style/fileUpload.sass";
+import {startCreateSession, uploadCreatedImage} from "../util/createAPI";
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 @Component
@@ -71,28 +66,45 @@ export default class FileUpload extends Vue {
   @Prop({default: undefined})
   public uploadError: any;
 
+  private sessionId: any;
+
   public reset() {
     this.currentStatus = STATUS_INITIAL;
     this.uploadedFiles = [];
     this.uploadError = null;
     this.uploadFieldName = "photo";
+    this.sessionId = null;
   }
 
-  private save(formData: FormData) {
-    // upload data to the server
-    this.currentStatus = STATUS_SAVING;
-    console.log("uploading...");
-    //getCreateHeightmap(1);
-    /*uploadCreatedImage(formData)
-        .then((response:any) => {
-            this.uploadedFiles = [].concat(response);
-            this.currentStatus = STATUS_SUCCESS;
-            this.$emit("successfulUpload");
-        })
-        .catch(err => {
-            this.uploadError = err.response;
-            this.currentStatus = STATUS_FAILED;
-        });*/
+  private async save(formData: FormData) {
+      // upload data to the server
+      if (!this.sessionId) {
+          startCreateSession()
+              .then((response: any) => {
+                  this.sessionId = response;
+              })
+              .catch(err => {
+                  this.uploadError = err.response;
+                  this.currentStatus = STATUS_FAILED;
+              });
+      }
+
+      if(!this.sessionId) return;
+
+      this.currentStatus = STATUS_SAVING;
+
+      console.log("uploading...");
+      //getCreateHeightmap(1);
+      uploadCreatedImage(this.sessionId, formData)
+          .then((response: any) => {
+              this.uploadedFiles = [].concat(response);
+              this.currentStatus = STATUS_SUCCESS;
+              this.$emit("successfulUpload");
+          })
+          .catch(err => {
+              this.uploadError = err.response;
+              this.currentStatus = STATUS_FAILED;
+          });
   }
 
   private filesChange(fieldName: string, fileList: FileList) {
