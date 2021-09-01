@@ -7,16 +7,20 @@
 <script lang="ts">
 import Component from "vue-class-component";
 import Vue from "vue";
-import {loadElements, SealElement} from "../../data/SealElement";
+import {SealElement} from "../../data/SealElement";
+import {asUrl, get} from "../../util/api";
 
 @Component
 export default class ElementPalette extends Vue {
   private elements: SealElement[] | null = null;
 
-  private mounted() {
-    loadElements().then(elements => {
-      this.elements = elements;
+  private async mounted() {
+    const elements: SealElement[] = await get("merge/elements");
+    elements.forEach(elem => {
+      elem.heightmap = asUrl(`assets/merge/heightmaps/${elem.id}.png`);
+      elem.preRendered = asUrl(`assets/merge/preRendered/${elem.id}.png`);
     });
+    this.elements = elements;
   }
 
   private onClick(element: SealElement) {
