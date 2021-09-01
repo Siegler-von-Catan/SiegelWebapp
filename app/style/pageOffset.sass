@@ -1,0 +1,44 @@
+@import variables
+
+.offset
+  display: flex
+  justify-content: center
+  align-items: center
+  gap: .2em
+
+  &.top
+    margin: 1em 0 3em 0
+  &.bottom
+    margin: 3em 0 1em 0
+
+  select
+    appearance: none
+    border: none
+    text-align: center
+    cursor: pointer
+
+    option
+      appearance: none
+
+  .first
+    background: url("../assets/icons/goto-first.svg")
+  .prev
+    background: url("../assets/icons/left.svg")
+  .next
+    background: url("../assets/icons/right.svg")
+  .last
+    background: url("../assets/icons/goto-last.svg")
+
+  .first, .prev, .next, .last
+    background-size: cover
+    background-repeat: no-repeat
+    background-position: center
+    width: 2em
+    height: 2em
+    cursor: pointer
+
+    &:not(.show)
+      filter: invert(75%)
+      cursor: default
+
+

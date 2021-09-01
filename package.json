@@ -3,19 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx parcel app/home.pug app/siegel.pug app/browse.pug",
-    "build": "npx parcel build --no-minify app/home.pug app/browse.pug app/siegel.pug",
-    "dev:build": "npx parcel build app/home.pug app/browse.pug app/siegel.pug"
+    "start": "npx parcel app/index.pug",
+    "build": "npx parcel build --no-minify app/index.pug",
+    "dev:build": "npx parcel build app/index.pug"
   },
-  "author": "Paul Methfessel",
-  "license": "MIT",
+  "author": "Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel",
+  "license": "GPL",
   "devDependencies": {
+    "@parcel/transformer-pug": "^2.0.0-beta.2",
+    "@types/fabric": "^4.2.6",
     "@types/node": "^14.14.10",
+    "@types/three": "^0.131.0",
     "@vue/component-compiler-utils": "^3.2.0",
     "eslint": "^7.17.0",
     "eslint-plugin-vue": "^7.4.0",
     "parcel-bundler": "^1.12.4",
-    "pug": "^3.0.0",
+    "pug": "^3.0.2",
     "sass": "^1.26.10",
     "typescript": "^3.9.7",
     "vue-template-compiler": "^2.6.11"
@@ -23,10 +26,12 @@
   "dependencies": {
     "axios": "^0.21.1",
     "d3": "^6.3.1",
-    "three": "^0.122.0",
+    "fabric": "^4.5.1",
+    "three": "^0.131.3",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.5",
     "vue-hot-reload-api": "^2.3.4",
-    "vue-property-decorator": "^9.0.0"
+    "vue-property-decorator": "^9.0.0",
+    "vue-router": "^3.5.2"
   }
 }

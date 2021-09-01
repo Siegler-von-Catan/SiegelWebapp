@@ -1,0 +1,62 @@
+/*!
+ / ShapeFromShading - Creating heightmaps out of 2D seal images.
+ / Copyright (C) 2021
+ / Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel
+ / This program is free software: you can redistribute it and/or modify
+ / it under the terms of the GNU General Public License as published by
+ / the Free Software Foundation, either version 3 of the License, or
+ / (at your option) any later version.
+ /
+ / This program is distributed in the hope that it will be useful,
+ / but WITHOUT ANY WARRANTY; without even the implied warranty of
+ / MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ / GNU General Public License for more details.
+ /
+ / You should have received a copy of the GNU General Public License
+ / along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ /
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap')
+
+$background: #ffffff
+$grey-60: #c8c8c8
+$grey-80: #505050
+$grey-100: #000000
+$wax-60: #F8B9B9
+$wax-80: #DF4848
+$wax-100: #751F1F
+
+$size-header-1: 3.8em
+$size-header-2: 2.2em
+$size-body: 1.5em
+$size-body-small: 1.1em
+$size-button: 1.5em
+$size-slogan: 48em
+
+$font-accent: "Bitter", serif
+$font-content: "Open Sans", sans-serif
+
+$footer-height: 40px
+
+$grid__cols: 12
+
+$grid__bp-sm: 450
+$grid__bp-md: 700
+$grid__bp-lg: 900
+$grid__bp-xl: 1200
+$map-grid-props: ('': 0, '-sm': $grid__bp-sm, '-md': $grid__bp-md, '-lg': $grid__bp-lg, '-xl': $grid__bp-xl)
+
+@mixin create-mq($breakpoint)
+  @if($breakpoint == 0)
+    @content
+  @else
+    @media screen and (min-width: $breakpoint *1px)
+      @content
+
+@mixin create-col-classes($modifier, $grid-cols, $breakpoint)
+  @include create-mq($breakpoint)
+    @for $i from 1 through $grid-cols
+      &__col#{$modifier}-#{$i}
+        flex-basis: (100 / ($grid-cols / $i) ) * 1%
+

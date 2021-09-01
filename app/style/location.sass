@@ -1,0 +1,42 @@
+@import variables
+@import icons
+
+.location
+  display: flex
+  align-items: center
+  position: relative
+  font-size: 1.4em
+  margin-bottom: 3em
+
+  .entry
+      position: relative
+      font-family: $font-content
+      color: $grey-100
+      text-decoration: none
+
+      &::after
+        content: ''
+        display: block
+        position: absolute
+        opacity: 0
+        width: 100%
+        bottom: -1.5px
+        height: 1.5px
+        background: $grey-80
+        border-radius: 0.75px
+        pointer-events: none
+        transition: opacity .2s ease
+
+      &:hover::after,
+      &:last-of-type::after
+        opacity: 1
+
+  .right
+    background-size: cover
+    background-position: center
+    width: 1em
+    height: 1em
+    margin: 0 .3em
+
+  .right:last-of-type
+    display: none

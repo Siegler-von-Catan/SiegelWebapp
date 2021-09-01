@@ -20,40 +20,36 @@
 import axios from "axios";
 
 const domain = process.env.DOMAIN || "";
+const apiEndpoint = process.env.NODE_ENV === "development" ? domain : domain + "/api";
 
-export interface Siegel {
-    id: number;
-    name: string;
-    heightmap: string;
+
+export async function get(url: string, params: any = {}, config: any = {}): Promise<any> {
+    const result = await axios.get(`${apiEndpoint}/${url}`, {params, ...config});
+    return result.data;
 }
 
-export async function getRandomData(amount: number) {
-    const result = await axios.get(domain + "/randomSiegels", {params: {amount}});
-    return result.data.siegel as Siegel[];
+export async function post(url: string, data: any, params: any = {}, config: any = {}): Promise<any> {
+    const result = await axios.post(`${apiEndpoint}/${url}`, data, {params, ...config});
+    return result.data;
 }
 
-export async function getDataFor(i: string) {
-    const result = await axios.get(domain + "/data", {params: {i}});
-    return result.data.siegel as Siegel;
+
+export async function postGetFile(url: string, data: any, params: any = {}): Promise<string> {
+    const response = await post(url, data, params, {responseType: "blob"});
+    return await readFileBlob(response);
 }
 
-export function getFileUrl(type: string, siegel: Siegel) {
-    return `${domain}/siegeldata?type=${type}&id=${siegel.id}`;
+export async function readFileBlob(blob: any): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const reader = new window.FileReader();
+        reader.readAsDataURL(blob);
+        reader.onload = () => {
+            resolve(reader.result as string);
+        };
+        // reader.onerror = reject;
+    });
 }
 
-export function openDetails(s: Siegel) {
-    window.location.href = `siegel.html?s=${s.id}`;
-}
-
-export function getSealBrowseCoordinatesUrl() {
-  return domain + "/staticBrowse/browseSealCoordinates.csv";
-}
-
-export function getThumbnailUrl(id: Number, size: Number) {
-  return domain + `/staticBrowse/thumbnails/thumb-${size}/seal-record_kuniweb_${id}-img.png`;
-}
-
-export async function getIdForRecordId(id: Number) {
-  const result = await axios.get(domain + `/id?recordid=${id}`);
-  return result.data;
+export function asUrl(path: string) {
+    return `${domain}/${path}`;
 }

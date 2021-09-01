@@ -1,0 +1,22 @@
+@import "variables"
+
+.question
+  font-size: 16px
+  margin: 2.5em 0
+
+  .tab__link
+    display: block
+    border-bottom: 2px solid $grey-100
+    position: relative
+
+    &:hover
+      cursor: pointer
+      user-select: none
+
+    .down-Arrow,
+    .up-Arrow
+      position: absolute
+      right: 0
+
+  .tab__content
+    color: $grey-100
