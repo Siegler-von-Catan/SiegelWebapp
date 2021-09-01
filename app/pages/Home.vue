@@ -36,13 +36,13 @@
           .container__col-sm-4
             .group_center
               h2 Remix
-              img(src="../assets/siegelsammlung_grun_571w.jpg")
+              img(src="../assets/under_construction.jpg")
               p Werde kreativ und stelle dein eigenes Siegel zusammen
               ActionButton(title="Zum Editor" icon="forward" @click="goToRemix")
           .container__col-sm-4
             .group
               h2 Create
-              img(src="../assets/siegelsammlung_grun_571w.jpg")
+              img(src="../assets/under_construction.jpg")
               p Lade ein Foto hoch, um es als Siegel ausdrucken zu können
               ActionButton(title="Zum Upload" icon="forward" @click="goToCreate")
         .container__col-sm-12

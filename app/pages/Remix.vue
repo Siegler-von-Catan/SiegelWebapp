@@ -18,6 +18,8 @@
 
 <template lang="pug">
   .screen-height-page.padding-page
+    .alert(@click="$event.target.style.display = 'none'")
+      | Diese Seite ist noch im Bau
     .big-seal-page#remix
       .toolbar
         .main
