@@ -47,8 +47,9 @@
       private renderer: Renderer;
 
       public mounted() {
-        // Only relevant for development (re-renders on hot-reload)
-        // this.onLoaded();
+        if (this.heightmap !== "") {
+          this.onLoaded();
+        }
       }
 
       @Watch("heightmap")

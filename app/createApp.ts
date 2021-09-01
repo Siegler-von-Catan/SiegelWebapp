@@ -30,6 +30,7 @@ import Datasets from './pages/Datasets.vue';
 import Impressum from './pages/Impressum.vue';
 import Contact from './pages/Contact.vue';
 import About from "./pages/About.vue";
+import Result from "./pages/Result.vue";
 
 Vue.use(VueRouter);
 
@@ -42,6 +43,7 @@ const routes = [
     { path: "/create", component: Create },
     { path: "/guide", component: Guide },
     { path: "/remix", component: Remix },
+    { path: "/result", component: Result },
     { path: "/impressum", component: Impressum },
     { path: "/contact", component: Contact },
     { path: "/about", component: About },

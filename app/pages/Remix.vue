@@ -30,7 +30,6 @@
         .group
           ActionButton(title="Hochladen" icon="upload")
           ActionButton(title="Exportieren" icon="download" @click="doExport")
-    img(ref="result")
 </template>
 
 <script lang="ts">
@@ -38,29 +37,42 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import ElementPalette from "../components/merge/ElementPalette.vue";
 import DrawableSeal from "../components/merge/DrawableSeal.vue";
-import {merge} from "../data/MergeExport";
 import {SealElement} from "../data/SealElement";
 import "../style/remix.sass";
 import "../style/bigSealPage.sass";
 import ActionButton from '../components/ActionButton.vue';
+import {postGetFile} from "../util/api";
+import {ResultData} from "./Result.vue";
 
 @Component({components: {ActionButton, ElementPalette, DrawableSeal}})
 export default class Remix extends Vue {
 
   $refs!: {
-    drawableSeal: DrawableSeal,
-    result: HTMLImageElement
+    drawableSeal: DrawableSeal
   }
 
   private placeElement(element: SealElement) {
     this.$refs.drawableSeal.placeElement(element);
   }
 
-  private doExport() {
+  public mounted() {
+    this.restore();
+  }
+
+  private restore() {
+    if (ResultData.instance.backLink === "remix") {
+      this.$refs.drawableSeal.deserialize(ResultData.instance.original);
+    }
+    ResultData.instance.backLink = "";
+  }
+
+  private async doExport() {
     const json = this.$refs.drawableSeal.getSerializedElements();
-    merge(json).then(result => {
-      this.$refs.result.setAttribute("src", result);
-    });
+    ResultData.instance.backLink = "remix";
+    ResultData.instance.original = this.$refs.drawableSeal.serialize();
+    ResultData.instance.heightmap = await postGetFile("merge", json);
+    ResultData.instance.hasResult = true;
+    await this.$router.push("result");
   }
 }
 </script>

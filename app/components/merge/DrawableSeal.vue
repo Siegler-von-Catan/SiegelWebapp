@@ -48,6 +48,14 @@ export default class DrawableSeal extends Vue {
     this.canvas.add(imgElement);
   }
 
+  public deserialize(json: any) {
+    this.canvas.loadFromJSON(json);
+  }
+
+  public serialize(): any {
+    const canvas = this.canvas.toJSON();
+  }
+
   public getSerializedElements(): object {
     const objects = this.canvas.getObjects("image").map(obj => ({
       sealElementId: (obj as FabricSealElement).sealElement.id,
