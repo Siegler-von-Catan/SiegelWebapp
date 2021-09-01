@@ -29,19 +29,19 @@
           h1 Originalfoto
           a(:href="original" target="_blank")
             img(:src="original" :alt="item.name")
-          a(href="https://www.youtube.com/watch?v=5qap5aO4i9A" target="_blank") Website der Sammlung
+          //a(href="https://www.youtube.com/watch?v=5qap5aO4i9A" target="_blank") Website der Sammlung
         .group
           .license {{ dataset.license }}
       .big-seal
         Item3d(:heightmap="heightmap")
       .toolbar
-        .group
+        .group.main
           h1 Stempel 3D-Drucken
-          CheckBox(title="Ohne Halterung" left)
-          ActionButton(title="Model herunterladen" icon="download")
-        .group
-          h1 Stempel bestellen
-          ActionButton(title="Model zu Bestelldienst schicken" icon="right")
+          //CheckBox(title="Ohne Halterung" left)
+          ActionButton(title="Model herunterladen" icon="download" @click="downloadStl")
+        //.group
+        //  h1 Stempel bestellen
+        //  ActionButton(title="Model zu Bestelldienst schicken" icon="right")
 </template>
 
 <script lang="ts">
@@ -75,11 +75,19 @@ export default class Details extends Vue {
     const data = await get(`datasets/${this.datasetId}/items/${this.itemId}`);
     this.item = data.item;
     this.dataset = data.dataset;
-    const heightmapFile = await get(`datasets/${this.datasetId}/items/${this.itemId}/heightmap`);
+    const heightmapFile = await get(this.itemFileUrl("heightmap"));
     this.heightmap = asUrl(heightmapFile.file);
-    const originalFile = await get(`datasets/${this.datasetId}/items/${this.itemId}/original`);
+    const originalFile = await get(this.itemFileUrl("original"));
     this.original = asUrl(originalFile.file);
     this.loaded = true;
+  }
+
+  private get itemUrl(): string {
+    return `datasets/${this.datasetId}/items/${this.itemId}`;
+  }
+
+  private itemFileUrl(file: "original" | "heightmap" | "stl"): string {
+    return `${this.itemUrl}/${file}`;
   }
 
   private get datasetId(): string {
@@ -96,6 +104,11 @@ export default class Details extends Vue {
       return tag.substring(0, maxLength - 3) + "...";
     }
     return tag;
+  }
+
+  private async downloadStl() {
+    const stl = await get(this.itemFileUrl("stl"));
+    window.location = asUrl(stl.file);
   }
 }
 </script>
