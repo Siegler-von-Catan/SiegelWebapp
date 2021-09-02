@@ -66,7 +66,7 @@ export async function uploadCreatedImage(sessionId: number, formData: FormData) 
     return result.data;
 }
 
-export async function transformToHeightmap(sessionId: number, settings: CreateSettings) {
+export async function startProcessing(sessionId: number, settings: CreateSettings) {
     const url = `${privateAPI}/start?id=${sessionId}`;
     const result = await axios.post(url, settings);
     return result.data;
