@@ -56,11 +56,8 @@ export default class Create extends Vue {
   private isLowQuality = false;
 
   private upload() {
-      //#todo: this is hacky
       this.$refs.fileUpload.reset();
-      setTimeout(function () {
-          document.getElementById("createFileInput")?.click();
-      }, 300);
+      this.$nextTick(() => document.getElementById("createFileInput")?.click());
   }
 
 }
