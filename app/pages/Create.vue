@@ -38,7 +38,7 @@
                 CheckBox(title="Exportiere 3D-Modell in niedriger Qualität" v-model="isLowQuality" left)
         .group
           ActionButton(title="Hochladen" icon="upload-alt" @click="upload()")
-          ActionButton(title="Exportieren" icon="download" @click="exportToResult()")
+          ActionButton(title="Exportieren" icon="download" v-if="showOptions" @click="exportToResult()")
 
 </template>
 
