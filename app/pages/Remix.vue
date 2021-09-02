@@ -44,7 +44,7 @@ import "../style/remix.sass";
 import "../style/bigSealPage.sass";
 import ActionButton from '../components/ActionButton.vue';
 import {postGetFile} from "../util/api";
-import {ResultData} from "./Result.vue";
+import {ResultData} from "../data/ResultData";
 
 @Component({components: {ActionButton, ElementPalette, DrawableSeal}})
 export default class Remix extends Vue {
@@ -73,7 +73,6 @@ export default class Remix extends Vue {
     ResultData.instance.backLink = "remix";
     ResultData.instance.original = this.$refs.drawableSeal.serialize();
     ResultData.instance.heightmap = await postGetFile("merge", json);
-    ResultData.instance.hasResult = true;
     await this.$router.push("result");
   }
 }

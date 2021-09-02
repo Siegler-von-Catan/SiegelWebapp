@@ -18,6 +18,7 @@
 
 // @ts-ignore
 import axios from "axios";
+import {postGetFile} from "./api";
 
 const domain = process.env.DOMAIN || "";
 const publicAPI = `${domain}/api/v1/userupload/public`;
@@ -33,13 +34,11 @@ export interface CreateSettings {
 }
 
 export async function getCreateModel(uploadId: number) {
-    const result = await axios.get(`${publicAPI}/result?id=${uploadId}&type=model`);
-    return result.data;
+    return await postGetFile(`api/v1/userupload/public/result?id=${uploadId}&type=model`, {});
 }
 
 export async function getCreateHeightmap(uploadId: number) {
-    const result = await axios.get(`${publicAPI}/result?id=${uploadId}&type=heightmap`);
-    return result.data;
+    return await postGetFile(`api/v1/userupload/public/result?id=${uploadId}&type=heightmap`, {});
 }
 
 /**
@@ -74,11 +73,9 @@ export async function transformToHeightmap(sessionId: number, settings: CreateSe
 }
 
 export async function getCreateSessionHeightmap(sessionId: number) {
-    const result = await axios.get(`${privateAPI}/result?id=${sessionId}&type=model`);
-    return result.data;
+    return await postGetFile(`api/v1/create/result?id=${sessionId}&type=heightmap`, {});
 }
 
 export async function getCreateSessionModel(sessionId: number) {
-    const result = await axios.get(`${privateAPI}/result?id=${sessionId}&type=heightmap`);
-    return result.data;
+    return await postGetFile(`api/v1/create/result?id=${sessionId}&type=model`, {});
 }

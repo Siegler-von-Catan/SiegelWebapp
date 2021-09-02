@@ -14,23 +14,14 @@ import Component from "vue-class-component";
 import "../style/result.sass";
 import Item3d from "../components/Item3d.vue";
 import ActionButton from "../components/ActionButton.vue";
-
-export class ResultData {
-  public heightmap: string = "";
-  public stl: string = "";
-  public original: any = {};
-  public backLink: string = "";
-
-  private constructor() {}
-  public readonly static instance = new ResultData();
-}
+import {ResultData} from "../data/ResultData";
 
 @Component({components: {ActionButton, Item3d}})
 export default class Result extends Vue {
   private result = ResultData.instance;
 
   public downloadStl() {
-    window.location = this.result.stl;
+    window.location = this.result.stl as any;
   }
 
   public async goBack() {

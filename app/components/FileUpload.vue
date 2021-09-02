@@ -66,7 +66,7 @@ export default class FileUpload extends Vue {
   @Prop({default: undefined})
   public uploadError: any;
 
-  private sessionId: any;
+  public sessionId: any;
 
   public reset() {
     this.currentStatus = STATUS_INITIAL;

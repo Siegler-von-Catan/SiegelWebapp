@@ -46,7 +46,7 @@ export async function readFileBlob(blob: any): Promise<string> {
         reader.onload = () => {
             resolve(reader.result as string);
         };
-        // reader.onerror = reject;
+        reader.onerror = reject;
     });
 }
 

@@ -35,9 +35,10 @@
         .group
             #options(v-if="showOptions")
                 CheckBox(title="Invertiere Motiv-Höhe" v-model="isInversed" left)
+                CheckBox(title="Exportiere 3D-Modell in niedriger Qualität" v-model="isLowQuality" left)
         .group
           ActionButton(title="Hochladen" icon="upload-alt" @click="upload()")
-          ActionButton(title="Exportieren" icon="download")
+          ActionButton(title="Exportieren" icon="download" @click="exportToResult()")
 
 </template>
 
@@ -48,6 +49,8 @@ import FileUpload from "../components/FileUpload.vue";
 import "../style/bigSealPage.sass";
 import ActionButton from "../components/ActionButton.vue";
 import CheckBox from '../components/CheckBox.vue';
+import {getCreateSessionHeightmap, getCreateSessionModel} from "../util/createAPI";
+import {ResultData} from "../data/ResultData";
 
 @Component({components: {FileUpload, ActionButton, CheckBox}})
 export default class Create extends Vue {
@@ -55,9 +58,22 @@ export default class Create extends Vue {
   private isInversed = false;
   private isLowQuality = false;
 
+    $refs!: {
+        fileUpload: FileUpload
+    };
+
   private upload() {
       this.$refs.fileUpload.reset();
       this.$nextTick(() => document.getElementById("createFileInput")?.click());
+  }
+
+  private async exportToResult() {
+      ResultData.instance.backLink = "/create";
+      ResultData.instance.heightmap = await getCreateSessionHeightmap(this.$refs.fileUpload.sessionId);
+      ResultData.instance.stl = await getCreateSessionModel(this.$refs.fileUpload.sessionId);
+      ResultData.instance.original = null;
+
+      await this.$router.push("result");
   }
 
 }
