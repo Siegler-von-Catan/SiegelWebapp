@@ -72,5 +72,25 @@ export default class Api {
 }
 
 
+export async function postGetFile(url: string, data: any, params: any = {}): Promise<string> {
+    const response = await axios.post(url, data, params, {responseType: "blob", withCredentials: true});
+    return await readFileBlob(response);
+}
 
-
+/*
+ -
+ -export async function readFileBlob(blob: any): Promise<string> {
+ -    return new Promise((resolve, reject) => {
+ -        const reader = new window.FileReader();
+ -        reader.readAsDataURL(blob);
+ -        reader.onload = () => {
+ -            resolve(reader.result as string);
+ -        };
+ -        reader.onerror = reject;
+ -    });
+ -}
+ -
+ -export function asUrl(path: string) {
+ -    return `${domain}/${path}`;
+ -}
+*/

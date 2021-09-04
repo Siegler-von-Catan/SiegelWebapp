@@ -66,36 +66,20 @@ export default class FileUpload extends Vue {
   @Prop({default: undefined})
   public uploadError: any;
 
-  public sessionId: any;
-
   public reset() {
     this.currentStatus = STATUS_INITIAL;
     this.uploadedFiles = [];
     this.uploadError = null;
     this.uploadFieldName = "photo";
-    this.sessionId = null;
   }
 
   private async save(formData: FormData) {
       // upload data to the server
-      if (!this.sessionId) {
-          startCreateSession()
-              .then((response: any) => {
-                  this.sessionId = response;
-              })
-              .catch(err => {
-                  this.uploadError = err.response;
-                  this.currentStatus = STATUS_FAILED;
-              });
-      }
-
-      if(!this.sessionId) return;
-
       this.currentStatus = STATUS_SAVING;
 
       console.log("uploading...");
       //getCreateHeightmap(1);
-      uploadCreatedImage(this.sessionId, formData)
+      uploadCreatedImage(formData)
           .then((response: any) => {
               this.uploadedFiles = [].concat(response);
               this.currentStatus = STATUS_SUCCESS;
@@ -132,7 +116,7 @@ export default class FileUpload extends Vue {
           endY: 1000000,
           isInversed: shouldBeInversed,
           isLowQuality: shouldBeLowQuality};
-      return await startProcessing(this.sessionId, settings)
+      return await startProcessing(settings)
   }
 
   public isInitial() {
