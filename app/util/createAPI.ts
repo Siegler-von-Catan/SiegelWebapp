@@ -33,49 +33,44 @@ export interface CreateSettings {
     isLowQuality: boolean;
 }
 
-export async function getCreateModel(uploadId: number) {
-    return await postGetFile(`api/v1/userupload/public/result?id=${uploadId}&type=model`, {});
+export async function getCreateModel() {
+    return await postGetFile(`api/v1/userupload/public/result?type=model`, {});
 }
 
-export async function getCreateHeightmap(uploadId: number) {
-    return await postGetFile(`api/v1/userupload/public/result?id=${uploadId}&type=heightmap`, {});
+export async function getCreateHeightmap() {
+    return await postGetFile(`api/v1/userupload/public/result?type=heightmap`, {});
 }
 
-/**
- * Returns a session id which is used throughout a user FabSeal Create session to access
- * the private API
- */
-export async function startCreateSession() {
-    const result = await axios.post(`${privateAPI}/new`);
-    return result.data.id as number;
-}
 
 /**
  * Returns an upload id which is used to retrieve the data resulting from a FabSeal Create session
  * from the public API
  * @param sessionId
  */
-export async function finishCreateSession(sessionId: number) {
-    const result = await axios.post(`${privateAPI}/finish?id=${sessionId}`);
-    return result.data.id as number;
+export async function finishCreateSession() {
+    const result = await axios.post(`${privateAPI}/finish`, {}, {withCredentials: true});
 }
 
-export async function uploadCreatedImage(sessionId: number, formData: FormData) {
-    const url = `${privateAPI}/upload?id=${sessionId}`;
-    const result = await axios.post(url, formData);
+export async function uploadCreatedImage(formData: FormData) {
+    const url = `${privateAPI}/upload`;
+    const result = await axios.post(url, formData, {withCredentials: true});
     return result.data;
 }
 
-export async function startProcessing(sessionId: number, settings: CreateSettings) {
-    const url = `${privateAPI}/start?id=${sessionId}`;
-    const result = await axios.post(url, settings);
+export async function startProcessing(settings: CreateSettings) {
+    const url = `${privateAPI}/start`;
+    const result = await axios.post(url, settings, {withCredentials: true});
     return result.data;
 }
 
-export async function getCreateSessionHeightmap(sessionId: number) {
-    return await postGetFile(`api/v1/create/result?id=${sessionId}&type=heightmap`, {});
+export async function getCreateSessionHeightmap() {
+    const response = await axios.get(`${privateAPI}/result?type=heightmap`, {responseType: "blob", withCredentials: true});
+    const url = URL.createObjectURL(response.data);
+    return url;
 }
 
-export async function getCreateSessionModel(sessionId: number) {
-    return await postGetFile(`api/v1/create/result?id=${sessionId}&type=model`, {});
+export async function getCreateSessionModel() {
+    const response = await axios.get(`${privateAPI}/result?type=model`, {responseType: "blob", withCredentials: true});
+    const url = URL.createObjectURL(response.data);
+    return url;
 }
