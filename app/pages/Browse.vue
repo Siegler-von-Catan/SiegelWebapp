@@ -20,20 +20,21 @@
   .padding-page
     Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}, {title: datasetName, href: datasetId}]")
 
-    .browse(v-show="hasLoadedItems")
-      .search
-        .title
-          h1 {{ datasetName }}
-          p {{ `${itemsCount} Elemente` }}
-        .page-filter
-          Dropdown(v-model="limit" :options="[25, 50, 100]" title="Elemente pro Seite: ")
-      PageOffset.top(v-model="offset" :itemCount="itemsCount" :items-per-page="limit")
-      .items
-        router-link.item(v-for="(item, i) in loadedItems" :key="i" :to="`/browse/${datasetId}/detail/${item.id}`")
-          img(:src="loadedThumbs[i]" :alt="item.name")
-          h1 {{ item.name }}
-          p {{ item.subjects.join(', ') }}
-      PageOffset.bottom(v-model="offset" :itemCount="itemsCount" :items-per-page="limit")
+    Loadable(:loaded="hasLoadedItems")
+      .browse(v-show="hasLoadedItems")
+        .search
+          .title
+            h1 {{ datasetName }}
+            p {{ `${itemsCount} Elemente` }}
+          .page-filter
+            Dropdown(v-model="limit" :options="[25, 50, 100]" title="Elemente pro Seite: ")
+        PageOffset.top(v-model="offset" :itemCount="itemsCount" :items-per-page="limit")
+        .items
+          router-link.item(v-for="(item, i) in loadedItems" :key="i" :to="`/browse/${datasetId}/detail/${item.id}`")
+            img(:src="loadedThumbs[i]" :alt="item.name")
+            h1 {{ item.name }}
+            p {{ item.subjects.join(', ') }}
+        PageOffset.bottom(v-model="offset" :itemCount="itemsCount" :items-per-page="limit")
 </template>
 
 <script lang="ts">
@@ -47,6 +48,7 @@
   import {Watch} from "vue-property-decorator";
   import Dropdown from "../components/Dropdown.vue";
   import Api from "../util/api";
+  import Loadable from "../components/Loadable.vue";
 
   interface Item {
     id: string;
@@ -59,7 +61,7 @@
     itemsCount: number;
   }
 
-  @Component({components: {Dropdown, PageOffset, Location}})
+  @Component({components: {Dropdown, PageOffset, Location, Loadable}})
   export default class Browse extends Vue {
     private datasetName: string = "";
     private itemsCount = 1;
