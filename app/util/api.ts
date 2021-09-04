@@ -18,38 +18,59 @@
 
 // @ts-ignore
 import axios from "axios";
+import {defaults} from "lodash";
 
-const domain = process.env.DOMAIN || "";
-const apiEndpoint = process.env.NODE_ENV === "development" ? domain : domain + "/api";
+const domainServer = process.env.DOMAIN || "";
+const domainMicro = process.env.DOMAIN_MICRO || "";
 
-
-export async function get(url: string, params: any = {}, config: any = {}): Promise<any> {
-    const result = await axios.get(`${apiEndpoint}/${url}`, {params, ...config});
-    return result.data;
+export class Endpoint {
+    static readonly server = process.env.NODE_ENV === "development" ? domainServer : domainServer + "/api/v1";
+    static readonly micro = domainMicro + "/api/v1";
 }
 
-export async function post(url: string, data: any, params: any = {}, config: any = {}): Promise<any> {
-    const result = await axios.post(`${apiEndpoint}/${url}`, data, {params, ...config});
-    return result.data;
+interface RequestOptions {
+    data?: any;
+    params?: any;
+    config?: any;
+    endpoint?: string;
+    prefix?: string;
+}
+
+const defaultOptions = {data: {}, params: {}, config: {}, endpoint: Endpoint.server, prefix: undefined}
+
+export default class Api {
+    static readonly post = async (url: string, options?: RequestOptions) => await Api.request(url, "POST", options);
+    static readonly get = async (url: string, options?: RequestOptions) => await Api.request(url, "GET", options);
+
+    static async request(url: string, method: string, options?: RequestOptions): Promise<any> {
+        const {data, params, config, endpoint, prefix} = defaults(options, defaultOptions);
+        const fullUrl = `${endpoint}${prefix ? `/${prefix}` : ""}/${url}`;
+        const result = await axios.request({url: fullUrl, method, data, query: params, ...config});
+        return result.data;
+    }
+
+    static async getFile(url: string, options: RequestOptions = {}): Promise<string> {
+        options.config = {responseType: "blob", ...options?.config};
+        const response = await Api.post(url, options);
+        return await Api.readFileBlob(response);
+    }
+
+    private static async readFileBlob(blob: any): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new window.FileReader();
+            reader.readAsDataURL(blob);
+            reader.onload = () => {
+                resolve(reader.result as string);
+            };
+            reader.onerror = reject;
+        });
+    }
+
+    static staticUrl(path: string) {
+        return `${domainServer}/${path}`;
+    }
 }
 
 
-export async function postGetFile(url: string, data: any, params: any = {}): Promise<string> {
-    const response = await post(url, data, params, {responseType: "blob"});
-    return await readFileBlob(response);
-}
 
-export async function readFileBlob(blob: any): Promise<string> {
-    return new Promise((resolve, reject) => {
-        const reader = new window.FileReader();
-        reader.readAsDataURL(blob);
-        reader.onload = () => {
-            resolve(reader.result as string);
-        };
-        reader.onerror = reject;
-    });
-}
 
-export function asUrl(path: string) {
-    return `${domain}/${path}`;
-}

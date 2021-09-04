@@ -10,7 +10,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import {Prop} from "vue-property-decorator";
 import "../style/datasets.sass";
-import {asUrl, get} from "../util/api";
+import Api from "../util/api";
 
 export interface DatasetData {
   id: string;
@@ -25,8 +25,8 @@ export default class Dataset extends Vue {
   private img: any = "";
 
   public async mounted() {
-    const image = await get(`datasets/${this.dataset.id}/thumb`);
-    this.img = asUrl(image.file);
+    const image = await Api.get(`datasets/${this.dataset.id}/thumb`);
+    this.img = Api.staticUrl(image.file);
   }
 }
 </script>

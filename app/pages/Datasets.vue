@@ -34,14 +34,14 @@
   import Dataset, {DatasetData} from "../components/Dataset.vue";
   import Location from "../components/Location.vue";
   import Loadable from "../components/Loadable.vue";
-  import {get} from "../util/api";
+  import Api from "../util/api";
 
   @Component({components: {Loadable, Dataset, Location}})
   export default class Datasets extends Vue {
     private datasets: DatasetData[] = [];
 
     public async mounted() {
-      const datasetMap = await get("datasets");
+      const datasetMap = await Api.get("datasets");
       this.datasets = Object.values(datasetMap);
     }
   }

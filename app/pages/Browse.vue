@@ -42,11 +42,11 @@
   import Component from 'vue-class-component';
   import Vue from 'vue';
   import Location from '../components/Location.vue';
-  import {asUrl, get} from "../util/api";
   import {DatasetData} from "../components/Dataset.vue";
   import PageOffset from "../components/PageOffset.vue";
   import {Watch} from "vue-property-decorator";
   import Dropdown from "../components/Dropdown.vue";
+  import Api from "../util/api";
 
   interface Item {
     id: string;
@@ -70,7 +70,7 @@
     private offset = 0;
 
     private async mounted() {
-      const info: DatasetInfo = await get(`datasets/${this.datasetId}/items/info`);
+      const info: DatasetInfo = await Api.get(`datasets/${this.datasetId}/items/info`);
       this.datasetName = info.dataset.title;
       this.itemsCount = info.itemsCount;
       await this.loadItems();
@@ -85,14 +85,14 @@
     }
 
     private async loadItems() {
-      this.loadedItems = await get(`datasets/${this.datasetId}/items`, {limit: this.limit, offset: this.offset});
+      this.loadedItems = await Api.get(`datasets/${this.datasetId}/items`, {params: {limit: this.limit, offset: this.offset}});
       this.hasLoadedItems = true;
     }
 
     private async loadThumbs() {
       for (const item of this.loadedItems) {
-        const thumb = await get(`datasets/${this.datasetId}/items/${item.id}/original`);
-        this.loadedThumbs.push(asUrl(thumb.file));
+        const thumb = await Api.get(`datasets/${this.datasetId}/items/${item.id}/original`);
+        this.loadedThumbs.push(Api.staticUrl(thumb.file));
       }
     }
 

@@ -50,11 +50,11 @@ import Vue from "vue";
 import Location from '../components/Location.vue';
 import "../style/details.sass";
 import "../style/page.sass";
-import {asUrl, get} from "../util/api";
 import {DatasetData} from "../components/Dataset.vue";
 import Item3d from "../components/Item3d.vue";
 import CheckBox from "../components/CheckBox.vue";
 import ActionButton from "../components/ActionButton.vue";
+import Api from "../util/api";
 
 export interface Item {
   id: number;
@@ -72,13 +72,13 @@ export default class Details extends Vue {
   private loaded = false;
 
   public async mounted() {
-    const data = await get(`datasets/${this.datasetId}/items/${this.itemId}`);
+    const data = await Api.get(`datasets/${this.datasetId}/items/${this.itemId}`);
     this.item = data.item;
     this.dataset = data.dataset;
-    const heightmapFile = await get(this.itemFileUrl("heightmap"));
-    this.heightmap = asUrl(heightmapFile.file);
-    const originalFile = await get(this.itemFileUrl("original"));
-    this.original = asUrl(originalFile.file);
+    const heightmapFile = await Api.get(this.itemFileUrl("heightmap"));
+    this.heightmap = Api.staticUrl(heightmapFile.file);
+    const originalFile = await Api.get(this.itemFileUrl("original"));
+    this.original = Api.staticUrl(originalFile.file);
     this.loaded = true;
   }
 
@@ -107,8 +107,8 @@ export default class Details extends Vue {
   }
 
   private async downloadStl() {
-    const stl = await get(this.itemFileUrl("stl"));
-    window.location = asUrl(stl.file);
+    const stl = await Api.get(this.itemFileUrl("stl"));
+    window.location = Api.staticUrl(stl.file) as any;
   }
 }
 </script>
