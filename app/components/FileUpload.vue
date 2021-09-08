@@ -29,7 +29,7 @@
 
     <!--SUCCESS-->
     #success(v-if="isSuccess()")
-        img(:src="uploadedFiles[0].url" class="img-responsive img-thumbnail" :alt="uploadedFiles[0].originalName")
+        img(:src="previewImageUrl" class="img-responsive img-thumbnail" :alt="uploadedFiles[0].originalName")
     <!--FAILED-->
     #error(v-if="isFailed()")
       h2 Hochladen fehlgeschlagen
@@ -65,6 +65,8 @@ export default class FileUpload extends Vue {
 
   @Prop({default: undefined})
   public uploadError: any;
+  
+  public previewImageUrl: string;
 
   public reset() {
     this.currentStatus = STATUS_INITIAL;
@@ -96,6 +98,9 @@ export default class FileUpload extends Vue {
     const formData = new FormData();
 
     if (!fileList.length) return;
+
+    this.uploadedFiles = fileList;
+    this.previewImageUrl = URL.createObjectURL(fileList[0]);
 
     // append the files to FormData
     Array
