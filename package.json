@@ -12,6 +12,7 @@
   "devDependencies": {
     "@parcel/transformer-pug": "^2.0.0-beta.2",
     "@types/fabric": "^4.2.6",
+    "@types/lodash": "^4.14.172",
     "@types/node": "^14.14.10",
     "@types/three": "^0.131.0",
     "@vue/component-compiler-utils": "^3.2.0",
@@ -27,6 +28,7 @@
     "axios": "^0.21.1",
     "d3": "^6.3.1",
     "fabric": "^4.5.1",
+    "lodash": "^4.17.21",
     "three": "^0.131.3",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.5",

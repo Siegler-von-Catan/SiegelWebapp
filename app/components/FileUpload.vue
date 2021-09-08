@@ -43,7 +43,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import {Prop, Watch} from 'vue-property-decorator';
 import "../style/fileUpload.sass";
-import {startCreateSession, uploadCreatedImage} from "../util/createAPI";
+import {CreateSettings, startCreateSession, startProcessing, uploadCreatedImage} from "../util/createAPI";
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 @Component
@@ -66,7 +66,7 @@ export default class FileUpload extends Vue {
   @Prop({default: undefined})
   public uploadError: any;
 
-  private sessionId: any;
+  public sessionId: any;
 
   public reset() {
     this.currentStatus = STATUS_INITIAL;
@@ -122,6 +122,17 @@ export default class FileUpload extends Vue {
 
     // save it
     this.save(formData);
+  }
+
+  public async processResults(shouldBeInversed: boolean, shouldBeLowQuality: boolean) {
+      const settings: CreateSettings = {
+          startX: 0,
+          endX: 1000000,
+          startY: 0,
+          endY: 1000000,
+          isInversed: shouldBeInversed,
+          isLowQuality: shouldBeLowQuality};
+      return await startProcessing(this.sessionId, settings)
   }
 
   public isInitial() {

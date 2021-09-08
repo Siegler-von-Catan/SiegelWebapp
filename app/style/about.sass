@@ -1,0 +1,72 @@
+/*!
+ / ShapeFromShading - Creating heightmaps out of 2D seal images.
+ / Copyright (C) 2021
+ / Joana Bergsiek, Leonard Geier, Lisa Ihde, Tobias Markus, Dominik Meier, Paul Methfessel
+ / This program is free software: you can redistribute it and/or modify
+ / it under the terms of the GNU General Public License as published by
+ / the Free Software Foundation, either version 3 of the License, or
+ / (at your option) any later version.
+ /
+ / This program is distributed in the hope that it will be useful,
+ / but WITHOUT ANY WARRANTY; without even the implied warranty of
+ / MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ / GNU General Public License for more details.
+ /
+ / You should have received a copy of the GNU General Public License
+ / along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ /
+
+@import variables
+
+.container__row
+  .about-section
+    .container__col-sm-12
+      h1
+        color: $grey-100
+        font-family: $font-accent
+        font-weight: bold
+        font-size: 28px
+        line-height: 41px
+        letter-spacing: -0.02em        
+        padding: 0 5em
+
+      p
+        text-align: center
+        font-family: $font-content
+        font-size: 16px
+        padding: 0 5em
+
+  .team-section
+    display: flex
+    flex-direction: row
+    align-items: left
+    margin: 0 auto
+
+    *
+      flex-basis: 100%
+
+    @media screen and (max-width: 900px)
+      flex-direction: column
+
+    .container__col-sm-4
+      display: flex      
+      flex-direction: column
+      align-items: center
+
+      h2
+        color: $grey-100
+        font-family: $font-accent
+        font-weight: bold
+        font-size: 14px
+        line-height: 41px
+        letter-spacing: -0.02em
+        margin-bottom: 0px
+
+      p
+        text-align: center
+        font-family: $font-content
+        font-size: 12px
+        margin-bottom: 41px
+
+      img
+        max-width: 25em

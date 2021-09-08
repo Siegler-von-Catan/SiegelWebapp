@@ -17,11 +17,11 @@
  */
 
 // @ts-ignore
-import axios from "axios";
 
-const domain = process.env.DOMAIN || "";
-const publicAPI = `${domain}/api/v1/userupload/public`;
-const privateAPI = `${domain}/api/v1/create`;
+import Api, {Endpoint} from "./api";
+
+const publicAPI = "userupload/public";
+const privateAPI = "create";
 
 export interface CreateSettings {
     startX: number;
@@ -33,13 +33,17 @@ export interface CreateSettings {
 }
 
 export async function getCreateModel(uploadId: number) {
-    const result = await axios.get(`${publicAPI}/result?id=${uploadId}&type=model`);
-    return result.data;
+    return await Api.getFile("result", {
+        params: {id: uploadId, type: "model"},
+        endpoint: Endpoint.micro,
+        prefix: publicAPI});
 }
 
 export async function getCreateHeightmap(uploadId: number) {
-    const result = await axios.get(`${publicAPI}/result?id=${uploadId}&type=heightmap`);
-    return result.data;
+    return await Api.getFile("result", {
+        params: {id: uploadId, type: "heightmap"},
+        endpoint: Endpoint.micro,
+        prefix: publicAPI});
 }
 
 /**
@@ -47,8 +51,10 @@ export async function getCreateHeightmap(uploadId: number) {
  * the private API
  */
 export async function startCreateSession() {
-    const result = await axios.post(`${privateAPI}/new`);
-    return result.data.id as number;
+    const result = await Api.post("new", {
+        endpoint: Endpoint.micro,
+        prefix: privateAPI});
+    return result.id as number;
 }
 
 /**
@@ -57,28 +63,39 @@ export async function startCreateSession() {
  * @param sessionId
  */
 export async function finishCreateSession(sessionId: number) {
-    const result = await axios.post(`${privateAPI}/finish?id=${sessionId}`);
-    return result.data.id as number;
+    const result = await Api.post("finish", {
+        params: {id: sessionId},
+        endpoint: Endpoint.micro,
+        prefix: privateAPI});
+    return result.id as number;
 }
 
 export async function uploadCreatedImage(sessionId: number, formData: FormData) {
-    const url = `${privateAPI}/upload?id=${sessionId}`;
-    const result = await axios.post(url, formData);
-    return result.data;
+    return await Api.post("upload", {
+        data: formData,
+        params: {id: sessionId},
+        endpoint: Endpoint.micro,
+        prefix: privateAPI});
 }
 
-export async function transformToHeightmap(sessionId: number, settings: CreateSettings) {
-    const url = `${privateAPI}/start?id=${sessionId}`;
-    const result = await axios.post(url, settings);
-    return result.data;
+export async function startProcessing(sessionId: number, settings: CreateSettings) {
+    return await Api.post("start", {
+        data: settings,
+        params: {id: sessionId},
+        endpoint: Endpoint.micro,
+        prefix: privateAPI});
 }
 
 export async function getCreateSessionHeightmap(sessionId: number) {
-    const result = await axios.get(`${privateAPI}/result?id=${sessionId}&type=model`);
-    return result.data;
+    return await Api.getFile("result", {
+        params: {id: sessionId, type: "heightmap"},
+        endpoint: Endpoint.micro,
+        prefix: privateAPI});
 }
 
 export async function getCreateSessionModel(sessionId: number) {
-    const result = await axios.get(`${privateAPI}/result?id=${sessionId}&type=heightmap`);
-    return result.data;
+    return await Api.getFile("result", {
+        params: {id: sessionId, type: "model"},
+        endpoint: Endpoint.micro,
+        prefix: privateAPI});
 }

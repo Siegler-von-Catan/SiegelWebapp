@@ -19,30 +19,32 @@
 <template lang="pug">
   .padding-page
     Location(:entries="[{title: 'Übersicht', href: '/home'}, {title: 'Datensätze', href: '/browse'}]")
-    .datasets
-      Dataset(v-for="(dataset, i) in datasets" :dataset="dataset" :key="i")
-      .dataset.fake
-        p Mehr Datensätze kommen bald!
+    Loadable(:loaded="loaded")
+      .datasets
+        Dataset(v-for="(dataset, i) in datasets" :dataset="dataset" :key="i")
+          .dataset.fake
+            p Mehr Datensätze kommen bald!
 </template>
 
 <script lang="ts">
   import "../style/browse.sass";
   import "../style/page.sass";
-  import "../style/loading.sass";
   import Component from 'vue-class-component';
   import Vue from 'vue';
   import Dataset, {DatasetData} from "../components/Dataset.vue";
   import Location from "../components/Location.vue";
   import Loadable from "../components/Loadable.vue";
-  import {get} from "../util/api";
+  import Api from "../util/api";
 
   @Component({components: {Loadable, Dataset, Location}})
   export default class Datasets extends Vue {
     private datasets: DatasetData[] = [];
+    private loaded = false;
 
     public async mounted() {
-      const datasetMap = await get("datasets");
+      const datasetMap = await Api.get("datasets");
       this.datasets = Object.values(datasetMap);
+      this.loaded = true;
     }
   }
 </script>
