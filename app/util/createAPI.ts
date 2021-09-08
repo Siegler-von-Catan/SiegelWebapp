@@ -70,6 +70,10 @@ export async function getCreateSessionHeightmap() {
 }
 
 export async function getCreateSessionModel() {
+    // DIRTY HACK: Wait a few seconds before querying model
+    // Replace this with a status query
+    const delay_ms = 7000;
+    const delay = await new Promise(resolve => setTimeout(resolve, delay_ms));
     const response = await axios.get(`${privateAPI}/result?type=model`, {responseType: "blob", withCredentials: true});
     const url = URL.createObjectURL(response.data);
     return url;
