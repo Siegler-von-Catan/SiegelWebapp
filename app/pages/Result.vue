@@ -20,8 +20,9 @@ import {ResultData} from "../data/ResultData";
 export default class Result extends Vue {
   private result = ResultData.instance;
 
-  public downloadStl() {
-    window.location = this.result.stl as any;
+  public async downloadStl() {
+    const stl_data = await this.result.stl;
+    window.location = stl_data as any;
   }
 
   public async goBack() {

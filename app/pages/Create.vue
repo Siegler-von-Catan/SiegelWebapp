@@ -71,8 +71,8 @@ export default class Create extends Vue {
       await this.$refs.fileUpload.processResults(this.isInversed, this.isLowQuality);
 
       ResultData.instance.backLink = "/create";
-      ResultData.instance.heightmap = await getCreateSessionHeightmap(this.$refs.fileUpload.sessionId);
-      ResultData.instance.stl = await getCreateSessionModel(this.$refs.fileUpload.sessionId);
+      ResultData.instance.heightmap = await getCreateSessionHeightmap();
+      ResultData.instance.stl = getCreateSessionModel();
       ResultData.instance.original = null;
 
       await this.$router.push("result");
