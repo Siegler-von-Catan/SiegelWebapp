@@ -72,7 +72,6 @@ export default class Create extends Vue {
 
       ResultData.instance.backLink = "/create";
       ResultData.instance.heightmap = await getCreateSessionHeightmap();
-      ResultData.instance.stl = getCreateSessionModel();
       ResultData.instance.original = null;
 
       await this.$router.push("result");
