@@ -35,7 +35,7 @@ export async function post(url: string, data: any, params: any = {}, config: any
 
 
 export async function postGetFile(url: string, data: any, params: any = {}): Promise<string> {
-    const response = await axios.post(url, data, params, {responseType: "blob", withCredentials: true});
+    const response = await axios.post(url, data, {responseType: "blob", withCredentials: true});
     return await readFileBlob(response);
 }
 

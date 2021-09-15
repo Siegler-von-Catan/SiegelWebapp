@@ -5,7 +5,7 @@
     .big-seal
       Item3d(:heightmap="result.heightmap")
     .toolbar
-      ActionButton(title="3D-Modell" icon="download" @click="downloadStl")
+      ActionLink(title="3D-Modell" icon="download" :href="model_url")
 </template>
 
 <script lang="ts">
@@ -13,17 +13,19 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import "../style/result.sass";
 import Item3d from "../components/Item3d.vue";
+import getCreateSessionModelUrl from "../util/createAPI.ts";
 import ActionButton from "../components/ActionButton.vue";
+import ActionLink from "../components/ActionLink.vue";
 import {ResultData} from "../data/ResultData";
+import { Component, Provide } from 'vue-property-decorator'
 
-@Component({components: {ActionButton, Item3d}})
+const domain = process.env.DOMAIN || "";
+
+@Component({components: {ActionButton, ActionLink, Item3d}})
 export default class Result extends Vue {
   private result = ResultData.instance;
 
-  public async downloadStl() {
-    const stl_data = await this.result.stl;
-    window.location = stl_data as any;
-  }
+  @Provide() model_url = `${domain}/api/v1/create/result?type=model`
 
   public async goBack() {
     await this.$router.push(this.result.backLink);
