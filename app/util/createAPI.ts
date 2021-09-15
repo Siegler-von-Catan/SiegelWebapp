@@ -127,10 +127,18 @@ export async function startProcessing(settings: CreateSettings) {
     return result.data;
 }
 
+export function getCreateSessionHeightmapUrl() {
+    return `${privateAPI}/result?type=heightmap`;
+}
+
 export async function getCreateSessionHeightmap() {
-    const response = await axios.get(`${privateAPI}/result?type=heightmap`, {responseType: "blob", withCredentials: true});
+    const response = await axios.get(getCreateSessionHeightmapUrl(), {responseType: "blob", withCredentials: true});
     const url = URL.createObjectURL(response.data);
     return url;
+}
+
+export function getCreateSessionModelUrl() {
+    return `${privateAPI}/result?type=model`;
 }
 
 export async function getCreateSessionModel() {
@@ -138,7 +146,7 @@ export async function getCreateSessionModel() {
     // Replace this with a status query
     const delay_ms = 7000;
     const delay = await new Promise(resolve => setTimeout(resolve, delay_ms));
-    const response = await axios.get(`${privateAPI}/result?type=model`, {responseType: "blob", withCredentials: true});
+    const response = await axios.get(getCreateSessionModelUrl(), {responseType: "blob", withCredentials: true});
     const url = URL.createObjectURL(response.data);
     return url;
 }
