@@ -45,13 +45,13 @@ export default class Api {
     static async request(url: string, method: string, options?: RequestOptions): Promise<any> {
         const {data, params, config, endpoint, prefix} = defaults(options, defaultOptions);
         const fullUrl = `${endpoint}${prefix ? `/${prefix}` : ""}/${url}`;
-        const result = await axios.request({url: fullUrl, method, data, query: params, ...config});
+        const result = await axios.request({url: fullUrl, method, data, params: params, ...config, withCredentials: true});
         return result.data;
     }
 
     static async getFile(url: string, options: RequestOptions = {}): Promise<string> {
         options.config = {responseType: "blob", ...options?.config};
-        const response = await Api.post(url, options);
+        const response = await Api.get(url, options);
         return await Api.readFileBlob(response);
     }
 
@@ -71,26 +71,22 @@ export default class Api {
     }
 }
 
+export async function readFileBlob(blob: any): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const reader = new window.FileReader();
+        reader.readAsDataURL(blob);
+        reader.onload = () => {
+            resolve(reader.result as string);
+        };
+        reader.onerror = reject;
+    });
+}
+
+export function asUrl(path: string) {
+    return `${domainServer}/${path}`;
+}
 
 export async function postGetFile(url: string, data: any, params: any = {}): Promise<string> {
     const response = await axios.post(url, data, {responseType: "blob", withCredentials: true});
     return await readFileBlob(response);
 }
-
-/*
- -
- -export async function readFileBlob(blob: any): Promise<string> {
- -    return new Promise((resolve, reject) => {
- -        const reader = new window.FileReader();
- -        reader.readAsDataURL(blob);
- -        reader.onload = () => {
- -            resolve(reader.result as string);
- -        };
- -        reader.onerror = reject;
- -    });
- -}
- -
- -export function asUrl(path: string) {
- -    return `${domain}/${path}`;
- -}
-*/
