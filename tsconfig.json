@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "strict": true,
-    "module": "ES2017",
+    "module": "es2020",
     "lib": ["ES2017", "dom"],
     "moduleResolution": "node",
     "experimentalDecorators": true,
